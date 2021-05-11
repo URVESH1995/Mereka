@@ -1,0 +1,85 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<app-navbar></app-navbar>
+
+<div class="pagesLog">
+  <img src="/assets/imgs/M-Logo.PNG" height="25px">
+  <i class="fas fa-chevron-right lightGray px-3"></i>
+  <p class="bold my-0">Browse</p>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-sm-12 maxWidthContent">
+    <div *ngIf="jobDetail.status==='Closed'" class="card p-3 mt-3">
+      <div class="d-flex">
+        <i class="fas fa-info-circle subTitle"></i>
+        <h5 class="text1 bold mb-0 align-center font-18 pl-3">This job is closed and no longer accepting proposals</h5>
+      </div>
+    </div>
+
+    <div class="card jobdetailsCont">
+      <div class="row justify-content-center">
+        <div class="col-sm-11">
+          <h5 class="bold mb-0">{{jobDetail.jobTitle}}</h5>
+          <p class="mb-0">{{jobDetail.category}}</p>
+          <div class="row justify-content-between">
+            <div class="col-sm-8 pl-0 align-center">
+              <p (click)="userDetails()" class="font-15 text1 bold pointer">{{jobOwner.fullName}}</p>
+              <div class="d-flex">
+                <div class="iconCont">
+                  <img src="/assets/imgs/Oval2.svg" class="align-center" height="10px">
+                  <p class="font-13 my-0 bold pl-2">
+                    {{jobDetail.isVerified ? 'Verified' : 'Non Verified'}}
+                  </p>
+                </div>
+                <div class="iconCont">
+                  <i class="fas fa-map-marker-alt font-14 align-center"></i>
+                  <p class="font-13 my-0 bold pl-2">{{jobDetail.preferredLocation}}</p>
+                </div>
+                <div class="iconCont">
+                  <p class="font-13 my-0 bold">{{jobDetail.jobDuration}}</p>
+                </div>
+                <div class="iconCont">
+                  <p class="font-13 my-0 bold">{{jobDetail.jobType}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-2 px-0">
+              <a *ngIf="getJobImage(jobDetail)" [href]="getJobImage(jobDetail)" target="_blank">
+                <img [src]="getJobImage(jobDetail)" class="jobImage">
+              </a>
+            </div>
+          </div>
+
+          <p class="font-13 mb-0 mt-4">{{jobDetail.description}}</p>
+
+          <h5 class="bold mt-4 mb-3">Skillsets</h5>
+          <div class="skillsBtnCont">
+            <button *ngFor="let skill of jobDetail.skills" class="btn skillBtn">{{skill}}</button>
+          </div>
+
+          <div *ngIf="jobDetail.fileUrls">
+            <h5 class="bold mt-5 mb-3">Attached Files</h5>
+            <div class="skillsBtnCont">
+              <a *ngFor="let file of jobDetail.fileUrls" [href]="file.url" target="_blank">
+                <button class="btn btn-light mr-3">
+                  {{file.name}} <i class="fa fa-download ml-3"></i>
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="submitBtnCont">
+        <button [disabled]="jobDetail.status==='Closed'" *ngIf="!alreadyBidSubmitted() && iamPartOfHub()"
+          (click)="submitBid()" class="btn darkBtn">Submit Bid</button>
+        <button *ngIf="alreadyBidSubmitted()" class="btn btn-lg btn-success">
+          <i class="fa fa-check"></i> Bid Submitted
+        </button>
+        <button (click)="contractDetails()" *ngIf="imHired() && myBidObject" class="btn btn-lg btn-dark ml-3"> Contract
+          Details</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

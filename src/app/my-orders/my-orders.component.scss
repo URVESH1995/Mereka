@@ -1,0 +1,601 @@
+// .pagesLog {
+//   height: 60px;
+//   display: flex;
+//   align-items: center;
+//   padding-left: 3em;
+//   border-bottom: 1px solid #d1cccc;
+// }
+
+// .mainCont {
+//   justify-content: center;
+//   margin: 3em 0em;
+
+//   #myTab {
+//     border-bottom-color: #d1cccc;
+
+//     .nav-item {
+//       margin-right: 55px;
+//     }
+
+//     .nav-item:last-child {
+//       margin-right: 0px !important;
+//     }
+
+//     .nav-link {
+//       font-weight: 500;
+//       border: none;
+//       padding: 8px 5px 8px 5px;
+//       min-width: 60px;
+//       color: #161616;
+//       text-align: center;
+//     }
+
+//     .nav-link.active {
+//       border: none;
+//       border-bottom: 4px solid #161616;
+//       font-weight: bold;
+//       background-color: transparent;
+//     }
+//   }
+
+//   .addBtn {
+//     height: 45px;
+//     width: 45px;
+//     border-radius: 50%;
+//     font-size: 22px;
+//   }
+
+//   .postsCard {
+//     border: 0px;
+//     border-radius: 10px;
+//     margin-top: 30px;
+
+//     .header {
+//       min-height: 110px;
+//       justify-content: center;
+//       align-items: center;
+//       border-bottom: 1px solid #d1cccc;
+//       padding: 0px 32px;
+
+//       select {
+//         background: #ffffff url(/assets/imgs/filter.svg) no-repeat left 0.7rem
+//           center/22px 40px !important;
+//         -webkit-appearance: none;
+//         -moz-appearance: none;
+//         appearance: none;
+//         height: 48px !important;
+//         font-size: 17px !important;
+//         width: 150px;
+//         padding: 0.5rem 5px 0.5rem 45px !important;
+//         border: 0px;
+//         color: #26aeea;
+//         font-weight: bold;
+//         cursor: pointer;
+//       }
+//     }
+
+//     .postDetailCont {
+//       border-bottom: 1px solid #d1cccc;
+//       padding: 25px 32px;
+//       width: 100%;
+//       position: relative;
+
+//       .editPost {
+//         cursor: pointer;
+//         position: absolute;
+//         right: 15px;
+//         top: 15px;
+//         height: 20px;
+//       }
+
+//       .iconCont {
+//         .icon {
+//           display: inline-flex;
+//           cursor: pointer;
+
+//           i {
+//             font-size: 13px;
+//             align-self: center;
+//             padding-left: 8px;
+//           }
+//         }
+//       }
+
+//       .iconCont:nth-child(2) {
+//         margin: 0px 3.7vw;
+//       }
+
+//       .iconCont:last-child {
+//         margin-right: 10px;
+//       }
+//     }
+
+//     .postDetailCont:last-child {
+//       border-bottom: 0px;
+//     }
+//   }
+
+//   .contractCard {
+//     border: 0px;
+//     border-radius: 10px;
+//     margin-top: 30px;
+
+//     .header {
+//       min-height: 90px;
+//       justify-content: center;
+//       align-items: center;
+//       border-bottom: 1px solid #d1cccc;
+//       padding: 0px 32px;
+
+//       .searchBar {
+//         height: 45px;
+//         font-size: 14px;
+//         padding: 0.5rem 20px;
+//         border-radius: 5px;
+//         border: 1px solid #ced4da;
+//         width: 300px;
+//         margin-left: 25px;
+//         display: flex;
+//         align-items: center;
+//         color: #7f7f7f;
+
+//         i {
+//           font-size: 18px;
+//         }
+
+//         input {
+//           border: 0px;
+//           padding-right: 0px;
+//           font-size: 14px;
+//         }
+//       }
+
+//       select {
+//         background: #ffffff url("/assets/imgs/downArrow2.svg") no-repeat right
+//           0.7rem center/12px 12px !important;
+//         -webkit-appearance: none;
+//         -moz-appearance: none;
+//         appearance: none;
+//         height: 45px;
+//         font-size: 14px;
+//         padding: 0.5rem 15px;
+//         width: 170px;
+//       }
+//     }
+
+//     .contractDetail {
+//       border-bottom: 1px solid #d1cccc;
+//       padding: 25px 15px;
+
+//       .userImgCont {
+//         height: 110px;
+//         width: 110px;
+//         position: relative;
+
+//         .userImg {
+//           height: 110px;
+//           width: 110px;
+//           object-fit: cover;
+//           border-radius: 50%;
+//         }
+
+//         .chatIcon {
+//           height: 30px;
+//           position: absolute;
+//           bottom: -2px;
+//           right: 7px;
+//           cursor: pointer;
+//         }
+//       }
+
+//       .darkBtn {
+//         height: 50px;
+//         width: 175px;
+//         font-size: 15px;
+//         padding: 0px;
+//         font-weight: bold;
+//         margin-right: 25px;
+//       }
+
+//       .dropdown-menu {
+//         border-radius: 10px;
+//         border: 0px;
+//         min-width: 13rem;
+//         padding-top: 15px;
+//         padding-bottom: 15px;
+
+//         .dropdown-item {
+//           color: #000000;
+//           font-size: 12px;
+//           font-weight: bold;
+//           padding: 7px 20px;
+//         }
+
+//         .dropdown-item:hover,
+//         .dropdown-item:active {
+//           background-color: white;
+//         }
+//       }
+//     }
+
+//     .contractDetail:last-child {
+//       border-bottom: 0px;
+//     }
+//   }
+// }
+
+// .jobCard {
+//   justify-content: center;
+//   padding: 30px 0px 25px 0px;
+//   border-bottom: 1px solid #d1cccc;
+//   cursor: pointer;
+//   .wishIcon {
+//     font-size: 20px;
+//     position: absolute;
+//     bottom: 5px;
+//     right: 3%;
+//     cursor: pointer;
+//   }
+
+//   .jobImg {
+//     width: 95%;
+//     object-fit: contain;
+//     max-height: 120px;
+//   }
+
+//   .jobDetailsCont {
+//     .jobTitle {
+//       overflow: hidden;
+//       text-overflow: ellipsis;
+//       display: -webkit-box;
+//       -webkit-line-clamp: 1;
+//       -webkit-box-orient: vertical;
+//       width: 100% !important;
+//     }
+
+//     .jobDescp {
+//       overflow: hidden;
+//       text-overflow: ellipsis;
+//       display: -webkit-box;
+//       -webkit-line-clamp: 2;
+//       -webkit-box-orient: vertical;
+//       width: 100% !important;
+//       font-size: 13px;
+//     }
+
+//     .iconCont {
+//       display: inline-flex;
+//     }
+//   }
+// }
+
+// .jobCard:last-child {
+//   border-bottom: 0px;
+//   padding-bottom: 35px;
+// }
+
+// /* responsiveness */
+// /* tablet 991px */
+// @media screen and (max-width: 991px) and (min-width: 576px) {
+//   .postsCard {
+//     .iconCont:nth-child(2) {
+//       margin: 0px 2vw !important;
+//     }
+//   }
+//   .tab-content {
+//     .contractCard {
+//       .header {
+//         padding: 20px 10px !important;
+//         display: block !important;
+//         .col-sm-3 {
+//           padding: 10px 0px !important;
+//         }
+//         .col-sm-9 {
+//           .d-flex {
+//             display: block !important;
+//             .form-group {
+//               margin-bottom: 1rem !important;
+//             }
+//             .searchBar {
+//               margin-left: 0px !important;
+//               margin-bottom: 1rem;
+//             }
+//           }
+//         }
+//       }
+//       .contractDetail {
+//         padding: 15px 10px;
+//         display: block !important;
+//         .col-sm-6 {
+//           padding: 10px 0px 20px 0px;
+//           flex: 0 0 100%;
+//           min-width: 100%;
+//           .txt {
+//             padding-left: 30px !important;
+//             .mb-4 {
+//               margin-bottom: 0px !important;
+//               margin-top: 5px !important;
+//             }
+//           }
+//         }
+//         .col-sm-4.align-center.pl-0 {
+//           margin-top: 20px;
+//           .darkBtn {
+//             height: 40px;
+//             width: 140px;
+//             font-size: 13px;
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+
+// /*mobile 575px */
+// @media only screen and (max-width: 575px) {
+//   .postsCard {
+//     .header {
+//       padding: 0px 15px !important;
+//     }
+//     .postDetailCont {
+//       padding: 20px 15px !important;
+//       .col-sm-12 {
+//         p {
+//           font-size: 15px !important;
+//         }
+//         .d-flex.mt-4 {
+//           display: block !important;
+//           margin-top: 1rem !important;
+//           .txt {
+//             padding-bottom: 20px;
+//             .font-15 {
+//               margin-bottom: 0px !important;
+//             }
+//           }
+//           .iconCont {
+//             width: 30% !important;
+//             .font-15 {
+//               text-align: center !important;
+//               margin-bottom: 0px !important;
+//             }
+//             .icon {
+//               display: block !important;
+//               text-align: center !important;
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+//   .tab-content {
+//     .contractCard {
+//       .header {
+//         padding: 20px 10px !important;
+//         .col-sm-3 {
+//           padding: 10px 0px !important;
+//         }
+//         .col-sm-9 {
+//           .d-flex {
+//             display: block !important;
+//             .form-group {
+//               margin-bottom: 1rem !important;
+//             }
+//             .searchBar {
+//               margin-left: 0px !important;
+//               margin-bottom: 1rem;
+//             }
+//           }
+//         }
+//       }
+//       .contractDetail {
+//         padding: 15px 10px;
+//         .col-sm-6 {
+//           padding: 0px;
+//           .userImgCont {
+//             .userImg {
+//               height: 60px;
+//               width: 60px;
+//             }
+//             .chatIcon {
+//               height: 20px;
+//               bottom: 45px;
+//               right: 30px;
+//             }
+//           }
+//           .txt {
+//             padding-left: 0px !important;
+//             .mb-4 {
+//               margin-bottom: 0px !important;
+//               margin-top: 5px !important;
+//             }
+//           }
+//         }
+//         .col-sm-4.align-center.pl-0 {
+//           margin-top: 20px;
+//           .darkBtn {
+//             height: 40px;
+//             width: 140px;
+//             font-size: 13px;
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+
+
+.mainContent {
+  .heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .toggleBtnsCont {
+      width: 200px;
+      margin: 0px 0px 0px auto;
+      height: 50px;
+      border-radius: 30px;
+      padding: 5px;
+      border: 1.25px solid rgba(0, 0, 0, 0.12);
+      display: flex;
+      align-items: center;
+      background: #e0e0e0;
+
+      .toggleBtn {
+        width: 50%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 15px;
+        border-radius: 30px;
+        cursor: pointer;
+
+        &.active {
+          background: var(--primaryColor);
+          color: white;
+        }
+      }
+    }
+  }
+
+  .subHeading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 24px 0px;
+  }
+
+  .viewAll {
+    font-size: 17px;
+    font-weight: bold;
+    margin: 0px;
+    padding-bottom: 3px;
+    color: var(--primaryColor);
+    border-bottom: 1px solid #cccdce;
+    cursor: pointer;
+  }
+
+  .jobCard {
+    border-radius: .25rem !important;
+    border: 1px solid #dee2e6 !important;
+    background: white;
+    .jobCont {
+      padding: 18px 25px;
+      border-bottom: 1px solid #dee2e6 !important;
+      
+      .summaryCont {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        p {
+          margin: 0px;
+        }
+
+        .postedByCont {
+          display: flex;
+          align-items: center;
+          width: 65%;
+        }
+
+        .iconCont {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+
+          i {
+            font-size: 22px;
+            color: var(--text1Color);
+          }
+        }
+
+        .statusCont {
+          display: flex;
+          align-items: center;
+
+          .jobStatus {
+            margin: 0px 15px;
+
+            .form-control {
+              border: 2px solid rgba(0, 0, 0, 0.12);
+              height: 45px;
+              border-radius: 30px;
+              width: 120px;
+              background: #FFFFFF url("/assets/imgs/downArrow2.svg") no-repeat right 1.2rem center/12px 12px !important;
+              -webkit-appearance: none;
+              -moz-appearance: none;
+              appearance: none;
+            }
+          }
+        }
+      }
+      .jobDesp
+      {
+        font-size: 17px;
+        margin: 16px 0px; 
+        color: var(--text1Color);
+        width: 75%;
+      }
+      .bottomBtns {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .skillsCont {
+          width: 70%;
+
+          .skill {
+            display: inline-block;
+            padding: 8px 18px;
+            font-size: 15px;
+            color: var(--primaryColor);
+            border-right: 1px solid #dee2e6;
+          }
+
+          .skill:last-child {
+            border-right: 0px;
+          }
+        }
+
+        .actBtn {
+          .darkBtn {
+            width: 100px;
+            height: 45px;
+            font-size: 16px;
+
+            &.delBtn {
+              background-color: rgb(184, 38, 38) !important;
+              border-color: rgb(184, 38, 38) !important;
+            }
+          }
+
+        }
+      }
+    }
+
+    .jobCont:last-child {
+      border-bottom: 0px !important;
+    }
+  }
+
+  .draftCont {
+    border-radius: .25rem !important;
+    border: 1px solid #dee2e6 !important;
+    padding: 38px 25px;
+    .actBtn
+    {
+      display: flex;
+      align-items: center;
+      .viewAll
+      {
+        margin-right: 20px;
+      }
+      .viewAll:last-child
+      {
+        margin-right: 0px !important;
+      }
+    }
+  }
+}

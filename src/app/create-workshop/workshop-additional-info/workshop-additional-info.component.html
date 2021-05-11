@@ -1,0 +1,326 @@
+<div class="row topNavbar fixed-top">
+    <div class="col-md-3 py-3">
+        <img routerLink="/home" src="/assets/imgs/grayLogo.png" class="pointer ml-4">
+    </div>
+    <div class="col-md-9 text-right">
+        <button (click)="navigatePage(btn.navigatePage)" *ngFor="let btn of tabButtons"
+            [class.activeBtn]="activeTab===btn.title" class="btn btn-inactive grayChoiceHover">{{btn.title}}</button>
+    </div>
+</div>
+
+<div class="parentContent bg-white">
+    <div class="row justify-content-center">
+        <div class="col-md-12 maxWidthContent">
+            <h3 class="bold text-center">Doing great so far</h3>
+            <p class="text-center">(14 items to go)</p>
+            <div class="borderdSection p-4 mt-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Duration
+                            <i *ngIf="expandDuration" (click)="expandDuration=false"
+                                class="fas fa-angle-up float-right pointer"></i>
+                            <i *ngIf="!expandDuration" (click)="expandDuration=true"
+                                class="fas fa-angle-down float-right pointer"></i>
+                        </p>
+                    </div>
+                </div>
+                <div *ngIf="expandDuration" class="row">
+                    <div class="col-md-7">
+                        <div class="leftContent">
+                            <h5 class="bold">How long will your experience be?</h5>
+                            <p class="text-secondary mb-4">
+                                Description of why we need to know level of expertise for user.
+                            </p>
+
+                            <div class="row">
+                                <div class="col-md-3 pl-0">
+                                    <label>Hour(s)</label>
+                                    <input [(ngModel)]="myWorkshopObj.experienceDuration.hourlyDuration" type="number"
+                                        min="1" class="form-control btnRounded">
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Minutes</label>
+                                    <input [(ngModel)]="myWorkshopObj.experienceDuration.minutesDuration" type="number"
+                                        min="0" class="form-control btnRounded">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 pl-5">
+                        <h5 class="bold">
+                            <img style="width: 35px;" src="/assets/imgs/light-icon.png">
+                            <span class="pl-2">TIPS</span>
+                        </h5>
+                        <p>
+                            If your Experience is open to everybody, this includes both the general public and members.
+                            Members access, on the other hand, is granted exclusively to members of a Hub.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="borderdSection p-4 mt-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Time of Day
+                            <i *ngIf="expandTiming" (click)="expandTiming=false"
+                                class="fas fa-angle-up float-right pointer"></i>
+                            <i *ngIf="!expandTiming" (click)="expandTiming=true"
+                                class="fas fa-angle-down float-right pointer"></i>
+                        </p>
+                    </div>
+                </div>
+                <div *ngIf="expandTiming" class="row">
+                    <div class="col-md-7">
+                        <div class="leftContent">
+                            <h5 class="bold">When will you be hosting your experience?</h5>
+                            <p class="text-secondary mb-4">
+                                You will be able to add or change the exact dates you'd like to host later.
+                            </p>
+
+                            <div class="row formContent">
+                                <div class="col-md-8 pl-0">
+                                    <div class="form-group">
+                                        <label>Date</label>
+                                        <input [(ngModel)]="myWorkshopObj.experienceDuration.startDate" type="date"
+                                            placeholder="Date" class="form-control">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 pl-0">
+                                            <div class="custom-control custom-checkbox mb-2 pt-2 mt-2">
+                                                <input [(ngModel)]="myWorkshopObj.experienceDuration.isRecurring"
+                                                    type="checkbox" class="custom-control-input" id="customCheckGroup1"
+                                                    name="recurringBox">
+                                                <label class="custom-control-label" for="customCheckGroup1">Set
+                                                    recurring for</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 pr-0">
+                                            <div class="form-group">
+                                                <ng-select
+                                                    [(ngModel)]="myWorkshopObj.experienceDuration.recurringPeriod"
+                                                    [items]="recurringList"></ng-select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Until</label>
+                                        <input [(ngModel)]="myWorkshopObj.experienceDuration.endDate" type="date"
+                                            placeholder="Date" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Time</label>
+                                        <input [(ngModel)]="myWorkshopObj.experienceDuration.startTime" type="time"
+                                            placeholder="Date" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 pl-5">
+                        <h5 class="bold">
+                            <img style="width: 35px;" src="/assets/imgs/light-icon.png">
+                            <span class="pl-2">EXAMPLE</span>
+                        </h5>
+                        <p>Description of when might be the best time to host an experience.</p>
+                        <p>What defines as morning, afternoon and evening on filters.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="borderdSection p-4 mt-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Price
+                            <i *ngIf="expandPrice" (click)="expandPrice=false"
+                                class="fas fa-angle-up float-right pointer"></i>
+                            <i *ngIf="!expandPrice" (click)="expandPrice=true"
+                                class="fas fa-angle-down float-right pointer"></i>
+                        </p>
+                    </div>
+                </div>
+                <div *ngIf="expandPrice" class="row">
+                    <div class="col-md-7">
+                        <div class="leftContent">
+                            <h5 class="bold">How much will you charge your learners?</h5>
+                            <p class="text-secondary mb-4">Description of something here.</p>
+
+                            <div class="row formContent">
+                                <div *ngIf="myWorkshopObj.accessibility==='everybody'" class="col-md-6 pl-0">
+                                    <h5 class="bold mt-2">Rate per learners</h5>
+                                </div>
+                                <div *ngIf="myWorkshopObj.accessibility==='everybody'" class="col-md-6 mb-3">
+                                    <div class="rateInputCont">
+                                        <p class="mb-0 font-14 bold">MYR</p>
+                                        <input [(ngModel)]="myWorkshopObj.ratePerLearner" min="1" type="number"
+                                            placeholder="0.00" class="form-control">
+                                    </div>
+                                </div>
+                                <div *ngIf="myWorkshopObj.accessibility==='members' || myWorkshopObj.accessibility==='everybody'"
+                                    class="col-md-6 pl-0">
+                                    <h5 class="bold mt-2">Rate per members</h5>
+                                </div>
+                                <div *ngIf="myWorkshopObj.accessibility==='members' || myWorkshopObj.accessibility==='everybody'"
+                                    class="col-md-6">
+                                    <div class="rateInputCont">
+                                        <p class="mb-0 font-14 bold">MYR</p>
+                                        <input [(ngModel)]="myWorkshopObj.ratePerMember" min="1" type="number"
+                                            placeholder="0.00" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 pl-5">
+                        <h5 class="bold">
+                            <img style="width: 35px;" src="/assets/imgs/light-icon.png">
+                            <span class="pl-2">EXAMPLE</span>
+                        </h5>
+                        <p>Description of when might be the best time to host an experience.</p>
+                        <p>What defines as morning, afternoon and evening on filters.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="borderdSection p-4 mt-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Set up your sessions
+                            <i *ngIf="expandSessions" (click)="expandSessions=false"
+                                class="fas fa-angle-up float-right pointer"></i>
+                            <i *ngIf="!expandSessions" (click)="expandSessions=true"
+                                class="fas fa-angle-down float-right pointer"></i>
+                        </p>
+                    </div>
+                </div>
+                <div *ngIf="expandSessions" class="row">
+                    <div class="col-md-7">
+                        <div class="leftContent">
+                            <h5 class="bold">When will you be hosting your experience?</h5>
+                            <p class="text-secondary mb-4">
+                                You will be able to add or change the exact dates you'd like to host later.
+                            </p>
+
+                            <div class="pr-4">
+                                <div *ngFor="let session of myWorkshopObj.sessions; index as i"
+                                    class="row sessionListItem pb-3 mt-4">
+                                    <div class="col-md-8">
+                                        <p class="text-secondary">Session {{i+1}}</p>
+                                        <h5 class="bold">{{session.topic}}</h5>
+                                    </div>
+                                    <div class="col-md-4 text-right pt-2">
+                                        <button (click)="updateSession(i)" data-toggle="modal"
+                                            data-target="#addEditSessionModal"
+                                            class="btn btn-dark btnRounded w-50 blackBgBtn">Update</button>
+                                        <i data-toggle="modal" data-target="#deleteSessionModal"
+                                            (click)="confirmRemove(i)" class="fa fa-trash m-4 pointer"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div (click)="newSession()" data-toggle="modal" data-target="#addEditSessionModal"
+                                style="width: fit-content" class="d-flex pointer mt-4">
+                                <img class="addIcon m-0" src="/assets/imgs/add-icon.png">
+                                <h5 class="bold mt-2 ml-3">Add Session</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 pl-5">
+                        <h5 class="bold">
+                            <img style="width: 35px;" src="/assets/imgs/light-icon.png">
+                            <span class="pl-2">EXAMPLE</span>
+                        </h5>
+                        <p>Description of when might be the best time to host an experience.</p>
+                        <p>What defines as morning, afternoon and evening on filters.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row fixed-bottom p-3 px-4 continueBackBtns">
+    <div class="col-md-4">
+        <button routerLink="/workshop-audience" class="btn grayChoiceHover btn-light btnRounded">Back</button>
+    </div>
+    <div class="col-md-4 text-center">
+        <button (click)="dataHelper.saveWorkshopAsDraft()" class="btn grayChoiceHover btnSecondary btnRounded">Save
+            Draft</button>
+    </div>
+    <div class="col-md-4 text-right">
+        <button (click)="saveAndNext()" class="btn grayChoiceHover btnSecondary btnRounded">Continue</button>
+    </div>
+</div>
+
+
+<div class="modal fade portfolioModal" id="addEditSessionModal">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <div class="form-group">
+                    <label>Topic Plan</label>
+                    <input [(ngModel)]="sessionDetails.topic" type="text" placeholder="Topic" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input [(ngModel)]="sessionDetails.date" type="date" placeholder="Date" class="form-control">
+                </div>
+                <div class="row">
+                    <div class="col-md-6 pl-0">
+                        <div class="form-group">
+                            <label>Start Time</label>
+                            <input [(ngModel)]="sessionDetails.startTime" type="time" placeholder="Start Time"
+                                class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6 pr-0">
+                        <div class="form-group">
+                            <label>End Time</label>
+                            <input [(ngModel)]="sessionDetails.endTime" type="time" placeholder="End Time"
+                                class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Topic Description (Optional)</label>
+                    <textarea [(ngModel)]="sessionDetails.description" rows="5" class="form-control"
+                        placeholder="Write description..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-6">
+                    <button id="closeSessionModalBtn" data-dismiss="modal"
+                        class="btn cancelBtn btnRounded whiteOutlinedBtn px-4">Cancel</button>
+                </div>
+                <div class="col-md-6 text-right">
+                    <button (click)="saveSession()" class="btn blackBgBtn btn-dark btnRounded px-4">Save and
+                        Exit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteSessionModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Remove Session</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                Are you sure you want to remove this session?
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button (click)="removeSession()" type="button" class="btn btn-danger"
+                    data-dismiss="modal">Remove</button>
+            </div>
+        </div>
+    </div>
+</div>

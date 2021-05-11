@@ -1,0 +1,71 @@
+<div class="bannerContent">
+    <img [src]="myAgency.coverImage">
+</div>
+
+<div class="row profileContent justify-content-center mb-5">
+    <div class="col-md-4">
+        <div class="profileCard p-4 rounded shadow">
+            <img class="userAvatar" [src]="myAgency.agencyLogo">
+            <img class="heartIcon" src="/assets/imgs/heart-icon.png">
+            <img class="chatIcon" src="/assets/imgs/chat-icon.png">
+            <div class="mt-3 pl-2">
+                <div class="row">
+                    <div class="col-md-7 px-0">
+                        <p class="bold">{{myAgency.agencyName}}</p>
+                    </div>
+                    <div class="col-md-5 px-0 rightImgs text-right">
+                        <a *ngIf="myAgency.webUrl" [href]="myAgency.webUrl" target="_blank">
+                            <img src="/assets/imgs/gray-web-icon.png">
+                        </a>
+                        <a *ngIf="myAgency.linkedinUrl" [href]="myAgency.linkedinUrl" target="_blank">
+                            <img src="/assets/imgs/linkedin.png">
+                        </a>
+                        <a *ngIf="myAgency.fbUrl" [href]="myAgency.fbUrl" target="_blank">
+                            <img src="/assets/imgs/gray-fb-icon.png">
+                        </a>
+                        <a *ngIf="myAgency.instaUrl" [href]="myAgency.instaUrl" target="_blank">
+                            <img src="/assets/imgs/insta-icon.png">
+                        </a>
+                    </div>
+                </div>
+                <p class="mb-1">{{myAgency.companyType}}</p>
+                <p>
+                    <i class="fas fa-map-marker-alt"></i> {{myAgency.location.location}}
+                    <i class="fas fa-star ml-5"></i> {{myAgency.avgRating}} ({{myAgency.totalReviews}})
+                </p>
+                <button class="btn cardBtns whiteOutlinedBtn btnRounded">Become a Member</button>
+                <button class="btn cardBtns whiteOutlinedBtn btnRounded">Post a Job</button>
+                <button class="btn cardBtns whiteOutlinedBtn btnRounded">Instant Quote</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-9 my-5">
+        <h2 class="bold">About Us</h2>
+        <div class="row contentSection bg-white p-4 mt-4 rounded">
+            <div class="col-md-8 leftSection pl-0">
+                <p>{{myAgency.agencyDescription}}</p>
+            </div>
+            <div class="col-md-4">
+                <p class="bold">Amenities</p>
+                <p class="m-0">
+                    <span *ngFor="let amenity of myAgency.amenities" class="badges">{{amenity}}</span>
+                </p>
+                <p class="bold mt-4">Facilities</p>
+                <p class="m-0">
+                    <span *ngFor="let facility of myAgency.facilities" class="badges">{{facility}}</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row fixed-bottom p-3 px-4 continueBackBtns">
+    <div class="col-md-6">
+        <button (click)="navigateBack()" class="btn grayChoiceHover btn-light btnRounded">Back</button>
+    </div>
+    <div class="col-md-6 text-right">
+        <button (click)="updateMyAgencyOnFirebase()"
+            class="btn grayChoiceHover btnSecondary btnRounded">Confirm</button>
+    </div>
+</div>

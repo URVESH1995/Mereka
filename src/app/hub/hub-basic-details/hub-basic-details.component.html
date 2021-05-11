@@ -1,0 +1,28 @@
+<ngx-loading [show]="loading"></ngx-loading>
+
+<div class="row topNavbar fixed-top">
+    <div class="col-md-3 py-3 px-0">
+        <img routerLink="/home" src="/assets/imgs/grayLogo.png" class="pointer ml-4">
+    </div>
+    <div class="col-md-9 text-right">
+        <button *ngFor="let btn of tabButtons" [class.activeBtn]="activeTab===btn"
+            class="btn btn-inactive grayChoiceHover">{{btn}}</button>
+    </div>
+</div>
+
+<div *ngIf="activeTab!=='Confirmation'" class="parentContent bg-white">
+    <div class="row justify-content-center">
+        <div class="col-md-12 maxWidthContent">
+            <app-hub-profile-setup (updatedActiveTab)="switchTab($event)" *ngIf="activeTab==='Your Hub'">
+            </app-hub-profile-setup>
+
+            <app-hub-profile-details (updatedActiveTab)="switchTab($event)" *ngIf="activeTab==='Your Details'">
+            </app-hub-profile-details>
+
+            <app-about-hub (updatedActiveTab)="switchTab($event)" *ngIf="activeTab==='About Page'"></app-about-hub>
+        </div>
+    </div>
+</div>
+
+<app-hub-profile-confirmation (updatedActiveTab)="switchTab($event)" *ngIf="activeTab==='Confirmation'">
+</app-hub-profile-confirmation>

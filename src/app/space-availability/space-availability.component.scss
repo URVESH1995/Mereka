@@ -1,0 +1,346 @@
+.SliderCont {
+  background-color: #000000;
+  min-height: 40vw;
+  padding: 4em 0em 3em 0em;
+  justify-content: center;
+
+  .topSlider {
+    margin: 0px 2%;
+
+    .carousel-indicators {
+      bottom: -40px;
+      padding-bottom: 10px;
+      margin-bottom: 0px;
+
+      li {
+        height: 9px;
+        width: 9px;
+        border-radius: 50%;
+        border: 0px;
+      }
+    }
+  }
+
+  .availCard {
+    border-radius: 12px;
+    min-height: 200px;
+    padding: 40px 0px;
+
+    .darkBtn {
+      height: 50px;
+    }
+
+    .flexTxt {
+      font-size: 15px;
+      margin: 0px;
+      padding-left: 15px;
+      align-self: center;
+    }
+  }
+
+  .rating {
+    display: inline-flex;
+    align-items: center;
+
+    i {
+      margin-right: 2.5px;
+      font-size: 14px;
+      color: #FDCD19;
+      align-self: center;
+    }
+  }
+
+  .tagBtnCont {
+    width: 27%;
+    margin-right: 2%;
+
+    .skillBtn {
+      height: 40px;
+      margin-right: 10px;
+      border-radius: 12px;
+      margin-top: 15px;
+      font-size: 12px;
+      color: #ffffff;
+      padding: 0px 10px;
+      min-width: 80px;
+      background-color: #808080;
+      border-color: #808080;
+      font-weight: bold;
+    }
+
+    .skillBtn:last-child {
+      margin-right: 0px;
+    }
+  }
+
+  .CountsCont {
+    width: 67%;
+    display: inline-flex;
+    justify-content: space-between;
+  }
+
+}
+
+.ContentCont {
+  justify-content: center;
+  margin: 5em 0em;
+
+  .userImg {
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+  }
+
+  .msgBtn {
+    height: 45px;
+    width: 65px;
+    font-size: 24px;
+    color: white;
+    background-color: #B80F0F;
+    border-color: #B80F0F;
+    border-radius: 8px;
+    padding: 0px;
+    align-self: center;
+    ;
+  }
+
+  .reviewsCont {
+    margin: 90px 0px;
+
+    .review {
+      margin-bottom: 30px;
+    }
+
+    .rating {
+      display: inline-flex;
+      align-items: center;
+
+      i {
+        margin-right: 2.5px;
+        font-size: 14px;
+        color: #2A94AF;
+        align-self: center;
+      }
+    }
+
+    .userInfo {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .similarSpaces {
+    .itemCont {
+      background-color: white;
+      border-radius: 8px;
+      color: var(--primaryColor);
+      margin-top: 15px;
+
+      .itemImg {
+        width: 100%;
+        border-radius: 8px 8px 0px 0px;
+      }
+
+      .textCont {
+        padding: 15px 15px 25px 15px;
+
+        .iconCont {
+          display: flex;
+          margin: 20px 0px;
+
+          .icons {
+            display: inline-flex;
+            align-items: center;
+
+            i {
+              color: #7f7f7f;
+              font-size: 15px;
+            }
+          }
+        }
+
+        .rating {
+          display: inline-flex;
+          align-items: center;
+          margin-left: 40px;
+
+          i {
+            margin-right: 2.5px;
+            font-size: 13px;
+            color: #FDCD19;
+            align-self: center;
+            margin-top: 3px;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+/* responsiveness */
+/* tablet 991px */
+@media screen and (max-width: 991px) and (min-width: 576px) {
+  .SliderCont{
+    .col-sm-10{
+      .row{
+        .col-sm-8{
+          flex: 0 0 100%;
+          max-width: 100% !important;
+          padding: 0px !important;
+          .row{
+            .col-sm-11{
+              .carousel{
+                margin: 0px !important;
+              }
+            }
+          }
+        }
+        .col-sm-4{
+          flex: 0 0 100%;
+          max-width: 96% !important;
+          padding-top: 50px;
+          padding-right: 0px !important;
+          padding-left: 25px;
+        }
+      }
+      .row.mt-5{
+        .col-sm-12{
+          padding-right: 0px !important;
+          .d-flex{
+            .tagBtnCont{
+              width: 13%;
+            }
+            .CountsCont{
+              width: 100%;
+              padding-top: 20px !important;
+              text-align: center;
+              .txt{
+                .font-15{
+                  font-size: 18px !important;
+                  font-weight: bold;
+                }
+              }
+              }
+          }
+          }
+        }
+      }
+    }
+
+    .ContentCont{
+      margin: 2em 0em 2em 0em;
+      .col-sm-10{
+        .row{
+          .col-sm-3{
+            flex: 0 0 50%;
+            max-width: 60%;
+           
+            }
+            .col-sm-9{
+              flex: 0 0 100%;
+              max-width: 100%;
+              .text1{
+                margin-bottom: 0px !important;
+              }
+              .btn-outline-primary{
+                margin-bottom: 10px !important;
+              }
+            }
+          }
+        .row.mt-5{
+          margin-top: 0px !important;
+        }
+        .row.pt-5{
+          padding-top: 0px !important;
+        }
+    
+        .reviewsCont{
+          margin-bottom: 50px !important;
+          .col-sm-3{
+            padding-bottom: 30px;
+          }
+        }
+        .similarSpaces{
+          .col-sm-4{
+            padding-right: 0px !important;
+            .itemCont{
+              .textCont{
+                padding: 10px 10px 15px 10px !important;
+                h5{
+                  font-size: 16px !important;
+                }
+                h4{
+                  font-size: 16px !important;
+                }
+                .iconCont{
+                  display: block;
+                .rating{
+                  margin-left: 0px;
+                }
+              }
+            }
+          }
+          }
+      }
+    }
+    }
+}
+
+/*mobile 575px */
+@media only screen and (max-width: 575px) {
+  .SliderCont{
+    padding: 1em 0em 1em 0em !important;
+    .col-sm-10{
+      .row{
+        .col-sm-8{
+          padding-right: 15px !important;
+          padding-bottom: 15px;
+        }
+        .col-sm-4{
+          padding-right: 15px !important;
+          padding-top: 40px;
+        }
+      }
+      .row.mt-5{
+        .col-sm-12{
+          h2{
+            font-size: 25px !important;
+          }
+          .tagBtnCont{
+            margin-right: 0px !important;
+            width: 23% !important;
+            .skillBtn{
+              height: 25px;
+              margin: 0px 0px 10px 0px !important;
+              min-width: 65px !important;
+            }
+          }
+          .CountsCont{
+            text-align: center;
+            padding-top: 6px;
+            .txt{
+              width: 100px;
+              .font-15{
+                font-size: 12px !important;
+                font-weight: bold;
+                padding: 0px 3px;
+              }
+              .font-14{
+                font-size: 12px !important;
+              }
+            }
+          }
+        }
+      }
+    }
+}
+.ContentCont{
+  margin: 2em 0em;;
+  .reviewsCont{
+    .col-sm-3{
+      padding-bottom: 50px;
+    }
+  }
+}
+}

@@ -1,0 +1,21 @@
+.modal-header {
+  border: none;
+}
+
+.modal-body {
+  hr {
+    margin-top: 10px;
+  }
+
+  .btn-outline-light {
+    border-radius: 30px;
+    height: 50px;
+    border-color: #b6b8ba;
+
+    img {
+      width: 25px;
+      height: 25px;
+      object-fit: contain;
+    }
+  }
+}

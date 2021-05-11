@@ -1,0 +1,166 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<app-navbar></app-navbar>
+
+<div class="mainContent">
+    <div class="row pt-5 justify-content-center">
+        <div class="col-md-11">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="d-flex">
+                        <img (click)="backPage()" class="backIcon pointer" src="/assets/imgs/back.png">
+                        <div class="pl-3">
+                            <h2>Your Confirmation</h2>
+                            <p class="text-secondary font-13">Check that your experience is correct and make payment to
+                                book your place</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8 borderRight mt-4">
+                    <div class="bg-white p-4 rounded border row">
+                        <div class="col-md-12 px-0">
+                            <h2 class="bold">
+                                {{workshopDetails.experienceTitle}}: {{workshopDetails.theme}}
+                            </h2>
+                            <p class="font-13">
+                                <span *ngIf="workshopDetails.experienceType==='online'">
+                                    <i class="fas fa-desktop"></i> Online
+                                </span>
+                                <span *ngIf="workshopDetails.experienceType==='physical'">
+                                    <i class="fas fa-running"></i> Class
+                                </span>
+                                <span class="pl-3">
+                                    <i class="fas fa-map-marker-alt"></i> {{workshopDetails.location.city}},
+                                    {{workshopDetails.location.country}}
+                                </span>
+                                <span class="pl-3">
+                                    <i class="fas fa-star"></i> {{workshopDetails.avgRating || 'No rating'}}
+                                </span>
+                            </p>
+                        </div>
+                        <div class="col-md-8 pl-0 mt-4">
+                            <h5 class="bold">Date and Time</h5>
+                            <p class="font-14 mb-2">{{bookWorkshopPayload.session?.date}}</p>
+                            <p class="font-14 mb-2">
+                                {{bookWorkshopPayload.session?.startTime}} -
+                                {{bookWorkshopPayload.session?.endTime}} (MYT)
+                            </p>
+                        </div>
+                        <div class="col-md-4 pr-0 text-right">
+                            <button (click)="backPage()" class="btn btnRounded border mt-4">Change dates</button>
+                        </div>
+                        <div class="col-md-12 px-0">
+                            <hr class="my-4" />
+                        </div>
+
+                        <div class="col-md-8 pl-0 mt-4">
+                            <h5 class="bold">Learners</h5>
+                            <p class="font-14 mb-2">{{bookWorkshopPayload.learners}} Learners</p>
+                        </div>
+                        <div class="col-md-4 pr-0 text-right">
+                            <button data-target="#addEditLearners" data-toggle="modal"
+                                class="btn btnRounded border mt-3">Edit + Add details</button>
+                        </div>
+                        <div class="col-md-12 px-0">
+                            <hr class="my-4" />
+
+                            <app-payment-card [deductionAmount]="getPaymentAmount()"
+                                (onValidateCard)="confirmPayment($event)">
+                            </app-payment-card>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mt-4">
+                    <div class="rightDiv rounded p-4">
+                        <h5 class="bold mb-2">Price Details
+                            <small class="text-secondary float-right">
+                                <img style="width: 25px;" src="/assets/imgs/info.png"> Cancellation Policy
+                            </small>
+                        </h5>
+                        <p *ngIf="iAmMemberOfHostAgency()" class="bold mb-0">RM
+                            {{workshopDetails.ratePerMember ? workshopDetails.ratePerMember : workshopDetails.ratePerLearner}}/person
+                        </p>
+                        <p *ngIf="!iAmMemberOfHostAgency()" class="bold mb-0">RM
+                            {{workshopDetails.ratePerLearner}}/person</p>
+                        <hr class="my-4" />
+                        <p class="text-secondary font-14">
+                            <span *ngIf="iAmMemberOfHostAgency()" class="w-100">
+                                RM
+                                {{workshopDetails.ratePerMember ? workshopDetails.ratePerMember : workshopDetails.ratePerLearner}}
+                                x {{bookWorkshopPayload.learners}} Learners
+                                <span class="bold float-right">RM {{bookWorkshopPayload.price}}</span>
+                            </span>
+                            <span *ngIf="!iAmMemberOfHostAgency()" class="w-100">
+                                RM
+                                {{workshopDetails.ratePerLearner ? workshopDetails.ratePerLearner : workshopDetails.ratePerMember}}
+                                x {{bookWorkshopPayload.learners}} Learners
+                                <span class="bold float-right">RM {{bookWorkshopPayload.price}}</span>
+                            </span>
+                        </p>
+                        <h3>
+                            <small>Total Amount</small>
+                            <span class="float-right bold">RM {{bookWorkshopPayload.price}}</span>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="addEditLearners">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <div class="row">
+                    <div class="col-md-12 pt-4">
+                        <span class="learnerInput">{{bookWorkshopPayload.learners}}</span>
+                        <span class="pl-3">Learner(s)</span>
+                        <div class="custom-slider rangebbarContainer my-4">
+                            <ngx-slider (valueChange)="updateSelectedLearners($event)"
+                                [(value)]="bookWorkshopPayload.learners" [options]="rangeBarOptions"></ngx-slider>
+                        </div>
+
+                        <p class="font-14">Booked by:</p>
+                        <p class="bold mb-1">{{userAuth.currentUser.fullName}}</p>
+                        <p class="bold">({{userAuth.currentUser.email}})</p>
+                    </div>
+                </div>
+
+                <div class="row class">
+                    <div class="col-md-12">
+                        <h5 class="bold">Add learner details</h5>
+                    </div>
+                </div>
+
+                <div *ngFor="let detail of bookWorkshopPayload.learnersDetails; index as i" class="row mt-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input [(ngModel)]="bookWorkshopPayload.learnersDetails[i].name" type="text"
+                                class="form-control" placeholder="Name">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input [(ngModel)]="bookWorkshopPayload.learnersDetails[i].email" type="email"
+                                class="form-control" placeholder="Email">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-6">
+                    <button id="closeLearnersModalButton" data-dismiss="modal"
+                        class="btn cancelBtn btnRounded px-4">Cancel</button>
+                </div>
+                <div class="col-md-6 text-right">
+                    <button data-dismiss="modal" class="btn btn-dark btnRounded px-4">Save
+                        and Exit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

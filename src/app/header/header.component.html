@@ -1,0 +1,282 @@
+<ngx-loading [show]="loading"></ngx-loading>
+
+<nav class="navbar navbar-expand-lg shadow-sm sticky-top navbar-dark">
+  <a class="navbar-brand" routerLink="/home"><img src="/assets/imgs/logo.PNG" height="40px"></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar2">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="collapsibleNavbar2">
+    <div class="leftNav">
+      <p (click)="toggleDisplayFilters()" class="my-0 pointer">Experiences</p>
+      <p routerLink="/spaces" class="my-0 pointer">Space</p>
+      <p class="my-0 pointer">Labs</p>
+      <p routerLink="/hire-expert" class="my-0 pointer">Hire an Expert</p>
+    </div>
+    <ul class="navbar-nav ml-auto">
+      <li *ngIf="userAuth.currentUser.uid" routerLink="/chats" class="nav-item align-center pointer px-3">
+        <img style="width: 30px; filter: invert(1)" src="/assets/imgs/chat.png">
+      </li>
+      <li *ngIf="userAuth.currentUser.uid" routerLink="/notifications"
+        class="nav-item align-center pointer notifyCont px-3 pr-4" style="position: relative;">
+        <img style="width: 30px; filter: invert(1)" src="/assets/imgs/bellIcon.png">
+        <img *ngIf="dataHelper.allNotifications.length" src="/assets/imgs/Oval.svg" class="activeIcon">
+      </li>
+      <div class="mr-3 align-center" *ngIf="userAuth.currentUser.expertProfile">
+        <button class="btn btn-primary" routerLink="/find-jobs"> Browse Jobs</button>
+        <!-- <i class="fas fa-search pointer"></i>
+        <input [(ngModel)]="jobSearchQuery" (keyup.enter)="searchJobs()" placeholder="Find Jobs" class="form-control"
+          style="border: none;"> -->
+      </div>
+      <li *ngIf="userAuth.currentUser.uid" class="nav-item align-center pointer" href="#" id="userDropdown2"
+        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <img src="/assets/imgs/add_Icon.svg">
+      </li>
+      <div class="dropdown-menu addDropDown dropdown-menu-right shadow" aria-labelledby="userDropdown2">
+        <a (click)="postNewJob()" class="dropdown-item pointer">
+          <img src="/assets/imgs/addUser.svg" height="18px">
+          <p class="my-0 font-14 pl-3">Post A Job</p>
+        </a>
+        <a (click)="becomeExpert()" *ngIf="!userAuth.currentUser.isExpert" class="dropdown-item pointer">
+          <img src="/assets/imgs/addUser.svg" height="18px">
+          <p class="my-0 font-14 pl-3">Become An Expert</p>
+        </a>
+        <a *ngIf="userAuth.currentUser.isExpert" class="dropdown-item pointer">
+          <img src="/assets/imgs/addUser.svg" height="18px">
+          <p class="my-0 font-14 pl-3">Invite Team Member</p>
+        </a>
+        <a *ngIf="dataHelper.myAgency" class="dropdown-item pointer">
+          <img src="/assets/imgs/addUser.svg" height="18px">
+          <p class="my-0 font-14 danger pl-3">Join A Team</p>
+        </a>
+        <a *ngIf="dataHelper.myAgency" (click)="addNewWorkshop()" class="dropdown-item pointer">
+          <img src="/assets/imgs/workIcon.svg" height="18px">
+          <p class="my-0 font-14 pl-3">Add New Workshop</p>
+        </a>
+        <a *ngIf="dataHelper.myAgency" class="dropdown-item pointer">
+          <img src="/assets/imgs/workIcon.svg" height="18px">
+          <p class="my-0 font-14 pl-3">Add New Machine</p>
+        </a>
+        <a *ngIf="dataHelper.myAgency" class="dropdown-item pointer">
+          <img src="/assets/imgs/workIcon.svg" height="18px">
+          <p class="my-0 font-14 pl-3">Add New Space</p>
+        </a>
+      </div>
+
+      <span *ngIf="!userAuth.currentUser.uid" class="text-white pt-2 mt-1 pointer" data-toggle="modal"
+        data-target="#myModal"> Sign Up / Log In
+      </span>
+
+      <li *ngIf="userAuth.currentUser.uid" class="nav-item">
+        <div class="userInfo" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          <img [src]="userAuth.currentUser.profileUrl || '/assets/imgs/userIcon.PNG'" class="userImg">
+        </div>
+        <div class="dropdown-menu dropdown-menu-right shadow user-dropdown" aria-labelledby="userDropdown">
+          <a routerLink="/profile" class="dropdown-item pointer">
+            My Profile
+          </a>
+          <a class="dropdown-item pointer" routerLink="/my-orders">
+            My Jobs
+          </a>
+          <a *ngIf="dataHelper.myAgency || userAuth.currentUser.expertProfile" class="dropdown-item pointer"
+            routerLink="/my-workshops">
+            My Workshops
+          </a>
+          <a routerLink="/favourites" class="dropdown-item pointer">Favourites</a>
+          <a (click)="userAuth.logoutUser()" class="dropdown-item pointer">
+            Logout
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<p data-target="#LoginModal" data-toggle="modal"
+  style="position: absolute; bottom: 0; right: 0; margin: 0;visibility: hidden;" id="openLoginModalId">
+  Hidden Button</p>
+
+
+<!-- Signup Modal -->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog myModal modal-dialog-centered">
+    <div class="modal-content">
+      <button data-dismiss="modal" style="visibility: hidden; position: absolute;" id="closeSignupModal"></button>
+      <div class="modal-body p-0">
+        <div class="row">
+          <div class="col-sm-6 pl-0">
+            <img src="/assets/imgs/Bitma.png" class="modalImg">
+          </div>
+          <div class="col-sm-6" style="padding-right: 30px;">
+            <form [formGroup]="onRegisterForm" (ngSubmit)="createAccount(onRegisterForm.value)">
+              <div class="text-center mt-5">
+                <img src="/assets/imgs/logo2.PNG" height="45px">
+                <h5 class="my-4 pb-2">Learn from the best professionals and be a part of the largest online community
+                  for creative people</h5>
+              </div>
+              <!-- <div class="form-group">
+                <input [(ngModel)]="referralCode" [ngModelOptions]="{standalone: true}" type="text"
+                  class="form-control dashBorder" placeholder="Add Referral Code (Optional)">
+              </div> -->
+
+              <div class="form-group">
+                <input formControlName="fullName" type="text" class="form-control" placeholder="Your Name">
+                <p class="errorMsg" *ngIf="onRegisterForm.get('fullName').hasError('required') && 
+                (onRegisterForm.get('fullName').dirty || onRegisterForm.get('fullName').touched)">
+                  *This field is required
+                </p>
+              </div>
+
+              <div class="form-group">
+                <input formControlName="email" type="email" class="form-control" placeholder="Your Email">
+                <p class="errorMsg" *ngIf="onRegisterForm.get('email').hasError('required') && 
+                (onRegisterForm.get('email').dirty || onRegisterForm.get('email').touched)">
+                  *This field is required
+                </p>
+                <p class="errorMsg" *ngIf="onRegisterForm.get('email').hasError('pattern') && 
+                (onRegisterForm.get('email').dirty || onRegisterForm.get('email').touched)">
+                  *Invalid email pattern
+                </p>
+              </div>
+
+              <div class="form-group">
+                <input formControlName="password" type="password" class="form-control" placeholder="Your Password">
+                <p class="errorMsg" *ngIf="onRegisterForm.get('password').hasError('required') && 
+                (onRegisterForm.get('password').dirty || onRegisterForm.get('password').touched)">
+                  *This field is required
+                </p>
+              </div>
+
+              <h5 class="mb-4">What is your Date of Birth?</h5>
+              <div class="row">
+                <div class="col-sm-4 px-0">
+                  <div class="form-group">
+                    <ng-select [items]="months" placeholder="Month" formControlName="birthMonth"></ng-select>
+                    <p class="errorMsg" *ngIf="onRegisterForm.get('birthMonth').hasError('required') && 
+                    (onRegisterForm.get('birthMonth').dirty || onRegisterForm.get('birthMonth').touched)">
+                      *This field is required
+                    </p>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <ng-select [items]="dates" placeholder="Day" formControlName="birthDate"></ng-select>
+                    <p class="errorMsg" *ngIf="onRegisterForm.get('birthDate').hasError('required') && 
+                    (onRegisterForm.get('birthDate').dirty || onRegisterForm.get('birthDate').touched)">
+                      *This field is required
+                    </p>
+                  </div>
+                </div>
+                <div class="col-sm-4 px-0">
+                  <div class="form-group">
+                    <ng-select [items]="years" placeholder="Year" formControlName="birthYear"></ng-select>
+                    <p class="errorMsg" *ngIf="onRegisterForm.get('birthYear').hasError('required') && 
+                    (onRegisterForm.get('birthYear').dirty || onRegisterForm.get('birthYear').touched)">
+                      *This field is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <button [disabled]="!onRegisterForm.valid" type="submit" class="btn loginBtn btn-block">Sign Up</button>
+            </form>
+            <button class="btn loginBtn googleBtn btn-block">Sign Up With Google +</button>
+            <p class="my-3">
+              By clicking “Create an account” I am confirming I am 16 or older and i accept the <u class="pointer">Terms
+                of Use,</u> the <u class="pointer">Privacy
+                Policy,</u> the <u class="pointer">Cookies Policy,</u> and agree to receive news and promotions.
+            </p>
+            <h5 class="mt-4 pb-4 text-center pointer" data-dismiss="modal" data-toggle="modal"
+              data-target="#LoginModal">Already registered? <b>Login</b></h5>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Login Modal -->
+<div class="modal fade" id="LoginModal">
+  <div class="modal-dialog myModal modal-dialog-centered">
+    <div class="modal-content">
+      <button data-dismiss="modal" style="visibility: hidden; position: absolute;" id="closeLoginModal"></button>
+      <div class="modal-body p-0">
+        <div class="row">
+          <div class="col-sm-6 pl-0">
+            <img style="height: 800px !important;" src="/assets/imgs/Bitma.png" class="modalImg">
+          </div>
+          <div class="col-sm-6" style="padding-right: 30px;">
+            <form [formGroup]="onLoginForm" (ngSubmit)="loginAccount(onLoginForm.value)">
+              <div class="text-center mt-5 pb-5">
+                <img src="/assets/imgs/logo2.PNG" height="45px">
+                <h5 class="my-4 pb-2">Learn from the best professionals and be a part of the largest online community
+                  for
+                  creative people</h5>
+              </div>
+              <div class="form-group">
+                <input formControlName="email" type="email" class="form-control" placeholder="Your Email">
+                <p class="errorMsg" *ngIf="onLoginForm.get('email').hasError('required') && 
+                  (onLoginForm.get('email').dirty || onLoginForm.get('email').touched)">
+                  *Email is required
+                </p>
+              </div>
+              <div class="form-group">
+                <input formControlName="password" type="password" class="form-control" placeholder="Your Password">
+                <p class="errorMsg" *ngIf="onLoginForm.get('password').hasError('required') && 
+                  (onLoginForm.get('password').dirty || onLoginForm.get('password').touched)">
+                  *Password is required
+                </p>
+              </div>
+              <button [disabled]="!onLoginForm.valid" type="submit" class="btn loginBtn btn-block mt-5">Login</button>
+            </form>
+            <button class="btn loginBtn googleBtn mt-3 btn-block">Login With Google +</button>
+            <p class="my-4 pt-2">
+              By clicking “Create an ccount” I am confirming I am 16 or older and i accept the <u class="pointer">Terms
+                of Use,</u> the <u class="pointer">Privacy
+                Policy,</u> the <u class="pointer">Cookies Policy,</u> and agree to receive news and promotions.
+            </p>
+            <h5 data-dismiss="modal" data-toggle="modal" data-target="#passwordResetModal"
+              class="mt-4 pb-4 bold text-center pointer">Forgot Password?</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Password reset Modal -->
+<div class="modal fade" id="passwordResetModal">
+  <div class="modal-dialog myModal modal-dialog-centered">
+    <div class="modal-content">
+      <button data-dismiss="modal" style="visibility: hidden; position: absolute;"
+        id="closeResetPasswordModal"></button>
+      <div class="modal-body p-0">
+        <div class="row">
+          <div class="col-sm-6 pl-0">
+            <img style="height: 480px !important;" src="/assets/imgs/Bitma.png" class="modalImg">
+          </div>
+          <div class="col-sm-6" style="padding-right: 30px;">
+            <div class="text-center mt-5 pb-5">
+              <img src="/assets/imgs/logo2.PNG" height="45px">
+              <h5 class="my-4 pb-2">
+                Enter your registered email address, you'll receive a password reset link.
+              </h5>
+            </div>
+            <div class="form-group">
+              <input [(ngModel)]="email" type="email" class="form-control" placeholder="Your Email">
+            </div>
+            <button [disabled]="!email" (click)="resetPassword()" type="submit"
+              class="btn loginBtn btn-block mt-4">Reset Password</button>
+            <p class="text-center mt-3 bold">
+              <span class="pointer" data-dismiss="modal">Cancel</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

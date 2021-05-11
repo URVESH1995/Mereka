@@ -1,0 +1,306 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<app-navbar></app-navbar>
+
+<div class="mainContent px-0">
+    <div class="row justify-content-center my-5">
+        <div class="col-md-12 maxWidthContent">
+            <h5 class="bold">My Workshops</h5>
+            <div class="border pt-4 mt-4 rounded bg-white">
+                <div class="row px-4">
+                    <div class="col-md-6">
+                        <div *ngIf="activeTab==='upcoming'" class="profileToggleBtn d-flex p-2">
+                            <button class="btn btn-dark btn-sm blackBgBtn">Upcoming</button>
+                            <p class="soloText pointer" (click)="filterMyBookings('past')">Past</p>
+                        </div>
+                        <div *ngIf="activeTab==='past'" class="profileToggleBtn d-flex p-2">
+                            <p class="soloText pointer" (click)="filterMyBookings('upcoming')">Upcoming</p>
+                            <button class="btn btn-dark btn-sm blackBgBtn">Past</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <button class="btn btnRounded border px-4 ml-4 selectedEntity">Experiences</button>
+                        <button class="whiteOutlinedBtn btn btnRounded border px-4 ml-4">Spaces</button>
+                        <button class="whiteOutlinedBtn btn btnRounded border px-4 ml-4">Machines</button>
+                    </div>
+                </div>
+                <hr class="mt-4 mb-0" />
+
+                <div *ngFor="let workshop of myWorkshops" class="row py-4" style="border-bottom: 1px solid #dcdcdc">
+                    <div class="col-md-6 pl-5 pointer" (click)="workshopDetails(workshop)">
+                        <button *ngFor="let tag of workshop.tags"
+                            class="btn border btn-sm rounded bold mr-2 whiteOutlinedBtn">{{tag | uppercase}}
+                        </button>
+                        <h5 class="bold mt-3">
+                            {{workshop.experienceTitle}}: {{workshop.theme}}
+                        </h5>
+                        <p class="mb-0">
+                            <span *ngIf="workshop.experienceType==='online'">
+                                <i class="fas fa-desktop"></i> Online
+                            </span>
+                            <span *ngIf="workshop.experienceType==='physical'">
+                                <i class="fas fa-map-marker-alt"></i>
+                                {{workshop.location.city}}, {{workshop.location.country}}
+                            </span>
+                            <span class="pl-3">
+                                - {{workshop.sessions.length}} Session(s)
+                            </span>
+                        </p>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="bold">PRICE</p>
+                        <p *ngIf="workshop.ratePerMember" class="mb-0">RM {{workshop.ratePerMember}}/member</p>
+                        <p *ngIf="workshop.ratePerLearner" class="mb-0">RM {{workshop.ratePerLearner}}/lerner</p>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="bold">DATE AND TIME</p>
+                        <p class="mb-0">{{workshop.experienceDuration.startDate}} -
+                            {{workshop.experienceDuration.endDate}}
+                        </p>
+                        <p class="mb-0">{{workshop.experienceDuration.startTime}} (MYT) -
+                            <span *ngIf="workshop.experienceDuration.hourlyDuration">
+                                {{workshop.experienceDuration.hourlyDuration}}h </span>
+                            <span *ngIf="workshop.experienceDuration.minutesDuration">
+                                {{workshop.experienceDuration.minutesDuration}}mins</span>
+                        </p>
+                    </div>
+                    <div class="col-md-1 px-0">
+                        <p class="bold text-center">BOOKINGS</p>
+                        <p class="mb-0 text-center">{{workshop.bookedBy?.length || 0}}</p>
+                    </div>
+                    <div class="col-md-1 px-0 text-center">
+                        <p class="bold">ACTIONS</p>
+                        <button (click)="editWorkshop(workshop)" class="btn btn-link w-75">Update</button>
+                        <button data-toggle="modal" data-target="#deleteWorkshopModal"
+                            (click)="removeWorkshop(workshop)" class="btn btn-link w-75 text-danger">Delete</button>
+                    </div>
+                </div>
+
+                <p *ngIf="!myWorkshops.length" class="text-center text-secondary my-5">No workshops found!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-footer></app-footer>
+
+
+<div class="modal fade" id="deleteWorkshopModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Remove Workshop</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                Are you sure you want to remove this workshop?
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button (click)="removeWorkshopFromFirebase()" type="button" class="btn btn-danger"
+                    data-dismiss="modal">Remove</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 
+
+<app-navbar></app-navbar>
+
+<div class="pagesLog">
+    <img src="/assets/imgs/M-Logo.PNG" height="25px">
+    <i class="fas fa-chevron-right lightGray px-3"></i>
+    <p class="bold my-0">Browse workshops</p>
+</div>
+
+<div class="row mainCont">
+    <div class="col-sm-10">
+
+        <div class="row">
+            <div class="col-sm-12 pl-0">
+                <ul class="nav nav-tabs" id="myTab2" role="tablist">
+                    <li *ngIf="dataHelper.myAgency" class="nav-item">
+                        <a class="nav-link active" id="imHiring-tab" data-toggle="tab" href="#imHiring" role="tab"
+                            aria-controls="imHiring" aria-selected="true">My Workshops</a>
+                    </li>
+                    <li class="nav-item">
+                        <a [class.active]="!dataHelper.myAgency" class="nav-link" id="bookedTab-tab" data-toggle="tab"
+                            href="#bookedTab" role="tab" aria-controls="bookedTab" aria-selected="false">
+                            Booked Workshops</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active pt-3" *ngIf="dataHelper.myAgency" id="imHiring" role="tabpanel"
+                aria-labelledby="imHiring-tab">
+                <div class="d-flex">
+                    <h3 class="bold mb-0 align-center mr-3">My Workshops</h3>
+                    <button (click)="addNewWorkshop()" class="btn darkBtn addBtn"><i class="fas fa-plus"></i></button>
+                </div>
+                <div class="card postsCard">
+                    <div *ngIf="!myWorkshops.length" class="text-center py-5">
+                        <p>No workshops added yet!</p>
+                        <button (click)="addNewWorkshop()" class="btn btn-dark">Add A Workshop</button>
+                    </div>
+
+                    <div *ngFor="let workshop of myWorkshops; let i=index" class="postDetailCont">
+                        <img (click)="editWorkshop(workshop)" src="/assets/imgs/edit.svg" class="editPost pointer">
+                        <div class="row justify-content-between">
+                            <div class="col-sm-12 px-0">
+                                <p class="font-17 mb-0 bold">{{workshop.title}}
+                                    <span (click)="workshopDetails(workshop)" class="blueTxt pointer pl-3">Review</span>
+
+                                    <span (click)="viewWorkshopUser=i" class="blueTxt pointer pl-3"
+                                        *ngIf="workshop.bookedBy && workshop.bookedBy.length && viewWorkshopUser!=i ">View
+                                        Users ({{workshop.bookedBy.length}})</span>
+                                    <span (click)="viewWorkshopUser='-1'" class="blueTxt pointer pl-3"
+                                        *ngIf="workshop.bookedBy && workshop.bookedBy.length && viewWorkshopUser==i">Hide
+                                        Users ({{workshop.bookedBy.length}})</span>
+                                    <span class="blueTxt pl-3"
+                                        *ngIf="!workshop.bookedBy || !workshop.bookedBy.length">No Booking</span>
+                                </p>
+                                <div class="d-flex justify-content-between mt-4">
+                                    <div class="txt">
+                                        <p class="font-15 mb-4">{{workshop.workshopTheme}}</p>
+                                        <p class="font-15 mb-0">{{workshop.workshopAccessibility}} - Created
+                                            {{workshop.timestamp | date:'mediumDate'}}
+                                        </p>
+                                    </div>
+                                    <div class="d-flex align-center">
+                                        <div class="iconCont">
+                                            <p class="mb-4 font-15 bold">Classes</p>
+                                            <p class="font-15 mb-0">{{workshop.numberOfClasses}}</p>
+                                        </div>
+                                        <div class="iconCont">
+                                            <p class="mb-4 font-15 bold">Price</p>
+                                            <p *ngIf="workshop.workshopAccessibility !== 'Public + Private'"
+                                                class="font-15 mb-0">RM {{workshop.price}}</p>
+                                            <p *ngIf="workshop.workshopAccessibility === 'Public + Private'"
+                                                class="font-15 mb-0"><i class="fas fa-globe mr-2"></i>
+                                                RM {{workshop.publicPrice}},
+                                                <i class="fas fa-user-lock ml-3 mr-2"></i>
+                                                RM {{workshop.privatePrice}}
+                                            </p>
+                                        </div>
+                                        <div class="iconCont mr-3">
+                                            <p class="mb-4 font-15 bold">Location</p>
+                                            <div class="icon">
+                                                <p class="font-15 mb-0">{{workshop.location}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="iconCont">
+                                            <p class="mb-4 font-15 bold" style="visibility: hidden;">0</p>
+                                            <div class="icon">
+                                                <i data-toggle="modal" data-target="#deleteWorkshopModal"
+                                                    (click)="removeWorkshop(workshop)"
+                                                    class="fas fa-trash-alt pointer"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" *ngIf="viewWorkshopUser==i">
+                            <div class="col-sm-12 px-0 viewtable mt-2">
+                                <table class="table table-responsive-sm table-hover">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>User/Expert</th>
+                                            <th>Class</th>
+                                            <th>Class Date</th>
+                                            <th>Time</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr [class.d-none]="booking.workshopKey!=workshop.key"
+                                            *ngFor="let booking of dataHelper.myWorkshopBookingsList ; let j=index;">
+                                            <td>{{j+1}}. {{getUserName(booking.bookedBy) }}</td>
+                                            <td>{{booking.classTitle | titlecase}}</td>
+                                            <td>{{booking.classDate | date:'mediumDate'}}</td>
+                                            <td>{{booking.classTime}}</td>
+                                            <td><a class="pointer">View Detaills</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade show pt-3" [class.active]="!dataHelper.myAgency" id="bookedTab" role="tabpanel"
+                aria-labelledby="bookedTab-tab">
+
+                <div class="card postsCard">
+
+                    <div *ngIf="!myWorkshopBookings || !myWorkshopBookings.length" class="text-center py-5">
+                        <p>No workshops booked yet!</p>
+                        <button routerLink="/workshops" class="btn btn-dark">Book A Workshop</button>
+                    </div>
+
+                    <div *ngFor="let workshop of myWorkshopBookings ; let i=index" class="postDetailCont">
+
+                        <div class="row justify-content-between">
+                            <div class="col-sm-12 px-0">
+                                <p class="font-17 mb-0 bold">
+                                    {{getWorkshopProperty(workshop.workshopKey, 'title') || 'N/A'}}
+                                    <span (click)="bookedWorkshopDetails(workshop)" class="blueTxt pointer pl-3">
+                                        View Details</span>
+                                </p>
+                                <div class="d-flex justify-content-between mt-4">
+                                    <div class="txt">
+                                        <p class="font-15 mb-4">
+                                            {{getWorkshopProperty(workshop.workshopKey, 'workshopTheme') || 'N/A'}}
+                                        </p>
+                                        <p class="font-15 mb-0">Classes:
+                                            {{getWorkshopProperty(workshop.workshopKey, 'numberOfClasses') || 'N/A'}}
+                                        </p>
+                                    </div>
+                                    <div class="d-flex align-center">
+                                        <div class="iconCont">
+                                            <p class="mb-4 font-15 bold">Quantity</p>
+                                            <p class="font-15 mb-0">{{workshop.quantity}}</p>
+                                        </div>
+                                        <div class="iconCont">
+                                            <p class="mb-4 font-15 bold">Price</p>
+                                            <p class="font-15 mb-0">RM {{workshop.price}}</p>
+                                        </div>
+                                        <div class="iconCont mr-3">
+                                            <p class="mb-4 font-15 bold">Booked as</p>
+                                            <p class="font-15 mb-0">{{workshop.bookedAs}}</p>
+                                        </div>
+                                        <div class="iconCont mx-3">
+                                            <p class="mb-4 font-15 bold">Location</p>
+                                            <div class="icon">
+                                                <p class="font-15 mb-0">
+                                                    {{getWorkshopProperty(workshop.workshopKey, 'location') || 'N/A' }}
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<app-footer></app-footer>
+
+
+ -->

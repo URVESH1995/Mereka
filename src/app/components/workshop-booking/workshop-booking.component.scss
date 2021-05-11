@@ -1,0 +1,24 @@
+.portfolioModal {
+  .form-group {
+    input {
+      height: 50px;
+    }
+  }
+
+  label {
+    font-size: 14px;
+    margin: 8px 0;
+  }
+
+  .modal-footer {
+    background: #f1f1f1;
+
+    .btn {
+      height: 50px;
+    }
+    .cancelBtn {
+      background: #ffffff;
+      border: 1px solid #d1d1d1;
+    }
+  }
+}

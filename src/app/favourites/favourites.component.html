@@ -1,0 +1,134 @@
+<app-navbar></app-navbar>
+
+<div class="mainContent px-0">
+  <div class="row justify-content-center my-5">
+    <div class="col-md-12 maxWidthContent">
+      <h2 class="bold px-3">View your Favorites</h2>
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item grayChoiceHover btnRounded">
+          <a class="nav-link active" id="imhiring-tab" data-toggle="tab" href="#imhiring" role="tab"
+            aria-controls="home" aria-selected="true">Experiences</a>
+        </li>
+        <li class="nav-item grayChoiceHover btnRounded">
+          <a class="nav-link" id="hireme-tab" data-toggle="tab" href="#hireme" role="tab" aria-controls="profile"
+            aria-selected="false">Spaces</a>
+        </li>
+        <li class="nav-item grayChoiceHover btnRounded">
+          <a class="nav-link" id="invite-tab" data-toggle="tab" href="#invitations" role="tab" aria-controls="profile"
+            aria-selected="false">Machines</a>
+        </li>
+        <li class="nav-item grayChoiceHover btnRounded">
+          <a class="nav-link" id="hubs-tab" data-toggle="tab" href="#hubs" role="tab" aria-controls="profile"
+            aria-selected="false">Hubs
+          </a>
+        </li>
+        <li class="nav-item grayChoiceHover btnRounded">
+          <a class="nav-link" id="experts-tab" data-toggle="tab" href="#experts" role="tab" aria-controls="profile"
+            aria-selected="false">Experts
+          </a>
+        </li>
+      </ul>
+
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="imhiring" role="tabpanel" aria-labelledby="imhiring-tab">
+          <div class="row">
+            <div *ngIf="!favWorkshops.length" class="col-md-12">
+              <p class="text-center text-secondary my-5">No favorite experiences found!</p>
+            </div>
+
+            <div *ngFor="let workshop of favWorkshops; index as i" class="col-md-4 mb-3">
+              <div class="horizontalItem cardView pointer">
+                <div class="workshopCard">
+                  <!-- <button class="btn text-white btn-sm leftCornerBtn">BEST SELLER</button> -->
+                  <button (click)="favUnfavWorkshop(workshop, i)" class="btn text-white btn-dark btn-sm rightCornerBtn">
+                    <i class="fa-heart" [class.far]="!isMyFavWorkshop(workshop)"
+                      [class.fas]="isMyFavWorkshop(workshop)"></i>
+                  </button>
+
+                  <div id="{{workshop.workshopKey}}" class="carousel slide" data-ride="carousel">
+                    <div (click)="workshopDetails(workshop)" class="carousel-inner">
+                      <div class="carousel-item active">
+                        <img [src]="workshop.coverImage">
+                      </div>
+                      <div *ngFor="let img of workshop.additionalPhotos; index as i" class="carousel-item">
+                        <img [src]="img">
+                      </div>
+                    </div>
+                    <a class="carousel-control-prev" [attr.data-target]="'#' + workshop.workshopKey" data-slide="prev">
+                      <span class="carousel-control-prev-icon"></span>
+                    </a>
+                    <a class="carousel-control-next" [attr.data-target]="'#' + workshop.workshopKey" data-slide="next">
+                      <span class="carousel-control-next-icon"></span>
+                    </a>
+                  </div>
+
+                </div>
+                <div (click)="workshopDetails(workshop)" class="py-4 px-3">
+                  <p class="font-13 text-secondary">{{workshop.location.city}}, {{workshop.location.country}}
+                    <span class="float-right">
+                      <i class="fa fa-star"></i> {{workshop.avgRating || 'No rating'}}
+                    </span>
+                  </p>
+                  <p class="bold mb-1">{{workshop.experienceTitle}}</p>
+                  <p class="text-secondary font-14 mb-2">{{workshop.mainLanguage}} | {{workshop.sessions.length}}
+                    Sessions
+                  </p>
+                  <p class="text-secondary font-14 mb-2">{{getWorkshopHost(workshop.uid) || 'N/A'}}</p>
+                  <p class="mb-0">
+                    <span *ngIf="workshop.ratePerLearner">
+                      <span class="bold">MYR {{workshop.ratePerLearner}}</span><small> / learner </small>
+                    </span>
+                    <span *ngIf="workshop.ratePerMember">
+                      <span class="bold"> MYR {{workshop.ratePerMember}}</span><small> / member</small>
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="experts" role="tabpanel" aria-labelledby="experts-tab">
+          <div class="row">
+            <div *ngIf="!favExperts.length" class="col-md-12">
+              <p class="text-center text-secondary my-5">No favorite experts found!</p>
+            </div>
+
+            <div (click)="expertProfile(expert)" *ngFor="let expert of favExperts" class="col-sm-4">
+              <div class="card expertCont pointer">
+                <i class="fa fa-heart wishIcon"></i>
+                <div class="expertInfo">
+                  <img [src]="expert.profileUrl || '/assets/imgs/userIcon.PNG'" class="userImg">
+                  <div class="txt">
+                    <h5 class="bold mb-1 appTxt">{{expert.fullName}}</h5>
+                    <p class="mb-0 font-14">{{(expert.location?.city || "") + ", " + (expert.location?.country || "")}}
+                    </p>
+                  </div>
+                </div>
+                <p class="my-3">{{expert.expertProfile.expertise.title || 'N/A'}}</p>
+                <h5 class="bold mb-0">RM {{expert.expertProfile.hourlyRate?.hourlyRate || 'N/A'}} /
+                  <small>Hour</small>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="hubs" role="tabpanel" aria-labelledby="hubs-tab">
+          <div class="row">
+            <div *ngIf="!favHubs.length" class="col-md-12">
+              <p class="text-center text-secondary my-5">No favorite hubs found!</p>
+            </div>
+
+            <div (click)="agencyProfile(agency)" *ngFor="let agency of favHubs" class="col-sm-4 pointer mt-3">
+              <img class="slideImage border" [src]="agency.agencyLogo || 'assets/imgs/notify-img.PNG'">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

@@ -1,0 +1,53 @@
+.mainContent {
+  background: #fcfcfc;
+
+  .backIcon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .borderRight {
+    border-right: 1px solid #dcdcdc;
+  }
+  .rightDiv {
+    background: #f5f5f5;
+  }
+}
+
+.modal {
+  .learnerInput {
+    padding: 10px 30px;
+    border: 1px solid #dcdcdc;
+    border-radius: 30px;
+  }
+
+  .modal-body {
+    max-height: 95vh;
+    overflow-y: scroll;
+  }
+
+  .form-group {
+    input {
+      height: 50px;
+    }
+  }
+
+  label {
+    font-size: 14px;
+    margin: 8px 0;
+  }
+
+  .modal-footer {
+    background: #f1f1f1;
+
+    .btn {
+      height: 50px;
+    }
+    .cancelBtn {
+      background: #ffffff;
+      border: 1px solid #d1d1d1;
+    }
+  }
+}

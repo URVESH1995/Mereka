@@ -1,0 +1,26 @@
+.modal-header {
+  border: none;
+}
+
+.modal-body {
+  button {
+    width: 40%;
+    height: 50px;
+    border-radius: 30px;
+  }
+  .form-group {
+    input {
+      height: 50px;
+    }
+  }
+  .input-group {
+    input {
+      height: 50px;
+      border-right: 0;
+    }
+    .input-group-text {
+      background: transparent;
+      border-left: 0;
+    }
+  }
+}

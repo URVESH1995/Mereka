@@ -1,0 +1,13 @@
+<svg id="Group_12" data-name="Group 12" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+  <circle id="Oval" cx="50" cy="50" r="50" fill="#f5f7f8"/>
+  <g id="noun_software_development_1864933" data-name="noun_software development_1864933" transform="translate(25 24)">
+    <g id="Group">
+      <path id="Shape" d="M0,22.343V0H28.844V8.369a3,3,0,0,0,3.006,3.006h4.875V22.343Z" transform="translate(3.9 16.331)"/>
+      <path id="Shape-2" data-name="Shape" d="M41.6,26.894a.641.641,0,0,1-.65.65H3.088a.641.641,0,0,1-.65-.65V3.331a.641.641,0,0,1,.65-.65H32.5V0H0V30.225H44.2V15.356H41.681V26.894Z" transform="translate(0.162 12.35)"/>
+      <path id="Shape-3" data-name="Shape" d="M31.606,6.988H26.569L24.375,0H7.881L5.688,6.988H.65A.628.628,0,0,0,0,7.556a.641.641,0,0,0,.65.65H31.606a.641.641,0,0,0,.65-.65A.628.628,0,0,0,31.606,6.988Z" transform="translate(6.094 43.794)"/>
+      <path id="Shape-4" data-name="Shape" d="M0,4.469V1.787A1.8,1.8,0,0,1,1.787,0H14.625a1.735,1.735,0,0,1,1.706,1.787V4.469Z" transform="translate(33.881)"/>
+      <rect id="Rectangle-path" width="16.331" height="15.275" transform="translate(33.963 5.606)"/>
+      <path id="Shape-5" data-name="Shape" d="M1.787,4.469A1.8,1.8,0,0,1,0,2.681V0H16.331V2.681a1.8,1.8,0,0,1-1.787,1.787Z" transform="translate(33.963 22.1)"/>
+    </g>
+  </g>
+</svg>

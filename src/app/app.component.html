@@ -1,0 +1,38 @@
+<ngx-loading [show]="dataHelper.displayLoading"></ngx-loading>
+<router-outlet (activate)="onActivate($event)"></router-outlet>
+
+
+<button hidden id="preSignupModalOpener" data-toggle="modal" data-target="#preSignupModal"></button>
+<div class="modal fade" id="preSignupModal">
+    <app-pre-signup></app-pre-signup>
+</div>
+
+
+<button hidden id="signupModalOpener" data-toggle="modal" data-target="#signupModal"></button>
+<div class="modal fade" id="signupModal">
+    <app-signup-modal></app-signup-modal>
+</div>
+
+
+<button hidden id="preLoginModalOpener" data-toggle="modal" data-target="#preLoginModal"></button>
+<div class="modal fade" id="preLoginModal">
+    <app-pre-login></app-pre-login>
+</div>
+
+
+<button hidden id="loginModalOpener" data-toggle="modal" data-target="#loginModal"></button>
+<div class="modal fade" id="loginModal">
+    <app-login-modal></app-login-modal>
+</div>
+
+
+<button hidden id="resetPasswordModalOpener" data-toggle="modal" data-target="#resetPassword"></button>
+<div class="modal fade" id="resetPassword">
+    <app-reset-password></app-reset-password>
+</div>
+
+
+<button hidden id="inviteExpertModalOpener" data-toggle="modal" data-target="#inviteExpertModal"></button>
+<div class="modal fade" id="inviteExpertModal">
+    <app-invite-experts></app-invite-experts>
+</div>

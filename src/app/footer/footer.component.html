@@ -1,0 +1,169 @@
+<div class="row footerSection py-5 justify-content-center">
+  <div class="col-md-12 maxWidthContent">
+    <div class="d-flex">
+      <img class="footerIcon" src="/assets/imgs/footerIcon.png">
+      <h2 class="text-white mt-4">You’ve reached ground zero</h2>
+    </div>
+    <div class="row mt-5 mb-4">
+      <div class="row col-md-8 pl-0 borderRight">
+        <div class="col-md-4 pl-0">
+          <h5 class="text-white mb-3">ABOUT</h5>
+          <p class="font-13 text-white mb-2">How it Works</p>
+          <p class="font-13 text-white mb-2">About Mereka</p>
+          <p class="font-13 text-white mb-2">Contact</p>
+        </div>
+        <div class="col-md-4">
+          <h5 class="text-white mb-3">SERVICES</h5>
+          <p routerLink="/workshops" class="pointer font-13 text-white mb-2">Find an Experience</p>
+          <p class="font-13 text-white mb-2">Book a Space</p>
+          <p class="font-13 text-white mb-2">Hire an Agency</p>
+        </div>
+        <div class="col-md-4">
+          <h5 class="text-white mb-3">VENDORS</h5>
+          <p (click)="becomeVendor()" class="font-13 pointer text-white mb-2">Become a Vendor</p>
+          <p routerLink="/add-service" class="pointer font-13 text-white mb-2">Post an Experience</p>
+          <p class="font-13 text-white mb-2">Post a Space</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="pl-5">
+          <h5 class="text-white mb-3">STAY UPDATED</h5>
+          <p class="font-13 text-white">Receive the latest news and events through our newsletter</p>
+          <div class="input-group">
+            <input type="email" class="form-control" placeholder="Your Email">
+            <div class="input-group-append">
+              <button class="btn text-white" type="button">Subscribe</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-md-8 pl-0 d-flex pt-4">
+        <p class="text-white font-13 mb-0">@ Mereka 2020</p>
+        <p (click)="appData('termsConditions')" class="text-white font-13 mb-0 pl-3 pointer">Terms of Use</p>
+        <p (click)="appData('privacyPolicy')" class="text-white font-13 mb-0 pl-3 pointer">Privacy Policy</p>
+        <p class="text-white font-13 mb-0 pl-3">Cookies Policy</p>
+      </div>
+      <div class="col-md-4 pr-0 text-right pt-2">
+        <a href="https://www.facebook.com/mereka.my/" target="_blank">
+          <button class="btn socialLinks whiteOutlinedBtn"><i class="fab fa-facebook-f"></i></button>
+        </a>
+        <a href="https://twitter.com/merekamy" target="_blank">
+          <button class="btn socialLinks whiteOutlinedBtn"><i class="fab fa-twitter"></i></button>
+        </a>
+        <a href="https://www.instagram.com/mereka.my/" target="_blank">
+          <button class="btn socialLinks whiteOutlinedBtn"><i class="fab fa-instagram"></i></button>
+        </a>
+        <a href="https://www.linkedin.com/company/merekamy/?originalSubdomain=my" target="_blank">
+          <button class="btn socialLinks whiteOutlinedBtn"><img src="/assets/imgs/linkedin.png"></button>
+        </a>
+        <a href="https://www.youtube.com/channel/UCCyMH5KIZeCMchjMKl7RWxg" target="_blank">
+          <button class="btn socialLinks whiteOutlinedBtn"><img src="/assets/imgs/utube.png"></button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <section class="footerCont">
+  <div class="row justify-content-center">
+    <div class="col-sm-10">
+      <h4 class="bold">You’ve reached ground zero</h4>
+      <div class="row">
+        <div class="col-sm-9 px-0">
+          <div class="row mt-3">
+            <div class="col-sm-3 pl-0">
+              <h5 class="bold mb-3">Workshops</h5>
+              <h6>Illustration</h6>
+              <h6>Photography and Video</h6>
+              <h6>Design</h6>
+              <h6>3D</h6>
+              <h6>Craft</h6>
+              <h6>Technology and VR</h6>
+            </div>
+            <div class="col-sm-3">
+              <h5 class="bold mb-3">Machines</h5>
+              <h6>HTC Vive</h6>
+              <h6>3D Printing</h6>
+              <h6>PCB Mailing</h6>
+              <h6>WAterjet cutting</h6>
+              <h6>Laser Engraving</h6>
+            </div>
+            <div class="col-sm-3 pl-0">
+              <h5 class="bold mb-3">Services</h5>
+              <h6>Book a Space</h6>
+              <h6>Create a Product</h6>
+              <h6>Hire an Hub</h6>
+            </div>
+            <div class="col-sm-3 pl-0">
+              <h5 class="bold mb-3">Lists</h5>
+              <h6>New workshops</h6>
+              <h6>Top Rated Experts</h6>
+              <h6>Popular Workshops</h6>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3 px-0">
+          <h5 class="bold mb-3">Coming Soon</h5>
+          <div class="row">
+            <div class="col-sm-6 pl-0 pr-1">
+              <img src="/assets/imgs/playStore.png" width="100%">
+            </div>
+            <div class="col-sm-6 pl-1 pr-0">
+              <img src="/assets/imgs/appStore.png" width="100%">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="footer2Cont">
+  <div class="row justify-content-center">
+    <div class="col-sm-10 pr-0">
+      <div class="row justify-content-between">
+        <div class="col-sm-4 px-0">
+          <h5 class="bold mb-3">Top Tags</h5>
+          <button class="btn tagBtn">#cncmachine</button>
+          <button class="btn tagBtn">#calligraphy</button>
+          <button class="btn tagBtn">#laserengraving</button>
+          <button class="btn tagBtn">#vrsoftware</button>
+          <button class="btn tagBtn">#photography</button>
+          <button class="btn tagBtn">#3dprinting</button>
+        </div>
+        <div class="col-sm-3 px-0">
+          <h5 class="bold mb-3">INFO</h5>
+          <div class="d-flex">
+            <p class="text1Color pr-3">About Mereka</p>
+            <p class="text1Color pr-3">Contact</p>
+            <p class="text1Color">About Us</p>
+          </div>
+        </div>
+        <div class="col-sm-3 px-0">
+          <h5 class="bold mb-2">Get Connected</h5>
+          <button class="btn socialLinks"><i class="fab fa-facebook-f"></i></button>
+          <button class="btn socialLinks"><i class="fab fa-twitter"></i></button>
+          <button class="btn socialLinks"><i class="fab fa-pinterest"></i></button>
+          <button class="btn socialLinks"><i class="fab fa-instagram"></i></button>
+          <button class="btn socialLinks"><i class="fab fa-vimeo-v"></i></button>
+          <button class="btn socialLinks"><img src="/assets/imgs/youtube.svg" height="18px"></button>
+          <div class="btns">
+            <button class="btn followBtn"><i class="fas fa-plus pr-2"></i>Follow Mereka</button>
+          </div>
+          <div class="btns">
+            <button class="btn likeBtn"><i class="fas fa-thumbs-up pr-2"></i>Like 1.7m</button>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex">
+        <p class="mb-0">@ Mereka 2020</p>
+        <p (click)="appData('termsConditions')" class="mb-0 pl-3 pointer">Terms of Use</p>
+        <p (click)="appData('privacyPolicy')" class="mb-0 pl-3 pointer">Privacy Policy</p>
+        <p class="mb-0 pl-3">Cookies Policy</p>
+      </div>
+    </div>
+  </div>
+</section> -->

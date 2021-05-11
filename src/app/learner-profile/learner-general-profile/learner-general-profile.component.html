@@ -1,0 +1,76 @@
+<h3 class="bold mb-3">About me</h3>
+<div class="row borderedContent bg-white p-4">
+  <div class="col-md-8 leftContent">
+    <h5 class="bold mb-2">Interested in:
+      {{learnerProfile.interestedExperts && learnerProfile.interestedExperts[0]? 
+        learnerProfile.interestedExperts[0] : 'N/A'}}
+    </h5>
+    <p>{{learnerProfile.aboutMe}}</p>
+  </div>
+  <div class="col-md-4 pl-5">
+    <h4 class="bold mb-4">Interests</h4>
+    <p class="mb-2">Experiences</p>
+    <div *ngIf="learnerProfile.purposeInExperiences" class="w-100">
+      <span *ngFor="let item of learnerProfile.purposeInExperiences" class="badges">{{item}}</span>
+    </div>
+    <p class="mb-2 mt-3">Spaces</p>
+    <div *ngIf="learnerProfile.purposeInSpaces" class="spaceIcons">
+      <span *ngFor="let item of learnerProfile.purposeInSpaces" class="badges">{{item}}</span>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="!hideBottomViews">
+  <hr class="my-5" />
+  <h3 class="bold mb-3">Achievements</h3>
+  <div class="row">
+    <div class="col-md-3 pl-0">
+      <div class="borderedContent achievementSection bg-white p-4">
+        <img class="achievementIcon" src="/assets/imgs/achievement.png">
+        <h5 class="bold">Rising UX</h5>
+        <p>Awarded by Me.reka</p>
+        <p>Awarded June 2020</p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="borderedContent achievementSection bg-white p-4">
+        <img class="achievementIcon" src="/assets/imgs/achievement.png">
+        <h5 class="bold">Rising UX</h5>
+        <p>Awarded by Me.reka</p>
+        <p>Awarded June 2020</p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="borderedContent achievementSection bg-white p-4">
+        <img class="achievementIcon" src="/assets/imgs/achievement.png">
+        <h5 class="bold">Rising UX</h5>
+        <p>Awarded by Me.reka</p>
+        <p>Awarded June 2020</p>
+      </div>
+    </div>
+    <div class="col-md-3 pr-0">
+      <div class="borderedContent achievementSection bg-white p-4">
+        <img class="achievementIcon" src="/assets/imgs/achievement.png">
+        <h5 class="bold">Rising UX</h5>
+        <p>Awarded by Me.reka</p>
+        <p>Awarded June 2020</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="my-5" />
+  <h3 class="bold mb-3">Memberships</h3>
+  <div class="row">
+    <div class="col-md-4 pl-0">
+      <div class="membershipBlock">
+        <img src="/assets/imgs/vendors1.png">
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="membershipBlock">
+        <img src="/assets/imgs/vendors2.png">
+      </div>
+    </div>
+  </div>
+</div>

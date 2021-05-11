@@ -1,0 +1,48 @@
+<div class="borderdBlock">
+  <div class="heading">
+    <h5 class="bold mb-2">Experts</h5>
+    <div class="btns">
+      <button class="btn primaryBtn blackBgBtn">CSV Import</button>
+      <button (click)="dataHelper.openSpecificModal('inviteExpertModalOpener')" class="btn primaryBtn blackBgBtn">
+        Invite Experts</button>
+      <button (click)="clearFilters()" class="btn primaryBtn blackBgBtn">Clear Filters</button>
+    </div>
+  </div>
+  <p class="font-17 text1">You have {{hubExperts.length}} experts at your hub</p>
+  <div class="membersMainCont">
+    <div class="headerRow">
+      <div class="leftFilters">
+        <ng-select [clearable]="false" (change)="getHubExperts()" [(ngModel)]="mainSkillset" [items]="mainSkills"
+          placeholder="Skill set">
+        </ng-select>
+        <ng-select [clearable]="false" bindValue="name" bindLabel="name" (change)="getHubExperts()"
+          [(ngModel)]="subSkill" [items]="subSkills" placeholder="Subskill set">
+        </ng-select>
+        <ng-select [items]="skills" placeholder="Tags"></ng-select>
+      </div>
+      <div class="rightFilter">
+        <ng-select [items]="skills" placeholder="Spaces"></ng-select>
+      </div>
+    </div>
+
+    <p *ngIf="!hubExperts.length" class="text-center my-4 text-secondary">No experts found!</p>
+
+    <div *ngFor="let expert of hubExperts" class="expertCont">
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="exp1">
+        <label class="custom-control-label" for="exp1"></label>
+      </div>
+      <div class="expertName">
+        <p class="bold appTxt mb-2">{{expert.profile.fullName || 'N/A'}}</p>
+        <p class="mb-0"><i class="fas fa-star mr-2"></i>
+          {{expert.profile.rating || 'N/A'}}
+          ({{expert.profile.reviewsCount || 0}})
+        </p>
+      </div>
+      <p class="skill">{{expert.profile.expertProfile?.expertise?.title || 'N/A'}}</p>
+      <div class="actbtnCont">
+        <button class="btn primaryBtn blackBgBtn">Offer Job</button>
+      </div>
+    </div>
+  </div>
+</div>

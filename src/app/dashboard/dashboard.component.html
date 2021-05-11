@@ -1,0 +1,140 @@
+<app-navbar></app-navbar>
+<div class="row mainCont">
+  <div class="col-sm-12 maxWidthContent">
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="card summaryCard shadow-sm">
+          <div class="d-flex justify-content-between">
+            <div class="txt">
+              <h3 class="mb-1 bold">RM{{myAgencySales || '0' | number:'1.2-2'}}</h3>
+              <p class="mb-0 font-14">Current Sales</p>
+            </div>
+            <img src="/assets/imgs/chart.svg" class="align-center" height="35px">
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="card summaryCard">
+          <div class="d-flex justify-content-between">
+            <div class="txt">
+              <h3 class="mb-1 bold" *ngIf="!dataHelper.myWorkshopBookingsList || !dataHelper.myWorkshopBookingsList.length">
+                0</h3>
+              <h3 class="mb-1 bold" *ngIf="dataHelper.myWorkshopBookingsList && dataHelper.myWorkshopBookingsList.length">
+                {{dataHelper.myWorkshopBookingsList.length || '0'}}</h3>
+              <p class="mb-0 font-14">Calendar Bookings</p>
+            </div>
+            <img src="/assets/imgs/chart.svg" class="align-center" height="35px">
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="card summaryCard">
+          <div class="d-flex justify-content-between">
+            <div class="txt">
+              <h3 class="mb-1 bold" *ngIf="!myAgencyExpertJobs || !myAgencyExpertJobs.length">0</h3>
+              <h3 class="mb-1 bold" *ngIf="myAgencyExpertJobs && myAgencyExpertJobs.length">{{myAgencyExpertJobs.length || '0'}}</h3>
+              <p class="mb-0 font-14">Jobs Overview</p>
+            </div>
+            <img src="/assets/imgs/chart.svg" class="align-center" height="35px">
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="card summaryCard">
+          <div class="d-flex justify-content-between">
+            <div class="txt">
+              <h3 class="mb-1 bold" *ngIf="!myAgencyExperts || !myAgencyExperts.length">0</h3>
+              <h3 class="mb-1 bold" *ngIf="myAgencyExperts && myAgencyExperts.length">{{myAgencyExperts.length || '0'}}</h3>
+              <p class="mb-0 font-14">Total Members</p>
+            </div>
+            <img src="/assets/imgs/chart.svg" class="align-center" height="35px">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4 pt-3">
+      <div class="col-sm-7">
+        <div class="card chartCont">
+          <div class="row justify-content-center">
+            <div class="col-sm-11 px-0">
+              <div class="d-flex mb-4 justify-content-between">
+                <p class="font-18 mb-0 bold">Sales</p>
+                <div class="d-flex text1 pointer">
+                  <p class="font-15 mb-0">Last Month</p>
+                  <i class="fas fa-chevron-down pl-2 font-13" style="padding-top: 5px;"></i>
+                </div>
+              </div>
+              <img src="/assets/imgs/ChartImg.png" width="100%">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-5 pl-4">
+        <div class="card chartCont">
+            <p class="font-18 mb-0 bold topService">Top Service</p>
+          <div class="row justify-content-center">
+            <div class="col-sm-12 px-4">
+              <img src="/assets/imgs/chart2.png" width="100%">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card dealsCont">
+          <div class="row justify-content-between tableTitle">
+            <div class="col-sm-4 px-0 align-center">
+              <h5 class="bold my-0 font-18">Project Status</h5>
+            </div>
+            <div class="col-sm-4 pl-5 pr-0">
+              <div class="searchBar">
+                <i class="fas fa-search pointer"></i>
+                <input placeholder="Search" class="form-control" [(ngModel)]="searchValue">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 px-0 viewtable mt-2">
+              <table class="table table-responsive-sm table-hover">
+                <thead class="thead-dark">
+                  <tr>
+                    <th>ID</th>
+                    <th>Project</th>
+                    <th>Type</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let job of myAgencyExpertJobs | search:searchValue:searchFields ; let i=index;">
+                    <td>{{i+1}}.</td>
+                    <td>{{job.jobTitle | titlecase}}</td>
+                    <td>{{job.jobType | titlecase}}</td>
+                    <td>{{job.timestamp | date:'mediumDate'}}</td>
+                    <td>
+                      <button class="btn StatusBtn" [class.progressBtn]="job.status=='Closed'" [class.pending]="job.status=='pending'"
+                      >{{job.status || 'Open' | titlecase}}</button>
+                    </td>
+                    <td>
+                      <a class="pointer" [routerLink]="['/job-detail', job.key]">
+                        View Detaills
+                      </a>
+                      <!-- <img src="/assets/imgs/editBtn.svg" height="30px">
+                      <img src="/assets/imgs/delIcon.svg" height="30px" class="ml-3"> -->
+                    </td>
+                  </tr>
+                 
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

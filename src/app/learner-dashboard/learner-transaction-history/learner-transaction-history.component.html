@@ -1,0 +1,53 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<div class="borderdBlock">
+  <h5 class="bold mb-3">Transactions</h5>
+  <div class="membersMainCont">
+    <div class="headerRow">
+      <div class="w-25 mr-3">
+        <ng-select [(ngModel)]="selectedType" (change)="filterTransaction()" [clearable]="false" placeholder="Type"
+          [items]="transactionTypes"></ng-select>
+      </div>
+      <div class="w-25 mr-3">
+        <ng-select [(ngModel)]="selectedMonth" (change)="filterTransaction()" [clearable]="false" placeholder="Month"
+          [items]="dataHelper.months"></ng-select>
+      </div>
+      <div class="w-25">
+        <ng-select [(ngModel)]="selectedYear" (change)="filterTransaction()" [clearable]="false" placeholder="Year"
+          [items]="years"></ng-select>
+      </div>
+      <div class="w-50 text-right">
+        <button (click)="clearFilters()" class="btn btn-dark btnRounded blackBgBtn">Clear Filters</button>
+      </div>
+    </div>
+
+    <p class="text-secondary my-5 text-center" *ngIf="!displayTransactions.length">No transactions found!</p>
+
+    <div *ngFor="let transaction of displayTransactions" class="historyCont">
+      <div class="desp">
+        <h5 class=" mt-0 mb-3 bold">{{transaction.paymentPurpose}}</h5>
+        <p class="mb-0">{{transaction.entityTitle}}</p>
+      </div>
+      <div class="date">
+        <p class="appTxt">{{transaction.timestamp | date:'mediumDate'}}</p>
+        <h5 class="text-danger bold mb-0">-RM {{transaction.amount}}</h5>
+      </div>
+      <button class="btn primaryBtn blackBgBtn">Dispute Resolution</button>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- <div class="historyCont">
+  <div class="desp">
+    <h5 class=" mt-0 mb-3 bold">
+      You paid <u class="pointer">Felicia Wong</u> for hourly
+    </h5>
+    <p class="mb-0">Description Here</p>
+  </div>
+  <div class="date">
+    <p class="appTxt">Dec 5th, 2020</p>
+    <h5 class="text-danger bold mb-0">-$ 300.00</h5>
+  </div>
+  <button class="btn primaryBtn">Dispute Resolution</button>
+</div> -->

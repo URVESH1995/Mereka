@@ -1,0 +1,332 @@
+<div class="row topNavbar fixed-top">
+    <div class="col-md-3 py-3">
+        <img routerLink="/home" src="/assets/imgs/grayLogo.png" class="pointer ml-4">
+    </div>
+    <div class="col-md-9 text-right">
+        <button (click)="navigatePage(btn.navigatePage)" *ngFor="let btn of tabButtons"
+            [class.activeBtn]="activeTab===btn.title" class="btn btn-inactive grayChoiceHover">{{btn.title}}</button>
+    </div>
+</div>
+
+<div class="parentContent bg-white">
+    <div class="row justify-content-center">
+        <div class="col-md-12 maxWidthContent">
+            <h3 class="bold text-center">Almost there</h3>
+            <div class="borderdSection p-4 mt-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Title
+                            <i *ngIf="expandTitle" (click)="expandTitle=false"
+                                class="fas fa-angle-up float-right pointer"></i>
+                            <i *ngIf="!expandTitle" (click)="expandTitle=true"
+                                class="fas fa-angle-down float-right pointer"></i>
+                        </p>
+                    </div>
+                </div>
+                <div *ngIf="expandTitle" class="row">
+                    <div class="col-md-7">
+                        <div class="leftContent pr-5">
+                            <h5 class="bold">Give your experience a title</h5>
+                            <p class="text-secondary mb-4">Some short description here.</p>
+                            <div class="formContent">
+                                <input [(ngModel)]="myWorkshopObj.experienceTitle" type="text" placeholder="Title"
+                                    class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 pl-5">
+                        <h5 class="bold">
+                            <img style="width: 35px;" src="/assets/imgs/light-icon.png">
+                            <span class="pl-2">TIPS</span>
+                        </h5>
+                        <p>
+                            Remember to allocate some time for introductions as well as any de-briefin
+                            or summary at the end of the experience
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="borderdSection p-4 mt-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Description
+                            <i *ngIf="expandDescription" (click)="expandDescription=false"
+                                class="fas fa-angle-up float-right pointer"></i>
+                            <i *ngIf="!expandDescription" (click)="expandDescription=true"
+                                class="fas fa-angle-down float-right pointer"></i>
+                        </p>
+                    </div>
+                </div>
+                <div *ngIf="expandDescription" class="row">
+                    <div class="col-md-7">
+                        <div class="leftContent pr-5">
+                            <h5 class="bold">Describe your experience</h5>
+                            <p class="text-secondary mb-4">
+                                Your activity description is a chance to inspire learners to take
+                                your experience. Think about it like a story, with a biginning, middle and end.
+                            </p>
+                            <p class="text-secondary mb-4">
+                                1. First, briefly describe what you'll do with your learners. What unique details set it
+                                apart from other similar experiences?
+                            </p>
+                            <p class="text-secondary mb-4">
+                                2. Then, get more specific. How will you kick things off? How will you make guests
+                                feel engaged during your time together?
+                            </p>
+                            <p class="text-secondary mb-4">
+                                3. Finally, explain what you want your learners will leave with and how they can
+                                take their newfound knowledge further. End with a strong selling point.
+                            </p>
+                            <div class="formContent">
+                                <textarea [(ngModel)]="myWorkshopObj.experienceDescription" type="text"
+                                    class="form-control" placeholder="Description" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 pl-5">
+                        <h5 class="bold">
+                            <img style="width: 35px;" src="/assets/imgs/light-icon.png">
+                            <span class="pl-2">TIPS</span>
+                        </h5>
+                        <p>
+                            Remember to allocate some time for introductions as well as any de-briefin
+                            or summary at the end of the experience
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="borderdSection p-4 mt-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Photos
+                            <i *ngIf="expandPhotos" (click)="expandPhotos=false"
+                                class="fas fa-angle-up float-right pointer"></i>
+                            <i *ngIf="!expandPhotos" (click)="expandPhotos=true"
+                                class="fas fa-angle-down float-right pointer"></i>
+                        </p>
+                    </div>
+                </div>
+                <div *ngIf="expandPhotos" class="row">
+                    <div class="col-md-7">
+                        <div class="leftContent pr-5">
+                            <h5 class="bold">Add photos to your experience</h5>
+                            <p class="text-secondary mb-4">
+                                At least five high-quality photos to show guests what it's like to take your experience.
+                                They will be reviewed by our team so make sure they meet our photo standards.
+                            </p>
+                            <h5 class="bold">Choose your cover photo</h5>
+                            <p class="text-secondary mb-4">
+                                Choose a candid photo that represents the experience as a whole.
+                            </p>
+
+                            <div *ngIf="!coverImagePath" class="uploadPhotoContent rounded text-center">
+                                <button (click)="workhopCoverPicker.click()"
+                                    class="btn btn-dark blackBgBtn btnRounded mt-3">
+                                    Upload Photo <i class="fas fa-cloud-upload-alt"></i>
+                                </button>
+                                <p class="text-secondary mt-2">or drag them in</p>
+                            </div>
+                            <div *ngIf="coverImagePath" class="coverImageContainer">
+                                <button (click)="workhopCoverPicker.click()" class="btn btn-primary">
+                                    <i class="fas fa-upload"></i>
+                                </button>
+                                <img [src]="coverImagePath">
+                            </div>
+                            <input #workhopCoverPicker hidden (change)="onChangeCoverFile($event)" type="file"
+                                accept="image/*">
+
+                            <h5 class="bold mt-4">Choose your gallery photos</h5>
+                            <p class="text-secondary mb-4">
+                                Upload at least 4 more photos that highlight different aspects of your experience.
+                                Photos may include host/guest interaction, the location where you're hosting, or
+                                close-up details of the experience.
+                            </p>
+
+                            <div *ngFor="let imagePath of additionalImagePaths; index as i"
+                                class="imageContainer rounded text-center pointer grayChoiceHover">
+                                <img (click)="workhopImagePicker.click()" class="uploadIcon" *ngIf="!imagePath"
+                                    src="/assets/imgs/uploadIcon.png">
+                                <div *ngIf="imagePath">
+                                    <img class="attachedImage rounded" [src]="imagePath">
+                                    <button (click)="workhopImagePicker.click()" class="btn btn-primary">
+                                        <i class="fas fa-upload"></i>
+                                    </button>
+                                    <button (click)="removeImage(i)" class="btn btn-danger">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </div>
+                                <input #workhopImagePicker hidden (change)="onChangeFile($event, i)" type="file"
+                                    accept="image/*">
+                            </div>
+
+                            <img (click)="workhopImagePickerOut.click()" class="addImageIcon pointer"
+                                src="/assets/imgs/add-icon.png">
+                            <input #workhopImagePickerOut hidden (change)="onChangeFile($event, -1)" type="file"
+                                accept="image/*">
+
+                        </div>
+                    </div>
+                    <div class="col-md-5 pl-5">
+                        <h5 class="bold">
+                            <img style="width: 35px;" src="/assets/imgs/light-icon.png">
+                            <span class="pl-2">TIPS</span>
+                        </h5>
+                        <p>Requirements for all photos</p>
+                        <p>
+                            - Photos must be bright and clear <br />
+                            - They must accurately describe the experience <br />
+                            - They can't show people posed for the camera or taking a selfie <br />
+                            - They can't be edited with filters, text or graphics, logos, or collages <br />
+                            - They must belong to you - don't use copyrighted work <br />
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="borderdSection p-4 mt-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Learning Outcomes
+                            <i *ngIf="expandLearningOutcomes" (click)="expandLearningOutcomes=false"
+                                class="fas fa-angle-up float-right pointer"></i>
+                            <i *ngIf="!expandLearningOutcomes" (click)="expandLearningOutcomes=true"
+                                class="fas fa-angle-down float-right pointer"></i>
+                        </p>
+                    </div>
+                </div>
+                <div *ngIf="expandLearningOutcomes" class="row">
+                    <div class="col-md-7">
+                        <div class="leftContent pr-5">
+                            <h5 class="bold">What will your learners be able to take away from your experience?</h5>
+                            <p class="text-secondary mb-4">
+                                Please outline at least 3 learning outcomes that your experience will provide.
+                            </p>
+                            <div class="formContent">
+                                <textarea [(ngModel)]="myWorkshopObj.learningOutcomes" type="text"
+                                    placeholder="Description..." class="form-control" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 pl-5">
+                        <h5 class="bold">
+                            <img style="width: 35px;" src="/assets/imgs/light-icon.png">
+                            <span class="pl-2">TIPS</span>
+                        </h5>
+                        <p>
+                            Remember to allocate some time for introductions as well as any de-briefin
+                            or summary at the end of the experience
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="borderdSection p-4 mt-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Instructions
+                            <i *ngIf="expandInstructions" (click)="expandInstructions=false"
+                                class="fas fa-angle-up float-right pointer"></i>
+                            <i *ngIf="!expandInstructions" (click)="expandInstructions=true"
+                                class="fas fa-angle-down float-right pointer"></i>
+                        </p>
+                    </div>
+                </div>
+                <div *ngIf="expandInstructions" class="row">
+                    <div class="col-md-7">
+                        <div class="leftContent pr-5">
+                            <h5 class="bold">What will your audience need to do?</h5>
+                            <p class="text-secondary mb-4">
+                                Some short description here, such as where the audience need to meet, best
+                                location to be, best way to get there and if online, if they have to join a specific
+                                platform, if more information will be sent.
+                            </p>
+                            <div class="formContent">
+                                <textarea [(ngModel)]="myWorkshopObj.instructions" type="text"
+                                    placeholder="Instructions..." class="form-control" rows="5"></textarea>
+                            </div>
+
+                            <hr class="my-4" />
+
+                            <h5 class="bold">Will you provide any materials?</h5>
+                            <p class="text-secondary">
+                                Some short description here to what type of materials they can provide to give ideas.
+                                Let them know if they can skip this question.
+                            </p>
+                            <div class="custom-control custom-radio pointer my-3">
+                                <input (change)="emptyMaterialsArray()" [(ngModel)]="myWorkshopObj.isMaterialsProvided"
+                                    type="radio" class="custom-control-input" id="customRadio1" name="example2"
+                                    [value]="false">
+                                <label class="custom-control-label" for="customRadio1">
+                                    There are no materials provided
+                                </label>
+                            </div>
+                            <div class="custom-control custom-radio pointer mb-3">
+                                <input (change)="emptyMaterialsArray()" [(ngModel)]="myWorkshopObj.isMaterialsProvided"
+                                    type="radio" class="custom-control-input" id="customRadio2" name="example2"
+                                    [value]="true">
+                                <label class="custom-control-label" for="customRadio2">
+                                    I will provide some materials for my guests
+                                </label>
+                            </div>
+                            <tag-input #input [modelAsStrings]="true" [placeholder]="'Add material'"
+                                [secondaryPlaceholder]="'Add material'" [(ngModel)]="myWorkshopObj.materials">
+                                <tag-input-dropdown [showDropdownIfEmpty]="true"></tag-input-dropdown>
+                            </tag-input>
+
+                            <h5 class="bold mt-5">What should learners bring to your experience?</h5>
+                            <p class="text-secondary">
+                                If learners need anything in order to enjoy your experience, please list them here.
+                                This list will be emailed to guests when they book your experience to help them prepare.
+                            </p>
+                            <div class="custom-control custom-radio pointer my-3">
+                                <input (change)="emptyBringlistsArray()" [(ngModel)]="myWorkshopObj.isBringlistRequired"
+                                    type="radio" class="custom-control-input" id="customRadio3" name="example11"
+                                    [value]="false">
+                                <label class="custom-control-label" for="customRadio3">
+                                    This experience does not require anything
+                                </label>
+                            </div>
+                            <div class="custom-control custom-radio pointer mb-3">
+                                <input (change)="emptyBringlistsArray()" [(ngModel)]="myWorkshopObj.isBringlistRequired"
+                                    type="radio" class="custom-control-input" id="customRadio4" name="example11"
+                                    [value]="true">
+                                <label class="custom-control-label" for="customRadio4">
+                                    My guests should bring the following items
+                                </label>
+                            </div>
+                            <tag-input #input [modelAsStrings]="true" [placeholder]="'Add item'"
+                                [secondaryPlaceholder]="'Add item'" [(ngModel)]="myWorkshopObj.bringList">
+                                <tag-input-dropdown [showDropdownIfEmpty]="true"></tag-input-dropdown>
+                            </tag-input>
+                        </div>
+                    </div>
+                    <div class="col-md-5 pl-5">
+                        <h5 class="bold">
+                            <img style="width: 35px;" src="/assets/imgs/light-icon.png">
+                            <span class="pl-2">TIPS</span>
+                        </h5>
+                        <p>
+                            Remember to allocate some time for introductions as well as any de-briefin
+                            or summary at the end of the experience
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row fixed-bottom p-3 px-4 continueBackBtns">
+    <div class="col-md-4">
+        <button routerLink="/workshop-additional-info" class="btn grayChoiceHover btn-light btnRounded">Back</button>
+    </div>
+    <div class="col-md-4 text-center">
+        <button (click)="dataHelper.saveWorkshopAsDraft()" class="btn grayChoiceHover btnSecondary btnRounded">Save
+            Draft</button>
+    </div>
+    <div class="col-md-4 text-right">
+        <button (click)="saveAndNext()" class="btn grayChoiceHover btnSecondary btnRounded">Continue</button>
+    </div>
+</div>

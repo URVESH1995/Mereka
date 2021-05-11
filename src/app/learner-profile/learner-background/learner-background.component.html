@@ -1,0 +1,21 @@
+<h3 class="bold mb-3">Education</h3>
+<div class="borderedContent">
+  <div *ngFor="let education of learnerProfile.educationList" class="eduCont">
+    <p class="font-17">{{education.startDate}} - {{education.endDate}}</p>
+    <h5 class="bold mb-2">{{education.school}}</h5>
+    <p class="mb-2 text1">{{education.areaOfStudy}}</p>
+    <p class="mb-0 text1">{{education.description}}</p>
+  </div>
+</div>
+
+<hr class="my-5" />
+
+<h3 class="bold mb-3">Employment History</h3>
+<div class="borderedContent">
+  <div *ngFor="let employment of learnerProfile.employmentList" class="eduCont">
+    <p class="font-17">{{employment.startDate}} - {{employment.endDate || 'Current'}}</p>
+    <h5 class="bold mb-2">{{employment.role}}</h5>
+    <p class="bold font-13 text-uppercase">{{employment.company}}</p>
+    <p class="mb-0 text1">{{employment.description}}</p>
+  </div>
+</div>

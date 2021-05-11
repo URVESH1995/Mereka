@@ -1,0 +1,86 @@
+<p *ngIf="!acceptedBids.length" class="mt-5 text-center text-secondary">No active jobs!</p>
+
+<div *ngFor="let bid of acceptedBids; index as mainIndex" class="card activeJobsCard">
+  <div class="row">
+    <div class="col-sm-10">
+      <div class="d-flex">
+        <div class="userInfoCont">
+          <div class="userImgCont">
+            <img [src]="bid.bidPerson.profileUrl || '/assets/imgs/userIcon.PNG'" class="userImg">
+            <img (click)="chatWithExpert(bid)" src="/assets/imgs/chatIcon.svg" class="chatIcon">
+          </div>
+
+          <p class="mt-3 mb-1 bold font-18">{{bid.bidPerson.fullName}}</p>
+          <p class="font-13 text1">{{bid.bidPerson.expertProfile.overview.title}}</p>
+          <div *ngIf="bid.bidPerson.location" class="icon mt-1">
+            <i class="fas fa-map-marker-alt"></i>
+            <p class="mb-0 font-13 pl-2 align-center">
+              {{bid.bidPerson.location.city}}, {{bid.bidPerson.location.country}}
+            </p>
+          </div>
+        </div>
+        <div class="txtCont">
+          <p class="font-18 mb-0 bold">{{dataHelper.getExpertAgency(bid.bidPerson) || 'N/A'}}</p>
+          <p class="font-13 mb-0">Received on {{bid.timestamp | date: 'mediumDate'}}</p>
+          <p class="font-13 my-3"><b>Cover Letter:</b> {{bid.coverLetter}}</p>
+
+          <div *ngIf="bid.type==='milestone'">
+            <p class="mt-3 mb-0 bold font-13">{{bid.milestones.length}} Milestones</p>
+            <div *ngFor="let milestone of bid.milestones; index as i" class="milstone">
+              <p class="font-13">
+                Milestone {{i+1}} of {{bid.milestones.length}}: RM {{milestone.price}}
+              </p>
+              <button *ngIf="milestone.status==='Completed'" class="btn darkBtn">Completed</button>
+              <button *ngIf="milestone.status==='In Progress'" class="btn darkBtn progressBtn">In Progress</button>
+              <button *ngIf="milestone.status==='Paid'" class="btn darkBtn bg-success">Paid</button>
+              <p *ngIf="milestone.status==='Completed'" class="acceptRejectTxt pointer">
+                <span (click)="acceptDelivery(mainIndex, i)" class="danger">Accept</span> |
+                <span (click)="rejectDelivery(mainIndex, i)">Reject</span></p>
+            </div>
+            <span id="openPaymentModal" hidden data-toggle="modal" data-target="#addPaymentModal"></span>
+          </div>
+
+          <div *ngIf="bid.type==='fixed'">
+            <div *ngIf="bid.status==='completed'">
+              <p class="mt-3 mb-0 bold font-13">Request for job completion</p>
+              <p class="acceptRejectTxt pointer">
+                <span (click)="markOverallJobAsPaid(mainIndex)" class="danger">Accept</span> |
+                <span (click)="rejectJob(mainIndex)">Reject</span></p>
+            </div>
+            <p *ngIf="bid.status==='paid'" class="acceptRejectTxt">
+              <span class="text-success">Paid</span>
+            </p>
+          </div>
+
+          <div class="detailBtns">
+            <button *ngIf="bid.type==='milestone'" (click)="milestoneDetails(bid)"
+              class="btn darkBtn mr-3">Detail</button>
+            <button class="btn darkBtn dispute">Dispute <br />Resolution</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-2 pl-0 align-center text-center">
+      <h4 class="bold">RM {{bid.totalPrice}}</h4>
+      <h6 *ngIf="bid.completionDate">{{bid.completionDate | date: 'short'}}</h6>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="addPaymentModal">
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 60%;">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h4 class="modal-title">Add Payment</h4>
+        <button id="closePaymentModal" type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <app-payment-card [deductionAmount]="deductionAmount" (onValidateCard)="confirmPayment($event)">
+        </app-payment-card>
+      </div>
+    </div>
+  </div>
+</div>

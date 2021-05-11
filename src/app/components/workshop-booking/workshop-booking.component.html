@@ -1,0 +1,64 @@
+<div *ngFor="let booking of workshopBookings" class="row py-4" style="border-bottom: 1px solid #dcdcdc">
+    <div class="col-md-7 pl-5">
+        <button *ngFor="let tag of booking.workshopDetails.tags"
+            class="btn border btn-sm rounded bold mr-2">{{tag | uppercase}}
+        </button>
+        <h5 (click)="workshopDetail(booking)" class="bold mt-3 pointer">{{booking.workshopDetails.experienceTitle}}:
+            {{booking.workshopDetails.theme}}
+        </h5>
+        <p class="mb-0">
+            <span *ngIf="booking.workshopDetails.experienceType==='online'">
+                <i class="fas fa-desktop"></i> Online
+            </span>
+            <span *ngIf="booking.workshopDetails.experienceType==='physical'">
+                <i class="fas fa-map-marker-alt"></i>
+                {{booking.workshopDetails.location.city}}, {{booking.workshopDetails.location.country}}
+            </span>
+            <span class="pl-3">
+                | Host: {{getHostName(booking.workshopDetails.uid) || 'N/A'}}
+            </span>
+            <span *ngIf="isUpcomingBooking(booking)" (click)="activeWorkshopBooking=booking"
+                data-target="#cancelConfirmationModal" data-toggle="modal" class="pl-3 pointer text-danger">
+                | Cancel Booking
+            </span>
+        </p>
+    </div>
+    <div class="col-md-2">
+        <p class="bold">LEARNERS</p>
+        <p class="mb-0">{{booking.learners}}</p>
+    </div>
+    <div class="col-md-2">
+        <p class="bold">DATE AND TIME</p>
+        <p class="mb-0">{{booking.session.date}}</p>
+        <p class="mb-0">{{booking.session.startTime}} - {{booking.session.endTime}} (MYT)</p>
+    </div>
+    <div class="col-md-1 px-0">
+        <p class="bold">PRICE</p>
+        <p class="mb-0">RM {{booking.price}}</p>
+    </div>
+</div>
+
+<p *ngIf="!workshopBookings.length" class="text-center text-secondary my-5">No bookings found!</p>
+
+<div class="modal fade portfolioModal" id="cancelConfirmationModal">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <h5 class="bold">Want to cancel booking, are you sure?</h5>
+                <p>You can still book this experience after that!</p>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-6">
+                    <button data-dismiss="modal" class="btn cancelBtn btnRounded whiteOutlinedBtn px-4">
+                        No, I have changed my mind
+                    </button>
+                </div>
+                <div class="col-md-6 text-right">
+                    <button (click)="cancelBooking()" data-dismiss="modal"
+                        class="btn blackBgBtn btn-dark btnRounded px-4">Yes, I'm sure I want to cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

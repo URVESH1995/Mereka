@@ -1,0 +1,502 @@
+<app-navbar></app-navbar>
+
+<div class="row filterbarOnHome notScrolledClass">
+  <div class="col-md-12 horizontalLine px-5">
+    <hr class="mt-1" />
+  </div>
+  <div class="col-md-3"></div>
+  <div class="col-md-8 pl-0">
+    <app-navbar-filters></app-navbar-filters>
+  </div>
+</div>
+
+
+<section class="bgCont">
+  <div class="row" style="position: absolute; top: 190px;">
+    <div class="col-md-3"></div>
+    <div class="col-sm-8 pl-0">
+      <h1 style="font-size: 60px" class="font-weight-bold text-white">The Future of Innovation</h1>
+    </div>
+  </div>
+</section>
+
+
+<div class="row justify-content-center sect2">
+  <div class="col-sm-12 maxWidthContent">
+    <div class="row">
+      <div class="col-md-12">
+        <h4 style="font-size: 34px" class="font-weight-bold">Discover More</h4>
+      </div>
+      <div *ngFor="let item of discoverItems" class="col-sm-4 lessPadding">
+        <div routerLink="/hire-expert" class="discoverMoreCard bg-white p-4">
+          <img [src]="item.imageUrl">
+          <hr />
+          <div class="txtCont">
+            <h5 style="font-size: 17px" class="bold">Hire an Expert</h5>
+            <p style="font-size: 14px" class="my-0 font-13">
+              Write a short description here Write a short description here Write a short description here
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row workshopSliderContainer justify-content-center py-5 bg-white">
+  <div *ngIf="dataHelper.allWorkshopList" class="row col-md-12 maxWidthContent">
+    <div class="col-md-12">
+      <h4 style="font-size: 34px" class="font-weight-bold">Unleash your creative potential
+        <span style="font-size: 16px" routerLink="/workshops" class="float-right pointer font-weight-bold">
+          <u>View All</u></span>
+      </h4>
+      <p class="font-14 text-secondary">Description of what to expect or some cool feature</p>
+      <div class="row mt-5 mb-4">
+        <div class="col-md-3 pl-0" style="border-right: 1px solid #c7c7c7;">
+          <div *ngIf="activeSwitch==='online'" class="toggleBtnContainer d-flex p-1">
+            <i (click)="activeSwitch='physical'; filterWorkshops()" class="fas fa-running pointer soloIcon"></i>
+            <button class="btn btn-dark blackBgBtn btn-sm">
+              <i class="fas fa-desktop"></i> Online
+            </button>
+          </div>
+          <div *ngIf="activeSwitch==='physical'" class="toggleBtnContainer d-flex p-1">
+            <button class="btn btn-dark blackBgBtn btn-sm">
+              <i class="fas fa-running"></i> Physical
+            </button>
+            <i (click)="activeSwitch='online'; filterWorkshops()" class="fas fa-desktop pointer soloIcon"></i>
+          </div>
+        </div>
+        <div class="col-md-9 text-right btnFilters pr-0">
+          <button (click)="selectedTag='All'; filterWorkshops()" [class.selectedTag]="selectedTag==='All'"
+            class="btn btn-outline-light text-dark whiteOutlinedBtn">All</button>
+          <button (click)="selectedTag=tag; filterWorkshops()" [class.selectedTag]="selectedTag===tag"
+            *ngFor="let tag of workshopTags | slice:0:5"
+            class="btn btn-outline-light text-dark ml-2 whiteOutlinedBtn">{{tag}}</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 lessPadding"
+      *ngFor="let workshop of allWorkshops | paginate: { itemsPerPage: 3, currentPage: currentPage }">
+      <div class="workshopCard pointer">
+        <!-- <button class="btn text-white btn-sm leftCornerBtn">BEST SELLER</button> -->
+        <button (click)="favUnfavWorkshop(workshop)" class="btn text-white btn-dark btn-sm rightCornerBtn">
+          <i class="fa-heart" [class.far]="!isMyFavWorkshop(workshop)" [class.fas]="isMyFavWorkshop(workshop)"></i>
+        </button>
+        <img (click)="workshopDetails(workshop)" [src]="workshop.coverImage">
+        <div (click)="workshopDetails(workshop)" class="p-3">
+          <h5 class="font-17 bold mb-1">{{workshop.experienceTitle}}</h5>
+          <p class="font-13 text-secondary">{{getWorkshopHost(workshop.uid) || 'N/A'}}</p>
+          <h5 class="font-15 text-right mb-0">
+            <span *ngIf="workshop.ratePerLearner">MYR {{workshop.ratePerLearner}}<small>/learner </small></span>
+            <span *ngIf="workshop.ratePerMember"> MYR {{workshop.ratePerMember}}<small>/member</small></span>
+          </h5>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!allWorkshops.length" class="col-md-12 text-center text-secondary my-5">No experiences found!</div>
+
+    <div *ngIf="allWorkshops.length" class="text-center w-100 mt-5">
+      <app-custom-pagination (pageChange)="currentPage = $event"></app-custom-pagination>
+    </div>
+  </div>
+</div>
+
+
+<div class="row featuredSection justify-content-center py-5">
+  <div class="row col-md-12 maxWidthContent">
+    <div class="col-md-4">
+      <h5 class="bold my-5">Featured Spaces</h5>
+      <h1 style="font-size: 48px" class="mainHeading w-75 my-4 font-weight-bold">Browse our spaces and find THE ONE</h1>
+      <p class="pointer bold"><u>View All Spaces</u></p>
+    </div>
+    <div class="col-md-4 pr-0">
+      <div *ngFor="let block of featuredSpacesBlocks | slice:0:3"
+        class="featuredBlock whiteOutlinedBtn p-4 bg-white mb-3">
+        <img [src]="block.imageUrl">
+        <p class="bold font-17">{{block.title}}</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div *ngFor="let block of featuredSpacesBlocks | slice:3:6"
+        class="featuredBlock whiteOutlinedBtn p-4 bg-white mb-3">
+        <img [src]="block.imageUrl">
+        <p class="bold font-17">{{block.title}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row featuredVendorsBlock justify-content-center py-5 bg-white">
+  <div class="col-md-12 maxWidthContent">
+    <h4 style="font-size: 34px" class="font-weight-bold px-3">Featured Hubs
+      <span style="font-size: 16px" class="bold float-right pointer"><u>View All</u></span>
+    </h4>
+    <p class="font-14 text-secondary pl-3">Explore the best of the best in the industry!</p>
+
+    <div id="carousel-example" class="carousel slide slider2 desktop-slider mt-4" data-ride="carousel"
+      data-interval="false">
+      <div class="carousel-inner row" role="listbox">
+        <div *ngFor="let slides of parentSlides; index as i" class="carousel-item col-sm-12 px-0"
+          [class.active]="i===0">
+          <div class="row">
+            <div (click)="agencyProfile(agency)" *ngFor="let agency of slides" class="col-sm-4 lessPadding pointer">
+              <img class="slideImage" [src]="agency.agencyLogo || 'assets/imgs/notify-img.PNG'">
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#carousel-example" role="button" data-slide="prev">
+        <img style="transform: rotate(180deg)" src="/assets/imgs/next_Arrow.svg" height="60px">
+      </a>
+      <a class="carousel-control-next" href="#carousel-example" role="button" data-slide="next">
+        <img src="/assets/imgs/next_Arrow.svg" height="60px">
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<app-footer></app-footer>
+
+
+<!-- Old Featured Spaces & Subscribed Boards -->
+<!-- <div class="row justify-content-center sect4">
+    <div class="col-sm-12 maxWidthContent">
+      <h2 class="pl-3">Featured Spaces</h2>
+      <div class="row">
+        <div class="col-sm-6">
+          <div routerLink="/space-availability" class="card spaceCard pointer">
+            <img src="/assets/imgs/spaceImg.png" class="spaceImg">
+            <div class="textCont">
+              <h4 class="bold">Campus Coworking 333</h4>
+              <p class="font-14 text1 bold mb-0">Petaling Jaya, Malaysia</p>
+              <div class="row">
+                <div class="col-sm-5 px-0">
+                  <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <p class="font-15 my-0 pl-2"><b>4.3</b>/5</p>
+                  </div>
+                </div>
+                <div class="col-sm-5 align-center px-0">
+                  <p class="font-15 bold my-0 text1">27 Reviews</p>
+                </div>
+              </div>
+            </div>
+            <div class="textCont2">
+              <p class="font-14 align-center my-0 bold text1">Livivity</p>
+              <button class="btn primaryBtn">View Profile</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div routerLink="/space-availability" class="card spaceCard pointer">
+            <img src="/assets/imgs/spaceImg.png" class="spaceImg">
+            <div class="textCont">
+              <h4 class="bold">Campus Coworking 333</h4>
+              <p class="font-14 text1 bold mb-0">Petaling Jaya, Malaysia</p>
+              <div class="row">
+                <div class="col-sm-5 px-0">
+                  <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <p class="font-15 my-0 pl-2"><b>4.3</b>/5</p>
+                  </div>
+                </div>
+                <div class="col-sm-5 align-center px-0">
+                  <p class="font-15 bold my-0 text1">27 Reviews</p>
+                </div>
+              </div>
+            </div>
+            <div class="textCont2">
+              <p class="font-14 align-center my-0 bold text1">Livivity</p>
+              <button class="btn primaryBtn">View Profile</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row justify-content-center sect5">
+    <div class="col-sm-12 maxWidthContent">
+      <div class="d-flex">
+        <h2 class="pl-3 align-center">Subscribed Boards</h2>
+        <button class="btn proBtn">PRO</button>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="card">
+            <img src="/assets/imgs/subscription-Img.png" class="Subimg">
+            <div class="txtCont">
+              <div class="txt">
+                <h4>Some Hub <br />Name here</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="card">
+            <img src="/assets/imgs/subscription-Img.png" class="Subimg">
+            <div class="txtCont">
+              <div class="txt">
+                <h4>Some Hub <br />Name here</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="card">
+            <img src="/assets/imgs/subscription-Img.png" class="Subimg">
+            <div class="txtCont">
+              <div class="txt">
+                <h4>Some Hub <br />Name here</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="d-flex bottomCont">
+            <button class="btn proBtn ml-4 bold" style="height: 55px; width: 60px;">PRO</button>
+            <div class="txt pl-4 align-center">
+              <h6 class="bold">Would you like to manage multi-experts, courses and machines?</h6>
+              <p class="danger my-0 font-14">Subscribe to Hub Package</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+<!-- Old Search Bar -->
+<!-- <div *ngIf="dataHelper.displayFilters" class="experienceCont row">
+  <div class="col-sm-12 maxWidthContent expSearch shadow">
+    <div class="row">
+      <div class="tabsCont">
+        <ul class="nav nav-justified" id="myTab" role="tablist">
+          <li class="nav-item pointer">
+            <a [class.active]="workshopFilters.accessibility==='Public'" (click)="switchWorkshopAccessibility('Public')"
+              class="nav-link" data-toggle="tab" role="tab">Public</a>
+          </li>
+          <li class="nav-item pointer">
+            <a [class.active]="workshopFilters.accessibility==='Private'"
+              (click)="switchWorkshopAccessibility('Private')" class="nav-link" data-toggle="tab" role="tab">Private</a>
+          </li>
+          <li class="nav-item pointer">
+            <a [class.active]="workshopFilters.accessibility==='Public + Private'"
+              (click)="switchWorkshopAccessibility('Public + Private')" class="nav-link" data-toggle="tab"
+              role="tab">Both</a>
+          </li>
+        </ul>
+      </div>
+      <div class="tabsCont inputCont">
+        <div class="txt">
+          <ng-select [clearable]="false" [items]="workshopCategories" [(ngModel)]="workshopFilters.category">
+          </ng-select>
+        </div>
+      </div>
+      <div class="tabsCont inputCont">
+        <div class="txt">
+          <ngxgeo-autocomplete id="autoComplete" [userSettings]="userSettings"
+            (componentCallback)="autoCompleteCallback($event)">
+          </ngxgeo-autocomplete>
+        </div>
+      </div>
+      <div class="tabsCont dateInput">
+        <div class="txt">
+          <p class="font-18 bold mb-0">Date</p>
+          <input [(ngModel)]="workshopFilters.date" type="date" placeholder="Choose date" class="text1 w-100"
+            style="border: 0px;">
+        </div>
+        <button (click)="searchWorkshops()" class="btn searchBtn mr-4 ml-auto">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- Old Workshops -->
+<!-- <div class="row justify-content-center sect3">
+  <div class="col-sm-12 maxWidthContent">
+    <h2 class="pl-3">Your First Workshop on Mereka</h2>
+    <p class="my-0 pl-3">Discounts of up to 75% on a selection of workshops</p>
+    <div id="carousel-example" class="carousel slide slider2 desktop-slider" data-ride="carousel" data-interval="false">
+      <div class="carousel-inner row" role="listbox">
+        <div *ngFor="let slides of parentSlides; index as i" class="carousel-item col-sm-12 px-0"
+          [class.active]="i===0">
+          <div class="row">
+
+            <div *ngFor="let workshop of slides" class="col-sm-4">
+              <div (click)="workshopDetails(workshop)" class="itemCont pointer">
+                <img [src]="workshop.coverPhotos[0].url" class="itemImg">
+                <div class="textCont">
+                  <h5 class="mb-1 bold">{{workshop.title}}</h5>
+                  <p class="font-13 my-0">A workshop by {{getWorkshopHost(workshop.uid) || 'N/A'}}</p>
+                  <div class="iconCont">
+                    <div class="icons">
+                      <i class="fas fa-user"></i>
+                      <p class="font-13 my-0 pl-2">{{workshop.bookedBy?.length || 0}} Students</p>
+                    </div>
+                    <div class="icons ml-5">
+                      <i class="fas fa-thumbs-up"></i>
+                      <p class="font-13 my-0 pl-2">98% (1.8k)</p>
+                    </div>
+                  </div>
+                  <div class="d-flex">
+                    <h4 *ngIf="workshop.workshopAccessibility!=='Public + Private'" class="bold mb-0">
+                      RM {{workshop.price}}</h4>
+                    <h4 *ngIf="workshop.workshopAccessibility==='Public + Private'" class="bold mb-0">
+                      <i class="fas fa-user-lock mr-2"></i> RM {{workshop.privatePrice}}, </h4>
+                    <h4 *ngIf="workshop.workshopAccessibility==='Public + Private'" class="bold mb-0 ml-3">
+                      <i class="fas fa-globe mr-2"></i> RM {{workshop.publicPrice}}</h4>
+                  </div>
+                  <div class="d-flex justify-content-between mt-2 mb-1">
+                    <p class="font-14 align-center my-0">{{workshop.workshopTheme}}</p>
+                    <button [disabled]="isMyWorkshop(workshop)" class="btn primaryBtn"> Buy Now
+                      <i *ngIf="workshop.workshopAccessibility==='Private' || workshop.workshopAccessibility==='Public + Private'"
+                        class="fas fa-user-lock ml-2"></i>
+                      <i *ngIf="workshop.workshopAccessibility==='Public' || workshop.workshopAccessibility==='Public + Private'"
+                        class="fas fa-globe ml-2"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#carousel-example" role="button" data-slide="prev">
+        <img style="transform: rotate(180deg)" src="/assets/imgs/next_Arrow.svg" height="60px">
+      </a>
+      <a class="carousel-control-next" href="#carousel-example" role="button" data-slide="next">
+        <img src="/assets/imgs/next_Arrow.svg" height="60px">
+      </a>
+    </div>
+    <section>
+      <div class="mobile-slider">
+        <div>
+          <div class="mobile-slide-1 slider2">
+            <div routerLink="/workshop-detail" class="itemCont pointer">
+              <img src="/assets/imgs/workshopImg_1.png" class="itemImg">
+              <div class="textCont">
+                <h5 class="mb-1 bold">Brand Strategy on Instagram</h5>
+                <p class="font-13 my-0">A workshop by John Doe</p>
+                <div class="iconCont">
+                  <div class="icons">
+                    <i class="fas fa-user"></i>
+                    <p class="font-13 my-0 pl-2">50,000 Students</p>
+                  </div>
+                  <div class="icons ml-5">
+                    <i class="fas fa-thumbs-up"></i>
+                    <p class="font-13 my-0 pl-2">98% (1.8k)</p>
+                  </div>
+                </div>
+                <div class="d-flex">
+                  <h4 class="bold mb-0">RM 11.90</h4>
+                  <p class="disPrice">RM 11.99</p>
+                </div>
+                <div class="d-flex justify-content-between mt-2 mb-1">
+                  <p class="font-14 align-center my-0">Daily</p>
+                  <button class="btn primaryBtn">Buy Now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mobile-slide-1 slider2">
+            <div routerLink="/workshop-detail" class="itemCont pointer">
+              <img src="/assets/imgs/workshopImg_1.png" class="itemImg">
+              <div class="textCont">
+                <h5 class="mb-1 bold">Brand Strategy on Instagram</h5>
+                <p class="font-13 my-0">A workshop by John Doe</p>
+                <div class="iconCont">
+                  <div class="icons">
+                    <i class="fas fa-user"></i>
+                    <p class="font-13 my-0 pl-2">50,000 Students</p>
+                  </div>
+                  <div class="icons ml-5">
+                    <i class="fas fa-thumbs-up"></i>
+                    <p class="font-13 my-0 pl-2">98% (1.8k)</p>
+                  </div>
+                </div>
+                <div class="d-flex">
+                  <h4 class="bold mb-0">RM 11.90</h4>
+                  <p class="disPrice">RM 11.99</p>
+                </div>
+                <div class="d-flex justify-content-between mt-2 mb-1">
+                  <p class="font-14 align-center my-0">Daily</p>
+                  <button class="btn primaryBtn">Buy Now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mobile-slide-1 slider2">
+            <div routerLink="/workshop-detail" class="itemCont pointer">
+              <img src="/assets/imgs/workshopImg_1.png" class="itemImg">
+              <div class="textCont">
+                <h5 class="mb-1 bold">Brand Strategy on Instagram</h5>
+                <p class="font-13 my-0">A workshop by John Doe</p>
+                <div class="iconCont">
+                  <div class="icons">
+                    <i class="fas fa-user"></i>
+                    <p class="font-13 my-0 pl-2">50,000 Students</p>
+                  </div>
+                  <div class="icons ml-5">
+                    <i class="fas fa-thumbs-up"></i>
+                    <p class="font-13 my-0 pl-2">98% (1.8k)</p>
+                  </div>
+                </div>
+                <div class="d-flex">
+                  <h4 class="bold mb-0">RM 11.90</h4>
+                  <p class="disPrice">RM 11.99</p>
+                </div>
+                <div class="d-flex justify-content-between mt-2 mb-1">
+                  <p class="font-14 align-center my-0">Daily</p>
+                  <button class="btn primaryBtn">Buy Now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mobile-slide-1 slider2">
+            <div routerLink="/workshop-detail" class="itemCont pointer">
+              <img src="/assets/imgs/workshopImg_1.png" class="itemImg">
+              <div class="textCont">
+                <h5 class="mb-1 bold">Brand Strategy on Instagram</h5>
+                <p class="font-13 my-0">A workshop by John Doe</p>
+                <div class="iconCont">
+                  <div class="icons">
+                    <i class="fas fa-user"></i>
+                    <p class="font-13 my-0 pl-2">50,000 Students</p>
+                  </div>
+                  <div class="icons ml-5">
+                    <i class="fas fa-thumbs-up"></i>
+                    <p class="font-13 my-0 pl-2">98% (1.8k)</p>
+                  </div>
+                </div>
+                <div class="d-flex">
+                  <h4 class="bold mb-0">RM 11.90</h4>
+                  <p class="disPrice">RM 11.99</p>
+                </div>
+                <div class="d-flex justify-content-between mt-2 mb-1">
+                  <p class="font-14 align-center my-0">Daily</p>
+                  <button class="btn primaryBtn">Buy Now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div> -->

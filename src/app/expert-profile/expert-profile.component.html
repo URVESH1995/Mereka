@@ -1,0 +1,80 @@
+<app-navbar *ngIf="!hideHeaderFooter"></app-navbar>
+
+<div class="bannerContent">
+  <img *ngIf="expertAgency.coverImage" [src]="expertAgency.coverImage">
+</div>
+
+<div class="basicProfileInfo bg-white row justify-content-center py-4">
+  <div class="col-md-12 maxWidthContent">
+    <div class="d-flex">
+      <div class="profileCard shadow">
+        <i class="fas fa-ellipsis-h moreIcon pointer"></i>
+        <img class="userAvatar" [src]="expertProfile.profileUrl || '/assets/imgs/userIcon.PNG'">
+        <h5 class="bold">{{expertProfile.fullName}}</h5>
+        <p>Expert at <u>{{expertAgency.agencyName}}</u></p>
+        <p><i class="fas fa-map-marker-alt"></i>
+          {{expertProfile.location?.location || 'N/A'}} {{expertProfile.location?.country || 'N/A'}}
+        </p>
+        <div class="socialLinks">
+          <a *ngIf="expertAgency.webUrl" [href]="expertAgency.webUrl" target="_blank">
+            <img src="/assets/imgs/gray-web-icon.png">
+          </a>
+          <a *ngIf="expertAgency.linkedinUrl" [href]="expertAgency.linkedinUrl" target="_blank">
+            <img src="/assets/imgs/linkedin.png">
+          </a>
+          <a *ngIf="expertAgency.fbUrl" [href]="expertAgency.fbUrl" target="_blank">
+            <img src="/assets/imgs/gray-fb-icon.png">
+          </a>
+          <a *ngIf="expertAgency.instaUrl" [href]="expertAgency.instaUrl" target="_blank">
+            <img *ngIf="expertAgency.instaUrl" src="/assets/imgs/insta-icon.png">
+          </a>
+        </div>
+      </div>
+      <div class="infoView">
+        <h3 class="bold">{{expertProfile.expertProfile.expertise.title}}
+          <small class="text-secondary"> @ MYR {{expertProfile.expertProfile.hourlyRate.hourlyRate}}/h</small>
+        </h3>
+        <p class="gray">Joined in {{expertProfile.timestamp | date: 'mediumDate'}} | Fluent in
+          <span *ngFor="let language of expertProfile.expertProfile.languages">{{language}}, </span>
+        </p>
+        <button *ngIf="!myOwnProfile" class="btn profileBtn btnRounded px-4 mr-3 whiteOutlinedBtn">Message</button>
+        <button *ngIf="!myOwnProfile" class="btn profileBtn btnRounded px-4 mr-3 whiteOutlinedBtn">Offer Job</button>
+        <button (click)="favUnfavExpert()" *ngIf="!myOwnProfile"
+          class="btn profileBtn btnRounded px-4 mr-3 whiteOutlinedBtn">
+          <span *ngIf="!isFavExpert()">Save as Favorite <i class="far fa-heart"></i></span>
+          <span *ngIf="isFavExpert()">Unsave as Favorite <i class="fa fa-heart"></i></span>
+        </button>
+        <button *ngIf="myOwnProfile" (click)=" updateProfile()" class="whiteOutlinedBtn btn profileBtn btnRounded px-4">
+          Update Profile <i class="far fa-edit"></i>
+        </button>
+      </div>
+      <div class="agencyLogoContainer">
+        <img *ngIf="expertAgency.agencyLogo" class="userAvatar" [src]="expertAgency.agencyLogo">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row bg-white justify-content-center topFixedTabs sticky-top">
+  <div class="col-md-12 maxWidthContent">
+    <button (click)="activeTab=btn" *ngFor="let btn of tabButtons" [class.activeBtn]="activeTab===btn"
+      class="btn btn-inactive whiteOutlinedBtn">{{btn}}</button>
+  </div>
+</div>
+
+
+<div class="mainContentSection row justify-content-center">
+  <div class="col-md-12 maxWidthContent">
+
+    <app-expert-general-profile [expertProfile]="expertProfile" *ngIf="activeTab==='General Profile'">
+    </app-expert-general-profile>
+    <app-portfolio [expertProfile]="expertProfile" *ngIf="activeTab==='Portfolio'"></app-portfolio>
+    <app-jobs-accomplished [expertProfile]="expertProfile" *ngIf="activeTab==='Jobs Accomplished'">
+    </app-jobs-accomplished>
+    <app-expert-services [expertProfile]="expertProfile" *ngIf="activeTab==='My Services'"></app-expert-services>
+
+  </div>
+</div>
+
+<app-footer *ngIf="!hideHeaderFooter"></app-footer>

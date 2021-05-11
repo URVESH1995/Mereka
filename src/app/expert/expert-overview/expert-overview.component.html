@@ -1,0 +1,145 @@
+<div class="row topNavbar fixed-top">
+    <div class="col-md-3 py-3">
+        <img routerLink="/home" src="/assets/imgs/grayLogo.png" class="pointer ml-4">
+    </div>
+    <div class="col-md-9 text-right">
+        <button (click)="navigatePage(btn.navigatePage)" *ngFor="let btn of tabButtons"
+            [class.activeBtn]="activeTab===btn.title" class="btn btn-inactive grayChoiceHover">{{btn.title}}</button>
+    </div>
+</div>
+
+<div class="parentContent bg-white">
+    <div class="row justify-content-center">
+        <div class="col-md-12 maxWidthContent">
+            <div class="borderedContent rounded p-4 mt-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Title
+                            <i *ngIf="expandTitle" (click)="expandTitle=false"
+                                class="fas fa-angle-up float-right pointer"></i>
+                            <i *ngIf="!expandTitle" (click)="expandTitle=true"
+                                class="fas fa-angle-down float-right pointer"></i>
+                        </p>
+                    </div>
+                </div>
+                <div *ngIf="expandTitle" class="row">
+                    <div class="col-md-7 leftContent">
+                        <div style="width: 92%">
+                            <h5 class="bold">Choose a title for your expertise</h5>
+                            <p class="text-secondary">Some short description here.</p>
+
+                            <div class="formContent">
+                                <div class="form-group">
+                                    <input [(ngModel)]="expertProfile.overview.title" type="text" class="form-control"
+                                        placeholder="Label">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 pl-5">
+                        <h5 class="bold mt-4">
+                            <img style="width: 35px;" src="/assets/imgs/light-icon.png">
+                            <span class="pl-2">TIPS</span>
+                        </h5>
+                        <p>Remember to allocate some time for introductions as well as any de-briefing or summary
+                            at the end of the experience.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="borderedContent rounded p-4 mt-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Description
+                            <i *ngIf="expandOverview" (click)="expandOverview=false"
+                                class="fas fa-angle-up float-right pointer"></i>
+                            <i *ngIf="!expandOverview" (click)="expandOverview=true"
+                                class="fas fa-angle-down float-right pointer"></i>
+                        </p>
+                    </div>
+                </div>
+                <div *ngIf="expandOverview" class="row">
+                    <div class="col-md-7 leftContent">
+                        <div style="width: 92%">
+                            <h5 class="bold">Give us a professional overview of what you do</h5>
+                            <p class="text-secondary">Make a detailed guideline on what they should update here.</p>
+
+                            <p class="text-secondary mb-2">1. First description here, make it concise.</p>
+                            <p class="text-secondary">2. Second description here, make it concise.</p>
+                            <div class="formContent">
+                                <div class="form-group">
+                                    <textarea [(ngModel)]="expertProfile.overview.overview" rows="7" type="text"
+                                        class="form-control" placeholder="Label"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 pl-5">
+                        <h5 class="bold mt-4">
+                            <img style="width: 35px;" src="/assets/imgs/light-icon.png">
+                            <span class="pl-2">TIPS</span>
+                        </h5>
+                        <p>Remember to allocate some time for introductions as well as any de-briefing or summary
+                            at the end of the experience.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="borderedContent rounded p-4 mt-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Price
+                            <i *ngIf="expandHourlyRate" (click)="expandHourlyRate=false"
+                                class="fas fa-angle-up float-right pointer"></i>
+                            <i *ngIf="!expandHourlyRate" (click)="expandHourlyRate=true"
+                                class="fas fa-angle-down float-right pointer"></i>
+                        </p>
+                    </div>
+                </div>
+                <div *ngIf="expandHourlyRate" class="row">
+                    <div class="col-md-7 leftContent">
+                        <div style="width: 92%">
+                            <h5 class="bold">How much will you charge your learners?</h5>
+                            <p class="text-secondary">Some short description here.</p>
+
+                            <div class="row formContent">
+                                <div class="col-md-6 pl-0">
+                                    <h5 class="bold">Hourly Rate</h5>
+                                </div>
+                                <div class="col-md-6 pr-0">
+                                    <div class="rateInputCont">
+                                        <p class="mb-0 font-14 bold">MYR</p>
+                                        <input (ngModelChange)="updateHourlyRatePerMerekaFee($event)"
+                                            [(ngModel)]="expertProfile.hourlyRate.hourlyRate" min="1" type="number"
+                                            placeholder="0.00" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 pl-5">
+                        <h5 class="bold mt-4">
+                            <img style="width: 35px;" src="/assets/imgs/copy.png">
+                            <span class="pl-2">EXAMPLE</span>
+                        </h5>
+                        <p>Description of how much experts should charge</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row fixed-bottom p-3 px-4 continueBackBtns">
+    <div class="col-md-4">
+        <button routerLink="/expertise-details" class="btn grayChoiceHover btn-light btnRounded">Back</button>
+    </div>
+    <div class="col-md-4 text-center">
+        <p (click)="saveAndExit()" class="mb-0 mt-2 pointer">Save and Exit</p>
+    </div>
+    <div class="col-md-4 text-right">
+        <button (click)="saveAndNext()" class="btn grayChoiceHover btnSecondary btnRounded">Continue</button>
+    </div>
+</div>

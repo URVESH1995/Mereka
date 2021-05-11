@@ -1,0 +1,151 @@
+.topNavbar {
+  background: #fafafa;
+  border-bottom: 1px solid #eaeaea;
+
+  img {
+    width: 200px;
+  }
+
+  .btn-inactive {
+    border-radius: 30px;
+    margin: 1em;
+    padding: 8px 20px;
+    font-weight: bold;
+  }
+
+  .activeBtn {
+    background: #eaeaea;
+  }
+}
+
+.parentContent {
+  padding-top: 7em;
+  padding-bottom: 7em;
+  height: 120vh;
+  overflow-y: scroll;
+
+  .pageHeading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 16px 0px;
+
+    .categBtnsCont {
+      text-align: right;
+
+      .cateBtn {
+        display: inline-block;
+        padding: 11px 20px;
+        font-size: 16px;
+        border-radius: 30px;
+        color: var(--primaryColor);
+        margin-right: 15px;
+        border: 1px solid #dadada;
+        cursor: pointer;
+
+        img {
+          margin-left: 5px;
+        }
+
+        &.active {
+          background: #eaeaea;
+        }
+      }
+
+      .cateBtn:last-child {
+        margin-right: 0px !important;
+      }
+    }
+  }
+
+  .borderdSection {
+    border: 1px solid #dadada;
+    border-radius: 10px;
+    margin-top: 25px;
+    padding: 35px 25px;
+
+    .borderedItem {
+      border-top: 1px solid #dadada;
+      margin: 35px 0px;
+    }
+
+    .workshopCateCont {
+      .WorkshopcateBtn {
+        display: inline-flex;
+        width: 18%;
+        margin: 15px 15px 0px 0px;
+        border-radius: 8px;
+        cursor: pointer;
+        padding: 32px 10px;
+        font-size: 18px;
+        text-align: center;
+        border: 1px solid #dcdcdc;
+        height: 110px;
+        justify-content: center;
+
+        &.selected {
+          background: #ebebeb;
+        }
+
+        &.spaceCateBtn {
+          width: 23%;
+          text-align: left;
+          padding: 30px 30px;
+          margin-right: 20px;
+
+          i {
+            float: right;
+          }
+        }
+
+        &.expertCateBtn {
+          width: 23%;
+          padding: 30px 20px;
+          margin-right: 20px;
+          height: 150px;
+
+          .expertCateCont {
+            display: inline-flex;
+            justify-content: space-between;
+            width: 95%;
+
+            .txt {
+              text-align: left;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .custom-checkbox {
+    margin-top: 15px;
+
+    .custom-control-label {
+      cursor: pointer;
+      color: var(--primaryColor);
+      padding: 5px 0px 0px 14px;
+      font-size: 16px;
+    }
+
+    .custom-control-label::before,
+    .custom-control-label::after {
+      width: 1.5rem;
+      height: 1.5rem;
+      border-color: #d8d8d8;
+    }
+  }
+
+  .custom-control-input:checked ~ .custom-control-label::before {
+    color: #fff;
+    border-color: var(--primaryColor) !important;
+    background-color: var(--primaryColor) !important;
+  }
+}
+
+.continueBackBtns {
+  button {
+    height: 45px;
+    width: 120px;
+  }
+}

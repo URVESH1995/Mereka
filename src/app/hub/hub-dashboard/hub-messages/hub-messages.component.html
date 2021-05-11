@@ -1,0 +1,37 @@
+<div class="borderdBlock">
+    <h5 class="bold mb-3">Messages to Hub Admins</h5>
+
+    <div class="membersMainCont">
+        <div class="memberCont headerRow">
+            <div style="width: 10%">
+                <input type="checkbox" class="form-control">
+            </div>
+            <p class="removeIcon"><i class="fa fa-trash pointer"></i></p>
+            <p style="visibility: hidden">Alpha</p>
+            <p style="visibility: hidden">Alpha</p>
+            <p style="visibility: hidden">Alpha</p>
+            <p style="visibility: hidden">Alpha</p>
+        </div>
+
+        <div (click)="chatDetails(chat, 'expertsTab')" *ngFor="let chat of chatWithExperts" class="memberCont pointer">
+            <div style="width: 10%">
+                <input type="checkbox" class="form-control">
+            </div>
+            <p class="userName bold">{{chat.expertDetails.fullName}}</p>
+            <p class="titleTxt bold">{{chat.jobDetails.jobTitle}}</p>
+            <p class="lastMsg">{{chat.lastMessage}}</p>
+            <p class="leave bold">{{chat.lastMessageTimestamp | date: 'short'}}</p>
+        </div>
+
+        <div (click)="chatDetails(chat, 'clientsTab')" *ngFor="let chat of chatWithClients" class="memberCont pointer">
+            <div style="width: 10%">
+                <input type="checkbox" class="form-control">
+            </div>
+            <p class="userName bold">{{chat.clientDetails.fullName}}</p>
+            <p class="titleTxt bold">{{chat.jobDetails.jobTitle}}</p>
+            <p class="lastMsg">{{chat.lastMessage}}</p>
+            <p class="leave bold">{{chat.lastMessageTimestamp | date: 'short'}}</p>
+        </div>
+
+    </div>
+</div>

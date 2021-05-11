@@ -1,0 +1,26 @@
+<div class="parentContent bg-white">
+    <div class="logoContent py-3">
+        <img routerLink="/home" src="/assets/imgs/logo2.PNG" class="pointer ml-5">
+    </div>
+
+    <div class="infoContent row justify-content-center">
+        <div class="col-md-6">
+            <div class="leftContent">
+                <h1>Welcome! Try out the platform features for hub</h1>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellendus dicta odio temporibus
+                    aspernatur placeat id cumque asperiores sed facilis voluptas vitae voluptates voluptate illum omnis
+                    excepturi, nulla repudiandae illo cum?
+                </p>
+                <button routerLink="/hub-basic-details" class="btn btn-dark btnRounded px-4">Get started now</button>
+            </div>
+        </div>
+        <div class="col-md-4 px-5 mt-5">
+            <div *ngFor="let block of featureBlocks" class="featuredBlock p-4 bg-white mb-3">
+                <img [src]="block.imageUrl">
+                <p class="bold mb-0">{{block.title}}</p>
+                <p class="mb-0">{{block.shortDescription}}</p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+<div class="row justify-content-center pt-4">
+    <div class="col-sm-11 px-0">
+        <img src="/assets/imgs/M-Logo2.PNG" height="25px">
+        <h5 class="mt-3 mb-1 bold">Post A Job</h5>
+        <p class="mb-0 font-13">{{remaining}} items to submit</p>
+        <div class="progress">
+            <div class="progress-bar bgPrimary" [style.width]="progress +'%'"></div>
+        </div>
+        <div class="row stepCont" (click)="navigateMenu(i)" *ngFor="let menu of postJobMenu; index as i"
+            [ngClass]="{'active': activeMenu === menu.title, 'completed': isPropertyFilled(i)}">
+            <div class="col-sm-2 pl-0 pr-2">
+                <img class="iconImg" *ngIf="menu.img" [src]="menu.img">
+                <span *ngIf="menu.icon" [innerHTML]="menu.icon"></span>
+            </div>
+            <div class="col-sm-7 px-0">
+                <p class="font-17 mb-0 bold">{{menu.title}}</p>
+            </div>
+            <div *ngIf="menu.title !== 'Preview'" class="col-sm-3 pr-0 d-flex justify-content-end">
+                <div class="tickIconCont">
+                    <i class="fas fa-check"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

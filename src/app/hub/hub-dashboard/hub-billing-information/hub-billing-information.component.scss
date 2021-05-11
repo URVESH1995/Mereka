@@ -1,0 +1,139 @@
+.borderdBlock {
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  background: white;
+  padding: 45px 32px;
+
+  .lastWithdrawlCont {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    padding: 30px;
+    margin-top: 20px;
+
+    .desp {
+      width: 70%;
+    }
+  }
+
+  .cardInfoCont {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .creditCardInfo {
+      width: 50%;
+      border: 1px solid #dcdcdc;
+      border-radius: 8px;
+      min-height: 120px;
+      padding: 5px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      &.addCardBtn {
+        min-height: 60px;
+        text-align: center;
+        justify-content: center;
+        font-weight: bold;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+      }
+    }
+
+    .addCardBtn:hover {
+      background: var(--primaryColor);
+      color: white;
+    }
+  }
+}
+
+.membersMainCont {
+  border: 1px solid #dadada;
+  border-radius: 10px;
+  margin-top: 24px;
+
+  .headerRow {
+    display: flex;
+    align-items: center;
+    min-height: 100px;
+    border-bottom: 1px solid #dadada;
+    background: #ececec;
+    padding: 5px 30px;
+  }
+
+  .historyCont {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 30px;
+    min-height: 130px;
+    border-bottom: 1px solid #dcdcdc;
+
+    .desp {
+      width: 50%;
+    }
+
+    .primaryBtn {
+      min-width: 220px;
+      height: 48px;
+      margin-left: 15px;
+    }
+  }
+
+  .historyCont:last-child {
+    border-bottom: 0px;
+  }
+}
+
+.portfolioModal {
+  .form-group {
+    input {
+      height: 50px;
+    }
+  }
+
+  label {
+    font-size: 14px;
+    margin: 8px 0;
+  }
+
+  .modal-footer {
+    background: #f1f1f1;
+
+    .btn {
+      height: 50px;
+    }
+    .cancelBtn {
+      background: #ffffff;
+      border: 1px solid #d1d1d1;
+    }
+  }
+
+  .infoIcon {
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    object-fit: contain;
+    margin-top: -4px;
+    cursor: pointer;
+  }
+  .rateInputCont {
+    border-radius: 5px;
+    height: 45px;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #ced4da;
+    padding-left: 20px;
+
+    input {
+      height: unset;
+      border: none;
+      text-align: right;
+    }
+  }
+}

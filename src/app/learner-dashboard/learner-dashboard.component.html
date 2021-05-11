@@ -1,0 +1,104 @@
+<app-navbar></app-navbar>
+
+<div class="row justify-content-center parentContent">
+  <div class="col-md-12 maxWidthContent">
+    <h2>{{userAuth.currentUser.fullName}}'s Dashboard</h2>
+    <div class="d-flex mt-4">
+
+      <div class="leftMenu">
+        <p class="pl-1 pb-3" *ngFor="let menu of sideMenuItems">
+          <span (click)="switchMenu(menu)" [class.activeTab]="activeTab===menu"
+            class="grayChoiceHover pointer">{{menu}}</span>
+        </p>
+      </div>
+
+      <div class="rightContent pl-4">
+        <div *ngIf="activeTab=='My Interests'" class="borderdBlock">
+          <h5 class="bold mb-3">My Interests
+            <span class="float-right pointer small bold">
+              <u routerLink="/create-learner-profile">Edit Interests</u>
+            </span>
+          </h5>
+          <div class="d-flex">
+            <div style="width: 85%">
+              <p class="mb-2 font-17 bold">Personalize Content</p>
+              <p class="text-secondary mb-0">
+                Personalize the content of my homepage according to my interests
+              </p>
+            </div>
+            <div class="switchToggler pt-3">
+              <label class="switch">
+                <input type="checkbox">
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+          <hr class="my-5" />
+
+          <h5 class="bold mb-3">My Experiences
+            <span class="float-right pointer small bold">
+              <u routerLink="/create-learner-profile">Edit Experiences</u>
+            </span>
+          </h5>
+          <p class="text-secondary">
+            I am hoping to find Experiences where I can gain new skills, learn something new and meet new people.
+            <br /><br />
+            I am interested to discover Workshops and Courses.<br /><br />
+            Here are the themes I am looking for in Experiences:
+          </p>
+          <div class="row">
+            <div *ngFor="let interest of learnerProfile.interestedExperiences" class="col-md-4 pl-0 mb-3">
+              <div class="innerBlock text-center p-4">
+                <p class="bold m-0">{{interest}} <i class="fas fa-check"></i></p>
+              </div>
+            </div>
+          </div>
+          <hr class="my-5" />
+
+          <h5 class="bold mb-3">Spaces
+            <span class="float-right pointer small bold">
+              <u routerLink="/create-learner-profile">Edit Spaces</u>
+            </span>
+          </h5>
+          <p class="text-secondary">Here are the spaces I am looking for:</p>
+          <div class="row">
+            <div *ngFor="let interest of learnerProfile.interestedSpaces" class="col-md-4 pl-0 mb-3">
+              <div class="innerBlock text-center p-4">
+                <p class="bold m-0">{{interest}} <i class="fas fa-check"></i></p>
+              </div>
+            </div>
+          </div>
+          <hr class="my-5" />
+
+          <h5 class="bold mb-3">Experts
+            <span class="float-right pointer small bold">
+              <u routerLink="/create-learner-profile">Edit Experts</u>
+            </span>
+          </h5>
+          <p class="text-secondary">Here are some of the Experts I am interested in:</p>
+          <div class="row">
+            <div *ngFor="let interest of learnerProfile.interestedExperts" class="col-md-4 pl-0 mb-3">
+              <div class="innerBlock p-4">
+                <p>
+                  <img src="/assets/imgs/design.png">
+                  <i class="fas fa-check float-right"></i>
+                </p>
+                <p class="bold m-0">{{interest}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <app-my-memberships *ngIf="activeTab=='My Memberships'"></app-my-memberships>
+        <app-learner-notify-settings *ngIf="activeTab=='Notifications'"></app-learner-notify-settings>
+        <app-learner-billing-info *ngIf="activeTab==='Billing Information'"></app-learner-billing-info>
+        <app-learner-privacy-settings *ngIf="activeTab==='Privacy'"></app-learner-privacy-settings>
+        <app-learner-security-settings *ngIf="activeTab==='Security'"></app-learner-security-settings>
+        <app-learner-transaction-history *ngIf="activeTab==='Transaction History'"></app-learner-transaction-history>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

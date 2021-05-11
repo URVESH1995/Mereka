@@ -1,0 +1,49 @@
+<div class="borderdBlock">
+  <h5 class="bold mb-3">Memberships
+    <span class="small bold float-right pointer">
+      <u>Explore more Hubs</u>
+    </span>
+  </h5>
+
+  <div *ngIf="myAgency">
+    <p class="text1">You are a member of {{agencyOwner}}'s Hub</p>
+    <div class="membersMainCont">
+      <div class="memberCont headerRow">
+        <p class="hubName">Hub Name</p>
+        <p class="date">Date Joined</p>
+        <p class="plan">Plan</p>
+        <p class="leave">Leave Hub</p>
+      </div>
+      <div class="memberCont">
+        <p class="hubName">{{myAgency.agencyName}}</p>
+        <p class="date">{{joinedDate | date:'mediumDate'}}</p>
+        <p class="plan">Free Member</p>
+        <p data-toggle="modal" data-target="#leaveHubModal" class="leave"><i class="fas fa-user-slash"></i></p>
+      </div>
+    </div>
+  </div>
+
+  <p *ngIf="!myAgency" class="text-center my-5 text-secondary">You're not a member of any Hub!</p>
+</div>
+
+<div class="modal fade" id="leaveHubModal">
+  <div class="modal-dialog myModal modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" id="leaveHubModal" class="close" data-dismiss="modal">
+          <i class="far fa-times-circle"></i>
+        </button>
+      </div>
+      <div class="modal-body pt-0 px-5 text-center">
+        <div *ngIf="!myOwnAgency">
+          <h4 class="mb-3 bold lh-5">We regret to see you leave, are you sure?</h4>
+          <p class="appTxt mb-4">You will lose access to the insider news and events of the Hub</p>
+        </div>
+        <h4 *ngIf="myOwnAgency" class="mb-3 bold lh-5">You cannot leave your own Hub!</h4>
+        <button data-dismiss="modal" class="btn primaryBtn btn-block">No, I have changed my mind</button>
+        <button (click)="leaveHub()" [disabled]="myOwnAgency" data-dismiss="modal"
+          class="btn primaryBtn whiteBtn btn-block">Yes, I'm sure I want to leave</button>
+      </div>
+    </div>
+  </div>
+</div>

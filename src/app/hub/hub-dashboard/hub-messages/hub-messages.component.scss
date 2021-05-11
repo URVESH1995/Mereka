@@ -1,0 +1,85 @@
+.borderdBlock {
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  background: white;
+  padding: 45px 32px;
+
+  .membersMainCont {
+    border: 1px solid #dadada;
+    border-radius: 10px;
+    margin-top: 24px;
+
+    .memberCont {
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #dadada;
+      padding: 5px 30px;
+      position: relative;
+
+      p {
+        margin: 0px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+
+        &.removeIcon {
+          position: absolute;
+          left: 15%;
+        }
+
+        &.userName {
+          width: 10%;
+        }
+
+        &.titleTxt {
+          width: 20%;
+        }
+
+        &.lastMsg {
+          width: 40%;
+        }
+
+        &.leave {
+          text-align: center;
+
+          i {
+            font-size: 25px;
+            cursor: pointer;
+          }
+        }
+      }
+
+      &.headerRow {
+        background: #ececec;
+        border-radius: 10px 10px 0px 0px;
+      }
+    }
+    .memberCont:last-child {
+      border-bottom: 0px !important;
+    }
+  }
+}
+
+.modal-header {
+  border: none;
+}
+
+.modal-body {
+  hr {
+    margin-top: 10px;
+  }
+  .lh-5 {
+    line-height: 1.5;
+  }
+  .primaryBtn {
+    height: 55px;
+    margin-bottom: 15px;
+  }
+  .whiteBtn {
+    border: 1px solid #dadada;
+    background-color: white;
+    color: var(--primaryColor);
+  }
+}

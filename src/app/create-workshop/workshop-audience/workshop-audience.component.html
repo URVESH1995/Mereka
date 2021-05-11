@@ -1,0 +1,303 @@
+<div class="row topNavbar fixed-top">
+    <div class="col-md-3 py-3">
+        <img routerLink="/home" src="/assets/imgs/grayLogo.png" class="pointer ml-4">
+    </div>
+    <div class="col-md-9 text-right">
+        <button (click)="navigatePage(btn.navigatePage)" *ngFor="let btn of tabButtons"
+            [class.activeBtn]="activeTab===btn.title" class="btn btn-inactive grayChoiceHover">{{btn.title}}</button>
+    </div>
+</div>
+
+<div class="parentContent bg-white">
+    <div class="row justify-content-center">
+        <div class="col-md-12 maxWidthContent">
+            <h3 class="bold my-3 text-center">Doing great so far</h3>
+            <div class="borderdSection p-4 mt-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Experience Access
+                            <i *ngIf="expandAccessibility" (click)="expandAccessibility=false"
+                                class="fas fa-angle-up float-right pointer"></i>
+                            <i *ngIf="!expandAccessibility" (click)="expandAccessibility=true"
+                                class="fas fa-angle-down float-right pointer"></i>
+                        </p>
+                    </div>
+                </div>
+                <div *ngIf="expandAccessibility" class="row">
+                    <div class="col-md-7">
+                        <div class="leftContent">
+                            <h5 class="bold">Who is your experience open to?</h5>
+                            <p class="text-secondary">
+                                Select the type of audience that can access your experience.
+                            </p>
+
+                            <div (click)="myWorkshopObj.accessibility='everybody'; clearOtherPriceValues()"
+                                *ngIf="myWorkshopObj.accessibility==='members'"
+                                class="toggleBtnContainer d-flex p-1 pointer">
+                                <span class="pt-1">Everybody</span>
+                                <button class="btn btn-dark btn-sm">Members</button>
+                            </div>
+                            <div (click)="myWorkshopObj.accessibility='members'; clearOtherPriceValues()"
+                                *ngIf="myWorkshopObj.accessibility==='everybody'"
+                                class="toggleBtnContainer d-flex p-1 pointer">
+                                <button class="btn btn-dark btn-sm">Everybody</button>
+                                <span class="pt-1">Members</span>
+                            </div>
+
+                            <!-- <div *ngIf="myWorkshopObj.accessibility==='members'"
+                                class="toggleBtnContainer d-flex py-1 pointer">
+                                <span (click)="myWorkshopObj.accessibility='everybody'; clearOtherPriceValues()"
+                                    class="pt-1">Everybody</span>
+                                <span (click)="myWorkshopObj.accessibility='both'; clearOtherPriceValues()"
+                                    class="pt-1">Both</span>
+                                <button class="btn btn-dark btn-sm blackBgBtn">Members</button>
+                            </div>
+                            <div *ngIf="myWorkshopObj.accessibility==='everybody'"
+                                class="toggleBtnContainer d-flex py-1 pointer">
+                                <button class="btn btn-dark btn-sm blackBgBtn">Everybody</button>
+                                <span (click)="myWorkshopObj.accessibility='both';clearOtherPriceValues()"
+                                    class="pt-1">Both</span>
+                                <span (click)="myWorkshopObj.accessibility='members';clearOtherPriceValues()"
+                                    class="pt-1">Members</span>
+                            </div>
+                            <div *ngIf="myWorkshopObj.accessibility==='both'"
+                                class="toggleBtnContainer d-flex py-1 pointer">
+                                <span (click)="myWorkshopObj.accessibility='everybody';clearOtherPriceValues()"
+                                    class="pt-1">Everybody</span>
+                                <button class="btn btn-dark btn-sm blackBgBtn">Both</button>
+                                <span (click)="myWorkshopObj.accessibility='members';clearOtherPriceValues()"
+                                    class="pt-1">Members</span>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="col-md-5 pl-5">
+                        <h5 class="bold">
+                            <img style="width: 35px;" src="/assets/imgs/light-icon.png">
+                            <span class="pl-2">TIPS</span>
+                        </h5>
+                        <p>
+                            If your Experience is open to everybody, this includes both the general public and members.
+                            Members access, on the other hand, is granted exclusively to members of a Hub.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="borderdSection p-4 mt-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Guests
+                            <i *ngIf="expandGuests" (click)="expandGuests=false"
+                                class="fas fa-angle-up float-right pointer"></i>
+                            <i *ngIf="!expandGuests" (click)="expandGuests=true"
+                                class="fas fa-angle-down float-right pointer"></i>
+                        </p>
+                    </div>
+                </div>
+                <div *ngIf="expandGuests" class="row">
+                    <div class="col-md-12">
+                        <h5 class="bold">How many learners can you host?</h5>
+                        <p class="text-secondary mb-4 w-75">
+                            You should ensure that you are able to provide each and every learner the time
+                            and guidance needed for them to have a fulfilling experience.
+                        </p>
+
+                        <input type="number" min="1" class="learnerInput" [(ngModel)]="myWorkshopObj.guestLearners">
+                        <span class="pl-3">Learners</span>
+                        <div style="width: 40%;" class="custom-slider rangebbarContainer">
+                            <!-- <input (change)="updateGuestsCount($event)" style="width: 40%" type="range" min="1"
+                                max="1000" [value]="myWorkshopObj.guestLearners"> -->
+                            <ngx-slider (valueChange)="updateGuestsCount($event)"
+                                [(value)]="myWorkshopObj.guestLearners" [options]="rangeBarOptions"></ngx-slider>
+                        </div>
+                        <hr class="my-4" />
+
+                        <h5 class="bold">Can your learner book as a group?</h5>
+                        <div class="custom-control custom-radio pointer my-3">
+                            <input (change)="myWorkshopObj.maximumBookableGroupByLearner=1"
+                                [(ngModel)]="myWorkshopObj.canLearnerBookAsGroup" type="radio"
+                                class="custom-control-input" id="customRadio1" name="bookAsGroup" [value]="false">
+                            <label class="custom-control-label" for="customRadio1">
+                                One reservation is only meant for one person</label>
+                        </div>
+                        <div class="custom-control custom-radio pointer">
+                            <input [(ngModel)]="myWorkshopObj.canLearnerBookAsGroup" type="radio"
+                                class="custom-control-input" id="customRadio2" name="bookAsGroup" [value]="true">
+                            <label class="custom-control-label mt-1" for="customRadio2">
+                                Yes, but there is a maximum of</label>
+                            <span>
+                                <button (click)="decreaseGroupMembers()"
+                                    class="btn btnRounded border whiteOutlinedBtn ml-3 mr-2 btn-sm"><i
+                                        class="fas fa-minus text-secondary"></i>
+                                </button>
+                                <span class="pt-3">{{myWorkshopObj.maximumBookableGroupByLearner}}</span>
+                                <button (click)="increaseGroupMembers()"
+                                    class="btn btnRounded border whiteOutlinedBtn ml-2 btn-sm"><i
+                                        class="fas fa-plus text-secondary"></i>
+                                </button>
+                            </span>
+                        </div>
+                        <hr class="my-4" />
+
+                        <h5 class="bold">Who is the target audience for your experience</h5>
+                        <p class="text-secondary w-75">You should ensure that you are able to provide each and
+                            every learner the time and guidance needed for them to have a fulfilling
+                            experience.
+                        </p>
+
+                        <div class="custom-control custom-radio pointer my-3">
+                            <input (change)="emptyGroupsArray()" [(ngModel)]="myWorkshopObj.targetAudience" type="radio"
+                                class="custom-control-input" id="customRadio3" name="targetAudience"
+                                [value]="'Open to Everyone'">
+                            <label class="custom-control-label" for="customRadio3">
+                                Open to Everyone</label>
+                        </div>
+                        <div class="custom-control custom-radio pointer">
+                            <input (change)="emptyGroupsArray()" [(ngModel)]="myWorkshopObj.targetAudience" type="radio"
+                                class="custom-control-input" id="customRadio4" name="targetAudience"
+                                [value]="'Specific Groups'">
+                            <label class="custom-control-label" for="customRadio4">
+                                Specific Groups</label>
+                        </div>
+                        <div class="row pl-5 mt-4">
+                            <div class="col-md-3 pl-0">
+                                <div class="custom-control custom-checkbox mb-2">
+                                    <input [checked]="isGroupAdded('Group - Friendly')"
+                                        (change)="updateTargetGroups('Group - Friendly')" type="checkbox"
+                                        class="custom-control-input" id="customCheckGroup1" name="example1">
+                                    <label class="custom-control-label" for="customCheckGroup1">Group - Friendly</label>
+                                </div>
+                                <div class="custom-control custom-checkbox mb-2">
+                                    <input [checked]="isGroupAdded('Family - Friendly')"
+                                        (change)="updateTargetGroups('Family - Friendly')" type="checkbox"
+                                        class="custom-control-input" id="customCheckGroup2" name="example1">
+                                    <label class="custom-control-label" for="customCheckGroup2">Family -
+                                        Friendly</label>
+                                </div>
+                                <div class="custom-control custom-checkbox mb-2">
+                                    <input [checked]="isGroupAdded('Kids - Activities')"
+                                        (change)="updateTargetGroups('Kids - Activities')" type="checkbox"
+                                        class="custom-control-input" id="customCheckGroup3" name="example1">
+                                    <label class="custom-control-label" for="customCheckGroup3">Kids -
+                                        Activities</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3 pl-0">
+                                <div class="custom-control custom-checkbox mb-2">
+                                    <input [checked]="isGroupAdded('For Students')"
+                                        (change)="updateTargetGroups('For Students')" type="checkbox"
+                                        class="custom-control-input" id="customCheckGroup4" name="example1">
+                                    <label class="custom-control-label" for="customCheckGroup4">For Students</label>
+                                </div>
+                                <div class="custom-control custom-checkbox mb-2">
+                                    <input [checked]="isGroupAdded('For Couples')"
+                                        (change)="updateTargetGroups('For Couples')" type="checkbox"
+                                        class="custom-control-input" id="customCheckGroup5" name="example1">
+                                    <label class="custom-control-label" for="customCheckGroup5">For Couples</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="borderdSection p-4 mt-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Level of Expertise
+                            <i *ngIf="expandExpertise" (click)="expandExpertise=false"
+                                class="fas fa-angle-up float-right pointer"></i>
+                            <i *ngIf="!expandExpertise" (click)="expandExpertise=true"
+                                class="fas fa-angle-down float-right pointer"></i>
+                        </p>
+                    </div>
+                </div>
+                <div *ngIf="expandExpertise" class="row locationBlock">
+                    <div class="col-md-7 leftContent">
+                        <h5 class="bold">What level of expertise does your audience require, if any?</h5>
+                        <p class="text-secondary">
+                            Description of why we need to know level of expertise for user.
+                        </p>
+
+                        <div class="custom-control custom-radio pointer mb-3">
+                            <input [(ngModel)]="myWorkshopObj.requiredLevelOfExpertise" type="radio"
+                                class="custom-control-input" id="expertiseRadio1" name="expertiseRadio"
+                                value="Beginner">
+                            <label class="custom-control-label" for="expertiseRadio1">Beginner</label>
+                        </div>
+                        <div class="custom-control custom-radio pointer mb-3">
+                            <input [(ngModel)]="myWorkshopObj.requiredLevelOfExpertise" type="radio"
+                                class="custom-control-input" id="expertiseRadio2" name="expertiseRadio"
+                                value="Intermediate">
+                            <label class="custom-control-label" for="expertiseRadio2">Intermediate</label>
+                        </div>
+                        <div class="custom-control custom-radio pointer mb-3">
+                            <input [(ngModel)]="myWorkshopObj.requiredLevelOfExpertise" type="radio"
+                                class="custom-control-input" id="expertiseRadio3" name="expertiseRadio"
+                                value="Advanced">
+                            <label class="custom-control-label" for="expertiseRadio3">Advanced</label>
+                        </div>
+
+                        <div
+                            *ngIf="myWorkshopObj.requiredLevelOfExpertise==='Intermediate' || myWorkshopObj.requiredLevelOfExpertise==='Advanced'">
+                            <p class="text-secondary mt-4">What skills does your experience need to be Advanced in?</p>
+                            <tag-input #input [modelAsStrings]="true" [placeholder]="'Add skill'"
+                                [secondaryPlaceholder]="'Add skill'" [(ngModel)]="myWorkshopObj.requiredskillset">
+                                <tag-input-dropdown [showDropdownIfEmpty]="true"></tag-input-dropdown>
+                            </tag-input>
+                        </div>
+                    </div>
+                    <div class="col-md-5 pl-5">
+                        <h5 class="bold">
+                            <img style="width: 35px;" src="/assets/imgs/copy.png">
+                            <span class="pl-2">EXAMPLE</span>
+                        </h5>
+                        <p>Description of how they should decide duration of their experience. Make sure
+                            mention maximum number of skills to include.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="borderdSection p-4 mt-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Language
+                            <i *ngIf="expandLanguages" (click)="expandLanguages=false"
+                                class="fas fa-angle-up float-right pointer"></i>
+                            <i *ngIf="!expandLanguages" (click)="expandLanguages=true"
+                                class="fas fa-angle-down float-right pointer"></i>
+                        </p>
+                    </div>
+                </div>
+                <div *ngIf="expandLanguages" class="row locationBlock">
+                    <div class="col-md-12">
+                        <h5 class="bold">What language will you be hosting in?</h5>
+                        <ng-select [(ngModel)]="myWorkshopObj.mainLanguage" [items]="dataHelper.languages"
+                            placeholder="Choose language"></ng-select>
+
+                        <hr class="my-4" />
+                        <h4 class="bold">Do you know any other language? (optional)</h4>
+                        <tag-input #input [modelAsStrings]="true" [placeholder]="'Add language'"
+                            [secondaryPlaceholder]="'Add language'" [(ngModel)]="myWorkshopObj.otherLanguages">
+                            <tag-input-dropdown [showDropdownIfEmpty]="true"></tag-input-dropdown>
+                        </tag-input>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row fixed-bottom p-3 px-4 continueBackBtns">
+    <div class="col-md-4">
+        <button routerLink="/create-workshop" class="btn grayChoiceHover btn-light btnRounded">Back</button>
+    </div>
+    <div class="col-md-4 text-center">
+        <button (click)="dataHelper.saveWorkshopAsDraft()" class="btn grayChoiceHover btnSecondary btnRounded">Save
+            Draft</button>
+    </div>
+    <div class="col-md-4 text-right">
+        <button (click)="saveAndNext()" class="btn grayChoiceHover btnSecondary btnRounded">Continue</button>
+    </div>
+</div>

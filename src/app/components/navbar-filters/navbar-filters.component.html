@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="row col-md-10 bg-white roundedBar p-2">
+        <div class="col-md-3 pl-0">
+            <div *ngIf="workshopFilters.type==='online'" class="toggleBtnContainer d-flex p-1">
+                <i (click)="workshopFilters.type='physical'" class="fas fa-running pointer soloIcon"></i>
+                <button class="btn btn-dark blackBgBtn btn-sm">
+                    <i class="fas fa-desktop"></i> Online
+                </button>
+            </div>
+            <div *ngIf="workshopFilters.type==='physical'" class="toggleBtnContainer d-flex p-1">
+                <button class="btn btn-dark blackBgBtn btn-sm">
+                    <i class="fas fa-running"></i> Physical
+                </button>
+                <i (click)="workshopFilters.type='online'" class="fas fa-desktop pointer soloIcon"></i>
+            </div>
+        </div>
+        <div class="col-md-3 d-flex dropdown borderedColumn">
+            <!-- <i class="fas fa-shapes filterIcons"></i> -->
+            <img class="categoryIcon" src="/assets/imgs/category.png">
+            <p [class.selectedCategory]="workshopFilters.category" class="pointer mb-0 text-secondary"
+                data-toggle="dropdown" style="white-space: nowrap; overflow: hidden;text-overflow: ellipsis;">
+                {{workshopFilters.category || 'Select a category'}}</p>
+            <div class="dropdown-menu categoryDropdown shadow">
+                <div class="innerContent">
+                    <p *ngFor="let category of workshopCategories; index as i" class="dropdown-item"
+                        (click)="workshopFilters.category=category">
+                        <span class="p-3">{{category}}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 d-flex borderedColumn">
+            <i class="fas fa-map-marker-alt filterIcons"></i>
+            <ngxgeo-autocomplete id="autoCompleteOnFilters" [userSettings]="userSettings"
+                (componentCallback)="autoCompleteCallback($event)">
+            </ngxgeo-autocomplete>
+        </div>
+        <div class="col-md-3 d-flex borderedColumn">
+            <i class="fas fa-calendar-check filterIcons"></i>
+            <input [class.selectedCategory]="workshopFilters.date" [(ngModel)]="workshopFilters.date" type="date"
+                placeholder="Enter date" class="form-control">
+        </div>
+    </div>
+    <div class="col-md-2">
+        <i [class.disabled]="isAnyInputMissing()" (click)="searchWorkshops()"
+            class="fa fa-search searchIcon pointer"></i>
+        <!-- <img class="searchIcon pointer" src="/assets/imgs/search.png"> -->
+    </div>
+</div>

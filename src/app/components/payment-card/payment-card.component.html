@@ -1,0 +1,58 @@
+<div class="paymentCont">
+    <h4 class="bold">Select Your Payment Method</h4>
+    <p class="my-4">Instantly access the production capacity of over 3,000 manufacturers with wide-ranging
+        capabilities, materials, and certifications rights from your desktop.</p>
+    <p class="font-18 mb-4">Payment Information</p>
+    <div class="form-group mb-4">
+        <label class="mb-3 font-15 bold">Name on Card</label>
+        <input type="text" placeholder="Enter Name" class="form-control" [(ngModel)]="paymentObj.cardName">
+        <span class="red-alert" *ngIf="submitted && 
+            (!paymentObj.cardName || paymentObj.cardName.length<3 || paymentObj.cardName.length>20)">
+            Card Name of 3 to 20 characters is required. </span>
+    </div>
+    <div class="form-group mb-4">
+        <label class="mb-3 font-15 bold">Card Number</label>
+        <input type="text" placeholder="Card Number" class="form-control" [(ngModel)]="paymentObj.cardNumber">
+        <span class="red-alert" *ngIf="submitted && 
+          (!paymentObj.cardNumber || paymentObj.cardNumber.length!=16 || invalidCardNumber() )">
+            Invalid Card Number. Valid card nummber should contain 16 digits only. </span>
+    </div>
+    <div class="row">
+        <div class="col-sm-4 pl-0">
+            <div class="form-group mb-4">
+                <label class="mb-3 font-15 bold">Expiry Month</label>
+                <ng-select [items]="suggestedMonths" [(ngModel)]="paymentObj.expiryMonth">
+                </ng-select>
+                <span class="red-alert" *ngIf="submitted && !paymentObj.expiryMonth ">
+                    Card expiry month is required. </span>
+            </div>
+        </div>
+        <div class="col-sm-4 px-1">
+            <div class="form-group mb-4">
+                <label class="mb-3 font-15 bold">Year</label>
+                <ng-select [items]="suggestedYears" [(ngModel)]="paymentObj.expiryYear">
+                </ng-select>
+                <span class="red-alert" *ngIf="submitted && !paymentObj.expiryMonth ">
+                    Card expiry year is required. </span>
+            </div>
+        </div>
+        <div class="col-sm-4 pr-0 pl-0">
+            <div class="form-group mb-4">
+                <label class="mb-3 font-15 bold">CVC</label>
+                <input type="number" placeholder="Enter" class="form-control cvvInput" min="100" max="9999"
+                    [(ngModel)]="paymentObj.cvc">
+                <span class="red-alert" *ngIf="submitted && 
+              (!paymentObj.cvc || paymentObj.cvc<100 || paymentObj.cvc>9999)">
+                    Card CVC number of 3 to 4 digits is required. </span>
+            </div>
+        </div>
+    </div>
+
+    <button (click)="confirmPayment()" class="btn checkuutBtn btn-block">
+        Pay RM {{deductionAmount}} with Stripe Checkout</button>
+
+    <div class="cryptedBtn">
+        <i class="fas fa-lock"></i>
+        <p class="font-13 mb-0 bold pl-2">Your credit card information is encrypted</p>
+    </div>
+</div>

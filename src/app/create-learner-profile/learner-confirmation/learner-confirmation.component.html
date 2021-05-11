@@ -1,0 +1,87 @@
+<div class="row topNavbar fixed-top">
+  <div class="col-md-3 py-3 px-0">
+    <img routerLink="/home" src="/assets/imgs/grayLogo.png" class="pointer ml-4">
+  </div>
+  <div class="col-md-9 text-right">
+    <button *ngFor="let btn of tabButtons" [class.activeBtn]="activeTab===btn.title"
+      class="btn btn-inactive">{{btn.title}}</button>
+  </div>
+</div>
+
+<div class="parentContent">
+
+  <div class="bannerContent">
+    <img *ngIf="learnerProfile.coverImage" [src]="learnerProfile.coverImage">
+  </div>
+
+  <div class="basicProfileInfo bg-white row justify-content-center py-4">
+    <div class="col-md-12 maxWidthContent">
+      <div class="d-flex">
+        <div class="profileCard shadow">
+          <i class="fas fa-ellipsis-h moreIcon pointer"></i>
+          <img class="userAvatar" [src]="currentUser.profileUrl || '/assets/imgs/userIcon.PNG'">
+          <h5 class="bold">{{currentUser.fullName}}</h5>
+          <p>Learner</p>
+          <p><i class="fas fa-map-marker-alt"></i> {{currentUser.location.city}}, {{currentUser.location.country}}
+          </p>
+          <div class="socialLinks">
+            <a *ngIf="learnerProfile.webUrl" [href]="learnerProfile.webUrl" target="_blank">
+              <img src="/assets/imgs/gray-web-icon.png">
+            </a>
+            <a *ngIf="learnerProfile.linkedinUrl" [href]="learnerProfile.linkedinUrl" target="_blank">
+              <img src="/assets/imgs/linkedin.png">
+            </a>
+            <a *ngIf="learnerProfile.fbUrl" [href]="learnerProfile.fbUrl" target="_blank">
+              <img src="/assets/imgs/gray-fb-icon.png">
+            </a>
+            <a *ngIf="learnerProfile.instaUrl" [href]="learnerProfile.instaUrl" target="_blank">
+              <img src="/assets/imgs/insta-icon.png">
+            </a>
+          </div>
+        </div>
+        <div class="infoView">
+          <h3 class="bold">Interested in {{learnerProfile.interestedThemes[0] || 'N/A'}}</h3>
+          <p class="gray">Joined in {{currentUser.timestamp | date:'mediumDate'}} |
+            <span>Fluent in {{learnerProfile.language}}
+              <span *ngIf="learnerProfile.otherLanguages">
+                <span *ngFor="let lang of learnerProfile.otherLanguages">, {{lang}}</span>
+              </span>
+            </span>
+          </p>
+          <button class="btn profileBtn btnRounded px-4 mr-3">Message</button>
+          <button class="btn profileBtn btnRounded px-4 mr-3">
+            Invite to become Expert <i class="fas fa-plus ml-2"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row bg-white justify-content-center topFixedTabs sticky-top">
+    <div class="col-md-12 maxWidthContent">
+      <button (click)="activeTab2=btn" *ngFor="let btn of tabButtons2" [class.activeBtn]="activeTab2===btn"
+        class="btn btn-inactive">{{btn}}</button>
+    </div>
+  </div>
+
+  <div class="mainContentSection row justify-content-center">
+    <div class="col-md-12 maxWidthContent">
+      <app-learner-general-profile [hideBottomViews]="true" [learnerProfile]="learnerProfile"
+        *ngIf="activeTab2=='General Profile'">
+      </app-learner-general-profile>
+      <app-learner-background *ngIf="activeTab2==='My Background'" [learnerProfile]="learnerProfile">
+      </app-learner-background>
+    </div>
+  </div>
+
+</div>
+
+<div class="row fixed-bottom p-3 px-4 continueBackBtns">
+  <div class="col-md-6">
+    <button (click)="goBackToSetupProfile()" class="btn btn-light btnRounded">Back</button>
+  </div>
+  <div class="col-md-6 text-right">
+    <button (click)="saveLearnerProfile()" class="btn btnSecondary btnRounded darked">Continue</button>
+  </div>
+</div>

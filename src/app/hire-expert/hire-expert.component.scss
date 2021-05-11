@@ -1,0 +1,84 @@
+.bgCont {
+  background: url("/assets/imgs/Hire_ExpertBg.png") center center no-repeat;
+  background-size: cover;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+
+  .primaryBtn {
+    background-color: #161616;
+    border-color: #161616;
+    padding: 0px;
+    height: 45px;
+    width: 180px;
+    border-radius: 5px;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+  }
+}
+
+.optsCont {
+  background-color: white;
+  min-height: 50vh;
+  justify-content: center;
+  padding: 1em 0em 4em 0em;
+
+  .skillsCard {
+    border: 0px;
+    border-radius: 10px;
+    box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
+    min-height: 25vh;
+    text-align: center;
+    padding: 20px 10px;
+    cursor: pointer;
+    margin-top: 2em;
+
+    .title {
+      font-size: 15px;
+      font-weight: 500;
+      margin: 0px;
+      min-height: 44.8px;
+    }
+
+    .skillIcon {
+      margin-top: 20px;
+      height: 85px;
+    }
+  }
+}
+
+.sect2 {
+  padding: 3em 0em;
+
+  .questCont {
+    margin-top: 35px;
+
+    .answerCont {
+      border-left: 1px solid #b2b2b2;
+    }
+  }
+}
+
+/* responsiveness */
+/* tablet 768px */
+@media (max-width: 768px) and (min-width: 576px) {
+  .bgCont {
+    height: 25vh;
+    .text-center {
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+  }
+  .optsCont {
+    .row {
+      .col-sm-3 {
+        flex: 0 0 50%;
+        max-width: 50%;
+      }
+    }
+  }
+}

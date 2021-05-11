@@ -1,0 +1,163 @@
+<div class="card proposalCard">
+
+  <div class="row filterCont">
+    <div class="col-sm-4 px-4">
+      <div class="form-group mb-0">
+        <select class="form-control">
+          <option>All orders</option>
+          <option>Woodworking Help</option>
+          <option>Design an AI Character</option>
+          <option>UI Expert</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div *ngFor="let bid of jobBidsList" class="row proposalDetailCont">
+    <div class="col-sm-8 pr-0 pointer" (click)="proposalDetails(bid)" data-toggle="modal"
+      data-target="#proposalDetailModal">
+      <div class="d-flex">
+        <div class="txt">
+          <div class="userImgCont">
+            <img [src]="bid.bidPerson.profileUrl || '/assets/imgs/userIcon.PNG'" class="userImg">
+            <!-- <img src="/assets/imgs/chatIcon.svg" class="chatIcon"> -->
+          </div>
+          <div class="text-center">
+            <p class="mt-3 mb-0 bold font-18">{{bid.bidPerson.fullName}}</p>
+            <p class="font-13 my-1 text1">{{bid.bidPerson.myAgency}}</p>
+            <div *ngIf="bid.bidPerson.location" class="icon">
+              <i class="fas fa-map-marker-alt"></i>
+              <p class="mb-0 font-13 pl-2 align-center">
+                {{bid.bidPerson.location.city}}, {{bid.bidPerson.location.country}}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="txtCont">
+          <p class="font-13 mb-0">Received on {{bid.timestamp | date: 'mediumDate'}}</p>
+          <p class="font-13 my-3"><b>Cover Letter:</b> {{bid.coverLetter}}</p>
+
+          <p *ngIf="bid.type==='milestone'" class="my-3 bold font-13">{{bid.milestones.length}} Milestones</p>
+          <p *ngIf="bid.type==='fixed'" class="my-3 bold font-13">Fixed Price</p>
+
+          <p class="mt-3 mb-0 bold font-13">Valuable Skillsets:</p>
+          <div class="skillsBtnCont">
+            <button *ngFor="let skill of getExpertSkills(bid.bidPerson)" class="btn skillBtn">{{skill}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4 align-center">
+      <div class="btnsCont">
+        <div class="price">
+          <p class="font-18 mb-0 align-center">Price</p>
+          <h4 class="mb-0 bold pl-2">RM {{bid.totalPrice}}</h4>
+        </div>
+        <div *ngIf="!bid.status" class="btns">
+          <button (click)="acceptRejectProposal(bid, 'accepted')" class="btn darkBtn">Accept</button>
+          <button (click)="acceptRejectProposal(bid, 'rejected')" class="btn darkBtn reject mt-3">Reject</button>
+        </div>
+        <div *ngIf="bid.status" class="btns">
+          <button style="text-transform: capitalize;" class="btn" [class.btn-danger]="bid.status==='rejected'"
+            [class.btn-success]="bid.status==='accepted'">{{bid.status}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p *ngIf="!jobBidsList.length" class="mt-5 text-center text-secondary">No proposals found!</p>
+
+</div>
+
+
+<div *ngIf="bidDetails" class="modal fade" id="proposalDetailModal">
+  <div class="modal-dialog bidDetailModal">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h4 class="modal-title">{{jobDetails.jobTitle}}</h4>
+        <button id="closeModalBtn" type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="row userprofileCont">
+          <div class="col-sm-7 pl-0">
+            <div class="row">
+              <div class="col-sm-4 pl-0">
+                <div class="userimgCont">
+                  <img [src]="bidDetails.bidPerson.profileUrl || '/assets/imgs/userIcon.PNG'" class="userImg">
+                  <img src="/assets/imgs/tickIcon.svg" class="tickIcon">
+                </div>
+              </div>
+              <div class="col-sm-8 pl-0">
+                <div class="userInfo pt-4">
+                  <div class="d-flex">
+                    <h4 class="my-0 mr-3 bold">{{bidDetails.bidPerson.fullName}}</h4>
+                  </div>
+                  <div class="d-flex">
+                    <p>{{bidDetails.bidPerson.myAgency}}</p>
+                  </div>
+                  <div class="d-flex pointer">
+                    <u data-dismiss="modal" (click)="expertDetails()" class="blueTxt">View Profile</u>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-5 px-0 pt-4">
+            <div class="d-flex justify-content-around">
+              <div class="txt">
+                <h6 class="mb-3 bold font-17">Hourly Rate</h6>
+                <p class="font-14 mb-0">RM {{bidDetails.bidPerson.expertProfile.hourlyRate.hourlyRate}}</p>
+              </div>
+              <div class="txt">
+                <h6 class="mb-3 bold font-17">Languages</h6>
+                <p *ngIf="bidDetails.bidPerson.expertProfile.languages" class="font-14 mb-0">
+                  <span *ngFor="let language of bidDetails.bidPerson.expertProfile.languages">
+                    {{language.language}},
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-5" *ngIf="bidDetails.type==='milestone'">
+          <h5 class="bold">Milestones</h5>
+          <div *ngFor="let milestone of bidDetails.milestones; index as i">
+            <p class="bold">{{i+1}}: {{milestone.name}} for
+              <span class="text-success">RM {{milestone.price}}</span>
+            </p>
+            <p>Delivery: {{milestone.delivery | date: 'mediumDate'}}</p>
+          </div>
+        </div>
+
+        <div *ngIf="bidDetails.answers" class="mt-5">
+          <h5 class="bold">Questions</h5>
+          <div *ngFor="let item of bidDetails.answers">
+            <p class="bold mb-2">{{item.question}}</p>
+            <p>{{item.answer}}</p>
+          </div>
+        </div>
+
+        <h5 class="bold mt-5">Cover Letter</h5>
+        <p>{{bidDetails.coverLetter}}</p>
+
+        <h5 class="bold mt-5">Total Price</h5>
+        <p>RM {{bidDetails.totalPrice}}</p>
+      </div>
+
+      <div *ngIf="!bidDetails.status" class="modal-footer">
+        <button (click)="acceptRejectProposal(bidDetails, 'rejected')" type="button" class="btn btn-danger"
+          data-dismiss="modal">Reject</button>
+        <button (click)="acceptRejectProposal(bidDetails, 'accepted')" type="button" class="btn btn-success"
+          data-dismiss="modal">Accept</button>
+      </div>
+      <div *ngIf="bidDetails.status" class="modal-footer">
+        <button type="button" style="text-transform: capitalize;" class="btn"
+          [class.btn-danger]="bidDetails.status==='rejected'"
+          [class.btn-success]="bidDetails.status==='accepted'">{{bidDetails.status}}</button>
+      </div>
+    </div>
+  </div>
+</div>

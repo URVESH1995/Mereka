@@ -1,0 +1,75 @@
+<app-navbar></app-navbar>
+
+<div class="bannerContent">
+  <img *ngIf="learnerProfile.coverImage" [src]="learnerProfile.coverImage">
+</div>
+
+<div class="basicProfileInfo bg-white row justify-content-center py-4">
+  <div class="col-md-12 maxWidthContent">
+    <div class="d-flex">
+      <div class="profileCard shadow">
+        <i class="fas fa-ellipsis-h moreIcon pointer"></i>
+        <img class="userAvatar" [src]="userProfile.profileUrl || '/assets/imgs/userIcon.PNG'">
+        <h5 class="bold">{{userProfile.fullName}}</h5>
+        <p>Learner</p>
+        <p><i class="fas fa-map-marker-alt"></i> {{userProfile.location.city}}, {{userProfile.location.country}}
+        </p>
+        <div class="socialLinks">
+          <a *ngIf="learnerProfile.webUrl" [href]="learnerProfile.webUrl" target="_blank">
+            <img src="/assets/imgs/gray-web-icon.png">
+          </a>
+          <a *ngIf="learnerProfile.linkedinUrl" [href]="learnerProfile.linkedinUrl" target="_blank">
+            <img src="/assets/imgs/linkedin.png">
+          </a>
+          <a *ngIf="learnerProfile.fbUrl" [href]="learnerProfile.fbUrl" target="_blank">
+            <img src="/assets/imgs/gray-fb-icon.png">
+          </a>
+          <a *ngIf="learnerProfile.instaUrl" [href]="learnerProfile.instaUrl" target="_blank">
+            <img src="/assets/imgs/insta-icon.png">
+          </a>
+        </div>
+      </div>
+      <div class="infoView">
+        <h3 class="bold">Interested in
+          {{learnerProfile.interestedThemes && learnerProfile.interestedThemes[0]? 
+            learnerProfile.interestedThemes[0] : 'N/A'}}
+        </h3>
+        <p class="gray">Joined in {{userProfile.timestamp | date:'mediumDate'}} |
+          <span>Fluent in {{learnerProfile.language}}
+            <span *ngIf="learnerProfile.otherLanguages">
+              <span *ngFor="let lang of learnerProfile.otherLanguages">, {{lang}}</span>
+            </span>
+          </span>
+        </p>
+        <button *ngIf="!myOwnProfile" class="btn profileBtn btnRounded px-4 mr-3 whiteOutlinedBtn">Message</button>
+        <button *ngIf="!myOwnProfile" class="btn profileBtn btnRounded px-4 mr-3 whiteOutlinedBtn">
+          Invite to become Expert <i class="fas fa-plus ml-2"></i>
+        </button>
+        <button (click)="editLearnerProfile()" *ngIf="myOwnProfile"
+          class="btn profileBtn btnRounded px-4 mr-3 whiteOutlinedBtn">
+          Update Profile <i class="fas fa-user-edit ml-2"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row bg-white justify-content-center topFixedTabs sticky-top">
+  <div class="col-md-12 maxWidthContent">
+    <button (click)="activeTab=btn" *ngFor="let btn of tabButtons" [class.activeBtn]="activeTab===btn"
+      class="btn btn-inactive whiteOutlinedBtn">{{btn}}</button>
+  </div>
+</div>
+
+
+<div class="mainContentSection row justify-content-center">
+  <div class="col-md-12 maxWidthContent">
+    <app-learner-general-profile [learnerProfile]="learnerProfile" *ngIf="activeTab=='General Profile'">
+    </app-learner-general-profile>
+    <app-learner-background [learnerProfile]="learnerProfile" *ngIf="activeTab=='My Background'">
+    </app-learner-background>
+  </div>
+</div>
+
+<app-footer></app-footer>

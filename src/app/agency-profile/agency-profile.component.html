@@ -1,0 +1,197 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<app-navbar></app-navbar>
+
+<div class="bannerContent">
+  <img *ngIf="agencyDetails.coverImage" [src]="agencyDetails.coverImage">
+</div>
+
+<div class="profileCard shadow">
+  <div class="moreIcon">
+    <i (click)="favUnfavHub()" *ngIf="!myOwnAgency && !isFavHub()" class="far fa-heart mr-4"></i>
+    <i (click)="favUnfavHub()" *ngIf="!myOwnAgency && isFavHub()" class="fa fa-heart mr-4"></i>
+    <i class="far fa-comment-alt"></i>
+  </div>
+  <img class="userAvatar" [src]="agencyDetails.agencyLogo || '/assets/imgs/userIcon.PNG'">
+  <div class="nameCont">
+    <h5 class="bold">{{agencyDetails.agencyName}}</h5>
+    <div class="socialLinks">
+      <a [href]="agencyDetails.webUrl" target="_blank" *ngIf="agencyDetails.webUrl">
+        <img src="/assets/imgs/gray-web-icon.png">
+      </a>
+      <a [href]="agencyDetails.linkedinUrl" target="_blank" *ngIf="agencyDetails.linkedinUrl">
+        <img src="/assets/imgs/linkedin.png">
+      </a>
+      <a [href]="agencyDetails.fbUrl" target="_blank" *ngIf="agencyDetails.fbUrl">
+        <img src="/assets/imgs/gray-fb-icon.png">
+      </a>
+      <a [href]="agencyDetails.instaUrl" target="_blank" *ngIf="agencyDetails.instaUrl">
+        <img src="/assets/imgs/insta-icon.png">
+      </a>
+    </div>
+  </div>
+  <p>{{agencyDetails.companyType}}</p>
+  <div class="d-flex">
+    <p><i class="fas fa-map-marker-alt mr-1"></i>
+      {{agencyDetails.location.city}}, {{agencyDetails.location.country}}
+    </p>
+    <p class="pl-4"><i class="fas fa-star"></i>
+      {{agencyDetails.avgRating || 0}} ({{agencyDetails.totalReviews || 0}})
+    </p>
+  </div>
+  <button (click)="becomeAgencyMember()" [disabled]="myOwnAgency" class="btn optBtn">Become a Member</button>
+  <button [disabled]="!myOwnAgency" class="btn optBtn">Post a Job</button>
+  <button class="btn optBtn">Instant Quote</button>
+</div>
+
+<div class="mainContentSection row justify-content-center">
+  <div class="col-md-12 maxWidthContent">
+    <h3 class="bold mb-3">About Us</h3>
+    <div class="row borderedContent">
+      <div class="col-md-8 leftContent">
+        <p class="mb-4">{{agencyDetails.agencyDescription}}</p>
+      </div>
+      <div class="col-md-4 pl-5">
+        <h5 class="bold mb-3">Amenities</h5>
+        <div>
+          <span *ngFor="let tag of agencyDetails.amenities" class="badges">{{tag}}</span>
+        </div>
+        <h5 class="bold mb-3 mt-4">Facilities</h5>
+        <div>
+          <span *ngFor="let tag of agencyDetails.facilities" class="badges">{{tag}}</span>
+        </div>
+      </div>
+    </div>
+    <hr class="my-5" />
+
+    <h3 class="bold mb-3">Explore Our Experiences</h3>
+    <div class="filtersMainCont">
+      <div class="toggleCont">
+        <div *ngIf="activeSwitch==='online'" class="toggleBtnContainer">
+          <i (click)="activeSwitch='physical'; filterWorkshops()" class="fas fa-running pointer soloIcon"></i>
+          <button class="btn btn-dark btn-sm">
+            <i class="fas fa-desktop"></i> Online
+          </button>
+        </div>
+        <div *ngIf="activeSwitch==='physical'" class="toggleBtnContainer">
+          <button class="btn btn-dark btn-sm">
+            <i class="fas fa-running"></i> Physical
+          </button>
+          <i (click)="activeSwitch='online'; filterWorkshops()" class="fas fa-desktop pointer soloIcon"></i>
+        </div>
+      </div>
+      <div class="btnFilters">
+        <button (click)="selectedTag='All'; filterWorkshops()" [class.selectedTag]="selectedTag==='All'"
+          class="btn btn-outline-light text-dark">All</button>
+        <button (click)="selectedTag=tag; filterWorkshops()" [class.selectedTag]="selectedTag===tag"
+          *ngFor="let tag of workshopTags | slice:0:5" class="btn btn-outline-light text-dark ml-2">{{tag}}</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4"
+        *ngFor="let workshop of agencyWorkshops | paginate: { itemsPerPage: 3, currentPage: currentPage }">
+        <div class="workshopCard pointer">
+          <button (click)="favUnfavWorkshop(workshop)" class="btn text-white btn-dark btn-sm rightCornerBtn">
+            <i class="fa-heart" [class.far]="!isMyFavWorkshop(workshop)" [class.fas]="isMyFavWorkshop(workshop)"></i>
+          </button>
+          <img (click)="workshopDetails(workshop)" [src]="workshop.coverImage">
+          <div (click)="workshopDetails(workshop)" class="p-3">
+            <h5 class="bold mb-1">{{workshop.experienceTitle}}</h5>
+            <p class="font-13 text-secondary">{{getWorkshopHost(workshop.uid) || 'N/A'}}</p>
+            <h5 class="text-right mb-0">
+              <span *ngIf="workshop.ratePerLearner">MYR {{workshop.ratePerLearner}}<small>/learner </small></span>
+              <span *ngIf="workshop.ratePerMember"> MYR {{workshop.ratePerMember}}<small>/member</small></span>
+            </h5>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="!agencyWorkshops.length" class="col-md-12 text-center text-secondary my-5">No experiences found!</div>
+
+      <div *ngIf="agencyWorkshops.length" class="text-center w-100 mt-5">
+        <app-custom-pagination (pageChange)="currentPage = $event"></app-custom-pagination>
+      </div>
+    </div>
+
+    <hr class="my-5" />
+    <h3 class="bold mb-3">Hire Our Experts</h3>
+    <div class="row pt-3">
+      <div class="col-sm-4 px-0" style="border-right: 1px solid #d9d9d9;">
+        <div class="leftMenu">
+          <p class="pb-2 pl-1"><span class="bold pointer">Expertise</span></p>
+          <p class="pb-2 pl-1" *ngFor="let menu of sideMenuItems; first as isFirst">
+            <span (click)="filterExperts()" [class.activeTab]="selectedExpertise===menu" class="pointer">{{menu}}</span>
+          </p>
+        </div>
+      </div>
+      <div class="col-sm-8 contentCont">
+        <div class="row">
+          <div (click)="expertProfile(expert)" *ngFor="let expert of agencyExperts; let i = index;" class="col-sm-6">
+            <div class="card expertCont pointer">
+              <i class="far fa-heart wishIcon"></i>
+              <div class="expertInfo">
+                <img [src]="expert.profileUrl || '/assets/imgs/userIcon.PNG'" class="userImg">
+                <div class="txt">
+                  <h5 class="bold mb-1 appTxt">{{expert.fullName}}</h5>
+                  <p class="mb-0 font-14">{{(expert.location?.city || "") + ", " + (expert.location?.country || "")}}
+                  </p>
+                </div>
+              </div>
+              <p class="my-3">{{expert.expertProfile.expertise.title || 'N/A'}}</p>
+              <h5 class="bold mb-0">RM {{expert.expertProfile.hourlyRate?.hourlyRate || 'N/A'}} /
+                <small>Hour</small>
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr class="my-5" />
+    <h3 class="bold mb-3">Join Our Community</h3>
+    <div class="row">
+      <div class="col-sm-4 pl-0">
+        <div class="communityCont">
+          <h5 class="bold mb-2 mt-3">Find New Friends</h5>
+          <p class="mb-0 font-17">Want to attend our events but don’t want to go alone? Connect ahead and meet new
+            people.</p>
+        </div>
+      </div>
+      <div class="col-sm-4 pl-0">
+        <div class="communityCont">
+          <h5 class="bold mb-2 mt-3">Find New Friends</h5>
+          <p class="mb-0 font-17">Want to attend our events but don’t want to go alone? Connect ahead and meet new
+            people.</p>
+        </div>
+      </div>
+      <div class="col-sm-4 px-0">
+        <div class="communityCont">
+          <h5 class="bold mb-2 mt-3">Find New Friends</h5>
+          <p class="mb-0 font-17">Want to attend our events but don’t want to go alone? Connect ahead and meet new
+            people.</p>
+        </div>
+      </div>
+      <div class="col-sm-4 pl-0">
+        <div class="communityCont">
+          <h5 class="bold mb-2 mt-3">Find New Friends</h5>
+          <p class="mb-0 font-17">Want to attend our events but don’t want to go alone? Connect ahead and meet new
+            people.</p>
+        </div>
+      </div>
+      <div class="col-sm-4 pl-0">
+        <div class="communityCont">
+          <h5 class="bold mb-2 mt-3">Find New Friends</h5>
+          <p class="mb-0 font-17">Want to attend our events but don’t want to go alone? Connect ahead and meet new
+            people.</p>
+        </div>
+      </div>
+      <div class="col-sm-4 px-0">
+        <div class="communityCont">
+          <h5 class="bold mb-2 mt-3">Find New Friends</h5>
+          <p class="mb-0 font-17">Want to attend our events but don’t want to go alone? Connect ahead and meet new
+            people.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

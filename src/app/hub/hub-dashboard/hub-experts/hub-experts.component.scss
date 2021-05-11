@@ -1,0 +1,115 @@
+.borderdBlock {
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  background: white;
+  padding: 45px 32px;
+
+  .heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .btns {
+      button {
+        margin-left: 15px;
+        width: 150px;
+      }
+    }
+  }
+
+  .membersMainCont {
+    border: 1px solid #dadada;
+    border-radius: 10px;
+    margin-top: 24px;
+
+    .headerRow {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 100px;
+      border-bottom: 1px solid #dadada;
+      background: #ececec;
+      padding: 5px 30px;
+      border-radius: 10px 10px 0px 0px;
+
+      ng-select {
+        min-width: 150px;
+        width: fit-content;
+        border-radius: 30px;
+        display: inline-block;
+      }
+
+      .leftFilters {
+        width: 80%;
+
+        ng-select {
+          margin-right: 15px;
+        }
+
+        ng-select:last-child {
+          margin-right: 0px !important;
+        }
+      }
+    }
+
+    .expertCont {
+      min-height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #dadada;
+      padding: 10px 30px;
+
+      .custom-checkbox {
+        min-width: 40px;
+        align-self: flex-start;
+        margin-top: 9px;
+
+        .custom-control-label {
+          cursor: pointer;
+          color: var(--primaryColor);
+          padding: 5px 0px 0px 14px;
+          font-size: 16px;
+        }
+
+        .custom-control-label::before,
+        .custom-control-label::after {
+          width: 1.5rem;
+          height: 1.5rem;
+          border-color: #d8d8d8;
+        }
+      }
+
+      .expertName {
+        width: 25%;
+      }
+
+      .skill {
+        font-size: 18px;
+        margin-bottom: 0px;
+        font-weight: bold;
+        width: 20%;
+      }
+
+      .actbtnCont {
+        width: 20%;
+        text-align: right;
+      }
+
+      .primaryBtn {
+        min-width: 130px;
+        height: 45px;
+      }
+
+      .custom-control-input:checked~.custom-control-label::before {
+        color: #fff;
+        border-color: var(--primaryColor) !important;
+        background-color: var(--primaryColor) !important;
+      }
+    }
+
+    .expertCont:last-child {
+      border-bottom: 0px;
+    }
+  }
+}

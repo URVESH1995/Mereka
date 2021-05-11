@@ -1,0 +1,88 @@
+.topNavbar {
+  background: #fafafa;
+  border-bottom: 1px solid #eaeaea;
+
+  img {
+    width: 200px;
+  }
+  .btn-inactive {
+    border-radius: 30px;
+    margin: 1em;
+  }
+  .activeBtn {
+    background: #eaeaea;
+  }
+}
+
+.parentContent {
+  padding-top: 7em;
+  padding-bottom: 7em;
+  height: 120vh;
+  overflow-y: scroll;
+
+  .borderdSection {
+    border: 1px solid #dadada;
+    border-radius: 10px;
+
+    .col-md-4,
+    .col-md-12 {
+      padding: 0 7px;
+    }
+
+    .featuredBlock {
+      border-radius: 10px;
+      cursor: pointer;
+      border: 1px solid #dadada;
+
+      &.selectedSkillset {
+        background: #dfdfdf !important;
+      }
+      img {
+        width: 50px;
+        height: 50px;
+        object-fit: contain;
+        margin-bottom: 1em;
+      }
+    }
+
+    .selectContainer {
+      .form-group {
+        width: 85%;
+      }
+    }
+    .addIcon {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 8px 0 0 10px;
+    }
+
+    .skillInputSection {
+      .addIcon {
+        margin: 0 0 0 10px !important;
+      }
+      .soloInput {
+        width: 150px;
+        border-radius: 30px;
+        display: inline-block;
+        margin-right: 10px;
+        height: 50px;
+      }
+    }
+
+    .inputContainer {
+      width: 200px;
+      display: inline-block;
+      margin: 0 12px 12px 0;
+
+      input {
+        border-radius: 30px 0 0 30px;
+        height: 50px;
+      }
+      .input-group-text {
+        border-radius: 0 30px 30px 0;
+      }
+    }
+  }
+}

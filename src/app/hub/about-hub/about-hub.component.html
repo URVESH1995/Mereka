@@ -1,0 +1,116 @@
+<div class="parentContent rounded p-4 mt-3">
+    <div class="row">
+        <div class="col-md-7 leftContent">
+            <div style="width: 90%">
+                <p>Description</p>
+                <h5 class="bold">Let Learners know more about your Hub</h5>
+                <p class="text-secondary">Some short description here.</p>
+
+                <div class="formContent">
+                    <div class="form-group">
+                        <textarea [(ngModel)]="myAgency.agencyDescription" type="text" rows="5" class="form-control"
+                            placeholder="Label"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5 pl-5">
+            <h5 class="bold mt-4">
+                <img style="width: 35px;" src="/assets/imgs/light-icon.png">
+                <span class="pl-2">TIPS</span>
+            </h5>
+            <p>Remember to allocate some time for introductions as well as any de-briefing or summary
+                at the end of the experience.
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="parentContent rounded p-4 mt-3">
+    <p>Amenities</p>
+    <h5 class="bold">What amenities do you offer at your space?</h5>
+    <p class="text-secondary">Description of something here</p>
+    <div class="row">
+        <div class="col-md-2 pl-0">
+            <div class="custom-control custom-checkbox mb-2">
+                <input [checked]="isAmenityAdded('Free Coffee')" (change)="updateAmenities('Free Coffee')"
+                    type="checkbox" class="custom-control-input" id="customCheck1" name="example1">
+                <label class="custom-control-label" for="customCheck1">Free Coffee</label>
+            </div>
+        </div>
+        <div class="col-md-10">
+            <div class="custom-control custom-checkbox mb-2">
+                <input [checked]="isAmenityAdded('Onsite Cafe')" (change)="updateAmenities('Onsite Cafe')"
+                    type="checkbox" class="custom-control-input" id="customCheck2" name="example2">
+                <label class="custom-control-label" for="customCheck2">Onsite Cafe</label>
+            </div>
+        </div>
+        <div class="col-md-2 pl-0">
+            <div class="custom-control custom-checkbox mb-2">
+                <input [checked]="isAmenityAdded('Free Snacks')" (change)="updateAmenities('Free Snacks')"
+                    type="checkbox" class="custom-control-input" id="customCheck3" name="example3">
+                <label class="custom-control-label" for="customCheck3">Free Snacks</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="parentContent rounded p-4 mt-3">
+    <p>Facilities</p>
+    <h5 class="bold">What facilities do you offer at your space?</h5>
+    <p class="text-secondary">Description of something here</p>
+    <div class="row">
+        <div class="col-md-2 pl-0">
+            <div class="custom-control custom-checkbox mb-2">
+                <input [checked]="isFacilityAdded('Lockers')" (change)="updateFacilities('Lockers')" type="checkbox"
+                    class="custom-control-input" id="customCheck4" name="example4">
+                <label class="custom-control-label" for="customCheck4">Lockers</label>
+            </div>
+        </div>
+        <div class="col-md-10">
+            <div class="custom-control custom-checkbox mb-2">
+                <input [checked]="isFacilityAdded('Public Transport Access')"
+                    (change)="updateFacilities('Public Transport Access')" type="checkbox" class="custom-control-input"
+                    id="customCheck5" name="example5">
+                <label class="custom-control-label" for="customCheck5">Public Transport Access</label>
+            </div>
+        </div>
+        <div class="col-md-2 pl-0">
+            <div class="custom-control custom-checkbox mb-2">
+                <input [checked]="isFacilityAdded('Free Parking')" (change)="updateFacilities('Free Parking')"
+                    type="checkbox" class="custom-control-input" id="customCheck6" name="example6">
+                <label class="custom-control-label" for="customCheck6">Free Parking</label>
+            </div>
+        </div>
+        <div class="col-md-10">
+            <div class="custom-control custom-checkbox mb-2">
+                <input [checked]="isFacilityAdded('Pantry/Kitchen')" (change)="updateFacilities('Pantry/Kitchen')"
+                    type="checkbox" class="custom-control-input" id="customCheck7" name="example7">
+                <label class="custom-control-label" for="customCheck7">Pantry/Kitchen</label>
+            </div>
+        </div>
+        <div class="col-md-2 pl-0">
+            <div class="custom-control custom-checkbox mb-2">
+                <input [checked]="isFacilityAdded('Meditation Room')" (change)="updateFacilities('Meditation Room')"
+                    type="checkbox" class="custom-control-input" id="customCheck8" name="example8">
+                <label class="custom-control-label" for="customCheck8">Meditation Room</label>
+            </div>
+        </div>
+        <div class="col-md-10">
+            <div class="custom-control custom-checkbox mb-2">
+                <input [checked]="isFacilityAdded('Childcare')" (change)="updateFacilities('Childcare')" type="checkbox"
+                    class="custom-control-input" id="customCheck9" name="example9">
+                <label class="custom-control-label" for="customCheck9">Childcare</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row fixed-bottom p-3 px-4 continueBackBtns">
+    <div class="col-md-6">
+        <button (click)="navigateBack()" class="btn grayChoiceHover btn-light btnRounded">Back</button>
+    </div>
+    <div class="col-md-6 text-right">
+        <button (click)="nextTab()" class="btn grayChoiceHover btnSecondary btnRounded">Continue</button>
+    </div>
+</div>

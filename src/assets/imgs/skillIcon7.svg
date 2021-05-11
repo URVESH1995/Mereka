@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+  <g id="Group_7" data-name="Group 7" transform="translate(-490 -330)">
+    <circle id="Oval" cx="50" cy="50" r="50" transform="translate(490 330)" fill="#f5f7f8"/>
+    <g id="noun_bar_chart_1120815" data-name="noun_bar chart_1120815" transform="translate(514 354)">
+      <rect id="Rectangle-path" width="11.906" height="18.498" transform="translate(5.666 33.349)"/>
+      <rect id="Rectangle-path-2" data-name="Rectangle-path" width="11.906" height="27.744" transform="translate(22.628 24.104)"/>
+      <rect id="Rectangle-path-3" data-name="Rectangle-path" width="11.906" height="36.989" transform="translate(39.589 14.858)"/>
+      <path id="Shape" d="M30.071,17.726a1.1,1.1,0,0,0,1.422.054L47.239,5.292l1.9,2.294L51.858,0,43.89,1.208l1.965,2.386L30.867,15.47l-5.9-5.406A1.1,1.1,0,0,0,23.564,10L.515,27.591a1.1,1.1,0,1,0,1.331,1.744L24.168,12.3Z" transform="translate(0.028 0.138)"/>
+    </g>
+  </g>
+</svg>

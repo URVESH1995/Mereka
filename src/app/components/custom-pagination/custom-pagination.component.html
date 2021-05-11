@@ -1,0 +1,24 @@
+<pagination-template #p="paginationApi" (pageChange)="pageChange.emit($event)">
+    <div class="d-flex justify-content-center customPagination">
+        <div class="pagination-previous" [class.disabled]="p.isFirstPage()">
+            <button [disabled]="p.isFirstPage()" class="btn btnRounded border whiteOutlinedBtn mr-3"
+                (click)="p.previous()"><i class="fas fa-angle-left"></i>
+            </button>
+        </div>
+
+        <div class="pagerCount pointer" *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
+            <a (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">
+                <span>{{ page.label }}</span>
+            </a>
+            <div *ngIf="p.getCurrent() === page.value">
+                <span>{{ page.label }}</span>
+            </div>
+        </div>
+
+        <div class="pagination-next" [class.disabled]="p.isLastPage()">
+            <button [disabled]="p.isLastPage()" class="btn btnRounded border whiteOutlinedBtn ml-3" (click)="p.next()">
+                <i class="fas fa-angle-right"></i>
+            </button>
+        </div>
+    </div>
+</pagination-template>

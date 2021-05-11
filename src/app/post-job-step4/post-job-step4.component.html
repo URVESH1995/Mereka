@@ -1,0 +1,77 @@
+<app-navbar></app-navbar>
+<div class="row mainCont">
+  <div class="col-sm-3 stepsCont">
+    <app-post-job-menu></app-post-job-menu>
+  </div>
+
+  <div class="col-sm-9 pl-4 pr-0">
+    <div class="row detailsCont">
+      <div class="col-sm-12 px-0">
+        <div class="row sectCont">
+          <div class="col-sm-11 px-0">
+            <div class="d-flex justify-content-between mb-4">
+              <h2 class="bold mb-0 align-center">Preview</h2>
+            </div>
+            <h5 class="bold mb-0">{{jobDetails.jobTitle || 'N/A'}}</h5>
+            <div class="row justify-content-between">
+              <div class="col-sm-8 pl-0 pt-4">
+                <p class="font-15 text1 bold">{{jobDetails.category || 'N/A'}}</p>
+                <div class="d-flex">
+                  <div class="iconCont">
+                    <img src="/assets/imgs/Oval2.svg" class="align-center" height="10px">
+                    <p class="font-13 my-0 bold pl-2">{{jobDetails.status || 'Non Verified'}}</p>
+                  </div>
+                  <div class="iconCont">
+                    <i class="fas fa-map-marker-alt font-14 align-center"></i>
+                    <p class="font-13 my-0 bold pl-2">{{jobDetails.preferredLocation || 'N/A'}}</p>
+                  </div>
+                  <div class="iconCont">
+                    <p class="font-13 my-0 bold">{{jobDetails.jobDuration || 'N/A'}}</p>
+                  </div>
+                  <div class="iconCont">
+                    <p class="font-13 my-0 bold">{{jobDetails.experienceLevel || 'N/A'}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-2 px-0">
+                <a *ngIf="getJobImage()" [href]="getJobImage()" target="_blank">
+                  <img [src]="getJobImage()" class="jobImage">
+                </a>
+              </div>
+            </div>
+
+            <p class="font-13 mb-0 mt-4">{{jobDetails.description || 'N/A'}}</p>
+
+            <div *ngIf="jobDetails.skills.length">
+              <h5 class="bold mt-4 pt-3 mb-3">Skillsets</h5>
+              <div class="skillsBtnCont">
+                <button *ngFor="let skill of jobDetails.skills" class="btn skillBtn">{{skill}}</button>
+              </div>
+            </div>
+
+            <div *ngIf="jobDetails.fileUrls">
+              <h5 class="bold mt-5 mb-3">Attached Files</h5>
+              <div class="skillsBtnCont">
+                <a *ngFor="let file of jobDetails.fileUrls" [href]="file.url" target="_blank">
+                  <button class="btn btn-light mr-3">
+                    {{file.name}} <i class="fa fa-download ml-3"></i>
+                  </button>
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="row sectCont">
+          <div class="col-sm-11 px-0 py-2 d-flex justify-content-between">
+            <button routerLink="/post-job-step3" class="btn btn-outline-primary">Back</button>
+            <button (click)="saveJobOnFirebase()" class="btn darkBtn bold">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<app-footer></app-footer>

@@ -1,0 +1,224 @@
+.parentContent {
+  padding: 8em 0 2em 2em;
+
+  .leftMenu {
+    width: 20%;
+    background: #eeeeee;
+    border-radius: 7px;
+    padding: 3em 2em;
+    height: fit-content;
+
+    .menu {
+      margin-bottom: 14px;
+      font-weight: bold;
+      padding: 14px 20px;
+      border-radius: 30px;
+      cursor: pointer;
+      width: fit-content;
+
+      &.active {
+        background: #dcdcdc;
+      }
+    }
+
+    .subMenu {
+      margin: 0px 0px 0px 40px;
+      padding: 14px 20px;
+      font-weight: bold;
+      border-radius: 30px;
+      cursor: pointer;
+      width: fit-content;
+
+      &.active {
+        background: #dcdcdc;
+      }
+    }
+
+    .subMenu:last-child {
+      margin-bottom: 14px;
+    }
+  }
+
+  .rightContent {
+    margin-left: 2%;
+    width: 77%;
+    border-left: 1px solid #d9d9d9;
+    padding-left: 24px;
+
+    .borderdBlock {
+      border: 1px solid #dcdcdc;
+      border-radius: 8px;
+      background: white;
+      padding: 45px 32px;
+    }
+
+    .currentPlanBlock {
+      background: #dcdcdc;
+    }
+
+    .infoBlocks {
+      .roundedBlock {
+        border-radius: 30px;
+        border: 1px solid #1a1623;
+        padding: 2.5em 0 1.5em 1.5em;
+      }
+    }
+
+    .reservationsBlock {
+      .tabButtons {
+        background: transparent;
+        width: 150px;
+
+        &.activeTab {
+          color: #ffffff;
+          background: #1a1623 !important;
+        }
+      }
+
+      .roundedBlock {
+        border-radius: 30px;
+        border: 1px solid #1a1623;
+        padding: 2em 3em;
+
+        .badges {
+          border: 1px solid #dcdcdc;
+          border-radius: 5px;
+          margin-right: 6px;
+          padding: 2px 10px;
+          font-size: 13px;
+        }
+      }
+    }
+
+    .hubMessagesSection {
+      .roundedBlock {
+        border-radius: 30px;
+        border: 1px solid #000000;
+        padding: 1em 3em;
+
+        .rowItem {
+          padding: 1.5em 0;
+          border-bottom: 1px solid #000000;
+
+          &.noBorderd {
+            border-bottom: none;
+          }
+
+          .messageTxt {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+
+    .reviewsSection {
+      .roundedBlock {
+        border-radius: 30px;
+        border: 1px solid #000000;
+        padding: 1em 3em;
+      }
+
+      .topRating {
+        span {
+          color: gray;
+        }
+
+        .badges {
+          border: 1px solid #292929;
+          border-radius: 5px;
+          margin-right: 10px;
+          padding: 2px 16px;
+        }
+      }
+
+      .reviewBlock {
+        position: relative;
+
+        .moreIcon {
+          position: absolute;
+          right: 3em;
+          top: 3em;
+        }
+
+        .userAvatar {
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+}
+
+.bannerContent {
+  height: 300px;
+  background: #dcdcdc;
+
+  img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+  }
+}
+
+.profileContent {
+  position: relative;
+  margin-top: -12em;
+
+  .profileCard {
+    background: #f5f5f5;
+    border: 1px solid #dcdcdc;
+
+    .userAvatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .heartIcon {
+      width: 25px;
+      position: absolute;
+      right: 4.5em;
+    }
+
+    .chatIcon {
+      width: 25px;
+      position: absolute;
+      right: 2.5em;
+    }
+
+    .rightImgs {
+      img {
+        width: 25px;
+        margin-left: 7px;
+      }
+    }
+
+    .cardBtns {
+      background: #ffffff;
+      border: 1px solid #dcdcdc;
+      margin-right: 10px;
+    }
+  }
+
+  .contentSection {
+    border: 1px solid #dcdcdc;
+
+    .leftSection {
+      border-right: 1px solid #dcdcdc;
+    }
+
+    .badges {
+      border: 1px solid #dcdcdc;
+      border-radius: 5px;
+      margin-right: 6px;
+      padding: 2px 10px;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+  }
+}

@@ -1,0 +1,21 @@
+.customPagination {
+  .whiteOutlinedBtn {
+    width: 45px;
+    height: 45px;
+  }
+  .pagerCount {
+    margin: 12px;
+    span {
+      color: #9c9c9c;
+      font-weight: bold;
+      &:hover {
+        color: #1a1623;
+      }
+    }
+    &.current {
+      span {
+        color: #1a1623;
+      }
+    }
+  }
+}

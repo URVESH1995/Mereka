@@ -1,0 +1,518 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+:root {
+  --primaryColor: #161616;
+  --secondaryColor: #41506d;
+  --lightColor: #f7f7f7;
+  --grayColor: #9393aa;
+  --lightGrayColor: #c6cbd1;
+  --tertiaryColor: #fe9870;
+  --text1Color: #888282;
+  --text2Color: #a2a0a0;
+}
+
+.container {
+  width: 100% !important;
+  height: 100% !important;
+  padding-left: 0% !important;
+  padding-right: 0% !important;
+}
+
+.row {
+  width: 100% !important;
+  margin-left: 0px !important;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.pointer {
+  cursor: pointer !important;
+}
+
+.subTitle {
+  font-size: 24px !important;
+}
+
+.subTxt {
+  font-size: 21px !important;
+}
+
+.appTxt {
+  font-size: 18px !important;
+}
+
+.font-13 {
+  font-size: 13px !important;
+}
+
+.font-14 {
+  font-size: 14px !important;
+}
+
+.font-15 {
+  font-size: 15px !important;
+}
+
+.font-17 {
+  font-size: 17px !important;
+}
+
+.font-18 {
+  font-size: 18px !important;
+}
+
+.font-11 {
+  font-size: 11px !important;
+}
+
+.font-12 {
+  font-size: 12px !important;
+}
+
+.align-center {
+  align-self: center;
+}
+
+.bgPrimary {
+  color: #ffffff !important;
+  background-color: var(--primaryColor) !important;
+}
+
+.bgSecondary {
+  color: #ffffff !important;
+  background-color: var(--secondaryColor) !important;
+}
+
+.bgWhite {
+  background-color: #ffffff !important;
+}
+
+.danger {
+  color: #d72e34;
+}
+
+.blueTxt {
+  color: #1cabe9;
+}
+
+.greenTxt {
+  color: #2a94af;
+}
+
+.text1 {
+  color: var(--text1Color) !important;
+}
+
+.text2 {
+  color: var(--text2Color) !important;
+}
+
+.primary {
+  color: var(--primaryColor) !important;
+}
+
+.secondary {
+  color: var(--secondaryColor) !important;
+}
+
+.light {
+  color: var(--lightColor) !important;
+}
+
+.bgLight {
+  background-color: var(--lightColor) !important;
+}
+
+.tertiary {
+  color: var(--tertiaryColor) !important;
+}
+
+.bgTertiary {
+  background-color: var(--tertiaryColor) !important;
+}
+
+.gray {
+  color: var(--grayColor) !important;
+}
+
+.bgGray {
+  background-color: var(--grayColor) !important;
+}
+
+.lightGray {
+  color: var(--lightGrayColor) !important;
+}
+
+.bgLightGray {
+  background-color: var(--lightGrayColor) !important;
+}
+
+@font-face {
+  font-family: lato;
+  src: url(assets/font/Lato-Regular.ttf) format("opentype");
+}
+
+body {
+  font-family: "lato" !important;
+  background: #f2f2f2;
+  zoom: 80%;
+}
+
+.mainContent {
+  padding: 100px 40px 20px;
+}
+
+.darkBtn {
+  background-color: #161616;
+  border-color: #161616;
+  padding: 0px;
+  height: 40px;
+  border-radius: 5px;
+  color: white;
+  font-size: 14px;
+}
+
+.primaryBtn {
+  border-radius: 30px;
+  color: white;
+  background-color: #161616;
+  border-color: #161616;
+  font-size: 17px;
+  height: 50px;
+}
+
+.btn-outline-primary {
+  border: 2px solid #161616;
+  color: #161616;
+  border-radius: 5px;
+  height: 49px;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 0px;
+  width: 150px;
+}
+
+.btn-outline-primary:hover {
+  background-color: #161616;
+  border-color: #161616;
+  color: white;
+}
+
+.btn-outline-primary:active {
+  background-color: #161616 !important;
+  border-color: #161616 !important;
+}
+
+.darkBtn:hover,
+.primaryBtn:hover {
+  color: white;
+}
+
+.borderBottom {
+  border-bottom: 1px solid #dedede;
+}
+
+.stepsCont {
+  background-color: white;
+
+  .iconImg {
+    filter: grayscale(1);
+  }
+
+  .progress {
+    height: 7px;
+    margin-top: 20px;
+  }
+
+  .stepCont {
+    cursor: pointer;
+    margin-top: 35px;
+
+    i {
+      font-size: 21px;
+      color: #a8a8a8;
+    }
+
+    .tickIconCont {
+      align-self: center;
+      height: 23px;
+      border-radius: 50%;
+      width: 23px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #cccccd;
+
+      i {
+        font-size: 11px;
+        color: white;
+      }
+    }
+
+    &.active {
+      color: #25a464;
+
+      .iconImg {
+        filter: grayscale(0);
+      }
+
+      i {
+        color: #25a464;
+      }
+
+      p {
+        color: #25a464 !important;
+      }
+
+      .tickIconCont {
+        border-color: #25a464;
+
+        i {
+          color: white;
+        }
+      }
+    }
+
+    &.completed {
+      .iconImg {
+        filter: brightness(0);
+      }
+
+      i,
+      p {
+        color: #161616;
+      }
+
+      .tickIconCont {
+        border-color: #25a464;
+        background-color: #25a464;
+
+        i {
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+input,
+select,
+button:focus {
+  box-shadow: none !important;
+  outline: none;
+}
+
+.card,
+p,
+li,
+i,
+img,
+div:focus {
+  outline: none;
+}
+
+textarea {
+  resize: none !important;
+}
+
+.custom-control-input:focus ~ .custom-control-label::before {
+  box-shadow: none;
+  outline: none;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border-color: #ced4da;
+}
+
+.errorMsg {
+  margin-top: 5px;
+  font-size: 12px;
+  color: red;
+}
+
+ng-select {
+  .ng-value {
+    color: #ffffff;
+    padding: 5px 10px;
+    position: relative;
+    padding-right: 2em;
+    background-color: #1cabe9 !important;
+  }
+
+  .ng-value-icon {
+    position: absolute;
+    right: 10px;
+    border-right: 0 !important;
+  }
+
+  .ng-select-container {
+    min-height: 50px !important;
+  }
+
+  .ng-placeholder {
+    top: 12px !important;
+  }
+}
+
+.modal-backdrop {
+  width: 100% !important;
+  background-color: black !important;
+  height: 100% !important;
+}
+
+.btnRounded {
+  border-radius: 30px;
+}
+
+.continueBackBtns {
+  background: #f1f1f1;
+  border-top: 1px solid #eaeaea;
+
+  .btn {
+    width: 100px;
+  }
+
+  .btn-light {
+    background: #ffffff;
+    border: 1px solid #eaeaea;
+  }
+
+  .btnSecondary {
+    background: #868686;
+    color: white;
+  }
+}
+
+#autoCompleteOnFilters {
+  #search_places {
+    padding: 0 !important;
+    border: none !important;
+    height: auto !important;
+    background: transparent !important;
+  }
+}
+
+.vHidden {
+  visibility: hidden;
+}
+
+.txt-uppercase {
+  text-transform: uppercase;
+}
+
+.whiteOutlinedBtn {
+  background: #ffffff;
+  &:hover {
+    background: #efefef !important;
+  }
+  &:focus {
+    background: #e5e5e5 !important;
+  }
+}
+
+.grayChoiceHover {
+  &:hover {
+    color: #1a1623;
+    background: rgba(0, 0, 0, 0.04) !important;
+  }
+}
+
+.blackBgBtn {
+  background: #1a1623 !important;
+  &:hover {
+    background: #2d2936 !important;
+  }
+  &:focus {
+    background: #403b47 !important;
+  }
+  &:disabled {
+    background: transparent !important;
+    border: none !important;
+    color: #292929 !important;
+  }
+}
+
+.lightBlackBtn {
+  &:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+  }
+  &:focus {
+    background: rgba(255, 255, 255, 0.2) !important;
+  }
+}
+
+.menuScrolled {
+  .lightBlackBtn {
+    &:hover {
+      background: #efefef !important;
+    }
+    &:focus {
+      background: #e5e5e5 !important;
+    }
+  }
+}
+
+.custom-slider .ngx-slider .ngx-slider-bar {
+  background: #8d8d8d !important;
+  height: 2px !important;
+}
+.custom-slider .ngx-slider .ngx-slider-selection {
+  background: #000000 !important;
+}
+
+.custom-slider .ngx-slider .ngx-slider-pointer {
+  width: 14px;
+  height: 14px;
+  top: auto;
+  bottom: -3.4px;
+  background-color: #333 !important;
+}
+
+.custom-slider {
+  zoom: 125%;
+  *:focus {
+    outline: none !important;
+  }
+}
+
+.custom-slider .ngx-slider .ngx-slider-pointer:after {
+  display: none;
+}
+
+.custom-slider .ngx-slider .ngx-slider-bubble {
+  bottom: 14px;
+  font-size: 12px;
+}
+
+.custom-slider .ngx-slider .ngx-slider-limit {
+  font-weight: bold;
+  color: #000000 !important;
+}
+
+.custom-slider .ngx-slider .ngx-slider-tick {
+  width: 2px;
+  height: 2px;
+  margin-left: 4px;
+  border-radius: 0;
+  background: #000000 !important;
+  top: 2.5px;
+}
+
+.custom-slider .ngx-slider .ngx-slider-tick.ngx-slider-selected {
+  background: #8d8d8d !important;
+}
+
+.lessPadding {
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+}
+
+.maxWidthContent {
+  max-width: 1600px !important;
+  padding: 0 40px !important;
+}

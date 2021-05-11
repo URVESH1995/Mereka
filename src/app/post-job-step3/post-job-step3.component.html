@@ -1,0 +1,68 @@
+<app-navbar></app-navbar>
+<div class="row mainCont">
+  <div class="col-sm-3 stepsCont">
+    <app-post-job-menu></app-post-job-menu>
+  </div>
+
+  <div class="col-sm-9 pl-4 pr-0">
+    <div class="row detailsCont">
+      <div class="col-sm-12 px-0">
+        <div class="row sectCont">
+          <div class="col-sm-11 px-0">
+            <div class="d-flex justify-content-between mb-4">
+              <h2 class="bold mb-0 align-center">Budget</h2>
+            </div>
+            <div class="d-flex">
+              <p class="font-15 mb-0 bold">How would you like to pay you expert or hub?</p>
+              <i class="fas fa-question-circle blueTxt pl-3 font-18  align-center pointer"></i>
+            </div>
+
+            <div class="row mt-4">
+              <div *ngFor="let item of jobTypes; index as i" [ngClass]="{'pl-0': i===0, 'pr-0': i===jobTypes.length-1 }"
+                (click)="jobDetails.jobType=item.title" class="col-sm-4 pl-0">
+                <div class="card payCard" [class.active]="jobDetails.jobType===item.title">
+                  <div class="txt text-center">
+                    <img src="{{item.img}}">
+                    <h5 class="my-3 bold">{{item.title}}</h5>
+                    <p [innerHTML]="item.description" class="font-15 mb-0 fw500"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p class="font-15 mb-0 mt-5 bold">What level or experience should your Expert/Hub have?</p>
+            <div class="row mt-4">
+              <div *ngFor="let item of experienceLevelList; index as i" class="col-sm-2 px-0">
+                <div class="custom-control custom-radio">
+                  <input [(ngModel)]="jobDetails.experienceLevel" type="radio" class="custom-control-input"
+                    id="{{'customRadioUpper' + i}}" name="example2" [value]="item">
+                  <label class="custom-control-label" for="{{'customRadioUpper' + i}}">{{item}}</label>
+                </div>
+              </div>
+            </div>
+
+            <p class="font-15 mb-0 mt-5 bold">How long do you expect this project to last?</p>
+            <div class="row mt-4 pb-4">
+              <div *ngFor="let item of jobDurationList; index as i" class="col-sm-3 px-0">
+                <div class="custom-control custom-radio">
+                  <input [(ngModel)]="jobDetails.jobDuration" type="radio" class="custom-control-input"
+                    id="{{'customRadio' + i}}" name="example1" [value]="item">
+                  <label class="custom-control-label" for="{{'customRadio' + i}}">{{item}}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row sectCont">
+          <div class="col-sm-11 px-0 py-2 d-flex justify-content-between">
+            <button routerLink="/post-job-step2" class="btn btn-outline-primary">Back</button>
+            <button (click)="saveJobDetails()" class="btn darkBtn bold">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<app-footer></app-footer>

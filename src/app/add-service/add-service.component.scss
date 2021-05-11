@@ -1,0 +1,32 @@
+.parentContent {
+  height: 125vh;
+  .logoContent {
+    border-bottom: 1px solid #dedede;
+    img {
+      width: 200px;
+    }
+  }
+  .infoContent {
+    margin: 5em;
+
+    h1 {
+      font-weight: bold;
+      line-height: 1.5;
+    }
+
+    .featuredBlock {
+      border-radius: 10px;
+      border: 1px solid #dadada;
+
+      &:hover {
+        box-shadow: 0px 5px 5px 0px #999;
+      }
+      img {
+        width: 50px;
+        height: 50px;
+        object-fit: contain;
+        margin-bottom: 1em;
+      }
+    }
+  }
+}

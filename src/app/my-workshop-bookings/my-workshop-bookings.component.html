@@ -1,0 +1,33 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<app-navbar></app-navbar>
+
+<div class="mainContent px-0">
+    <div class="row justify-content-center my-5">
+        <div class="col-md-12 maxWidthContent">
+            <h5 class="bold">Bookings</h5>
+            <div class="border pt-4 mt-4 rounded bg-white">
+                <div class="row px-4">
+                    <div class="col-md-6">
+                        <div *ngIf="activeTab==='upcoming'" class="profileToggleBtn d-flex p-2">
+                            <button class="btn btn-dark btn-sm">Upcoming</button>
+                            <p class="soloText pointer" (click)="filterMyBookings('past')">Past</p>
+                        </div>
+                        <div *ngIf="activeTab==='past'" class="profileToggleBtn d-flex p-2">
+                            <p class="soloText pointer" (click)="filterMyBookings('upcoming')">Upcoming</p>
+                            <button class="btn btn-dark btn-sm">Past</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <button class="btn btnRounded border px-4 ml-4 selectedEntity">Experiences</button>
+                        <button class="btn btnRounded border px-4 ml-4">Spaces</button>
+                        <button class="btn btnRounded border px-4 ml-4">Machines</button>
+                    </div>
+                </div>
+                <hr class="mt-4 mb-0" />
+                <app-workshop-booking [workshopBookings]="myBookings"></app-workshop-booking>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-footer></app-footer>

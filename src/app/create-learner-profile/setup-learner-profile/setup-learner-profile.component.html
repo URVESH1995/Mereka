@@ -1,0 +1,334 @@
+<div class="row topNavbar fixed-top">
+  <div class="col-md-3 py-3 px-0">
+    <img routerLink="/home" src="/assets/imgs/grayLogo.png" class="pointer ml-4">
+  </div>
+  <div class="col-md-9 text-right">
+    <button *ngFor="let btn of tabButtons" [class.activeBtn]="activeTab===btn.title"
+      class="btn btn-inactive">{{btn.title}}</button>
+  </div>
+</div>
+
+<div *ngIf="showStep1">
+  <div class="parentContent bg-white">
+    <div class="row justify-content-center">
+      <div class="col-md-12 maxWidthContent">
+        <h3 class="bold my-3">Step 2: Set up your profile</h3>
+        <div class="borderdSection">
+          <p>Your profile</p>
+          <h4 class="bold mb-3">Edit your profile</h4>
+          <div class="coverImgContainer rounded">
+            <img *ngIf="coverImagePath" class="coverImg rounded" [src]="coverImagePath">
+            <img (click)="learnerCoverPicker.click()" class="uploadIcon pointer" src="/assets/imgs/uploadIcon.svg">
+          </div>
+
+          <input (change)="onChangeLogoFile($event)" type="file" accept="image/*" hidden #learnerLogoPicker>
+          <input (change)="onChangeCoverFile($event)" type="file" accept="image/*" hidden #learnerCoverPicker>
+
+          <div class="row formContainer">
+            <div class="col-md-1"></div>
+            <div class="col-md-4">
+              <div class="formContent rounded shadow p-3">
+                <div class="row">
+                  <div class="col-md-10">
+                    <img (click)="learnerLogoPicker.click()" class="profileIcon pointer"
+                      [src]="profileImagePath || '/assets/imgs/hubProfile.png'">
+                  </div>
+                  <div class="col-md-2 text-right">
+                    <i class="fas fa-ellipsis-h pointer"></i>
+                  </div>
+                </div>
+
+                <div class="formFields mt-2">
+                  <div class="form-group">
+                    <label>Name</label>
+                    <input [(ngModel)]="currentUser.fullName" type="text" class="form-control" placeholder="Name">
+                  </div>
+                  <div class="form-group">
+                    <label>Location</label>
+                    <input [(ngModel)]="currentUser.location.city" type="text" class="form-control mb-3"
+                      placeholder="City">
+                  </div>
+                  <div class="form-group">
+                    <label>Contact Information</label>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text bg-white">
+                          <img src="/assets/imgs/webicon.png">
+                        </span>
+                      </div>
+                      <input [(ngModel)]="learnerProfile.webUrl" type="text" class="form-control"
+                        placeholder="Website URL">
+                    </div>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text bg-white">
+                          <img src="/assets/imgs/fb-icon.png">
+                        </span>
+                      </div>
+                      <input [(ngModel)]="learnerProfile.fbUrl" type="text" class="form-control"
+                        placeholder="Facebook URL">
+                    </div>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text bg-white">
+                          <img src="/assets/imgs/insta-icon.png">
+                        </span>
+                      </div>
+                      <input [(ngModel)]="learnerProfile.instaUrl" type="text" class="form-control"
+                        placeholder="Instagram URL">
+                    </div>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text bg-white">
+                          <img src="/assets/imgs/linkedin.png">
+                        </span>
+                      </div>
+                      <input [(ngModel)]="learnerProfile.linkedinUrl" type="text" class="form-control"
+                        placeholder="LinkedIn URL">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-7 pr-0">
+              <div style="margin-top: 12em" class="form-group">
+                <h4 class="bold">About Me</h4>
+                <p class="font-15">What do you want people to know about you? Share your interests and hobbies!</p>
+                <textarea [(ngModel)]="learnerProfile.aboutMe" type="text" placeholder="Label" class="form-control"
+                  rows="8"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row fixed-bottom p-3 px-4 continueBackBtns">
+    <div class="col-md-6">
+      <button (click)="backToLearnerProfile()" class="btn btn-light btnRounded">Back</button>
+    </div>
+    <div class="col-md-6 text-right">
+      <button (click)="basicDetailsAreFilled()" class="btn btnSecondary btnRounded">Continue</button>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="!showStep1">
+  <div class="parentContent bg-white">
+    <div class="row justify-content-center">
+      <div class="col-md-12 maxWidthContent">
+        <h3 class="bold my-3">Step 2: Set up your profile</h3>
+        <div class="borderdSection">
+          <p>Education
+            <i *ngIf="expandTypeofEdu" (click)="expandTypeofEdu=false" class="fas fa-angle-up float-right pointer"></i>
+            <i *ngIf="!expandTypeofEdu" (click)="expandTypeofEdu=true"
+              class="fas fa-angle-down float-right pointer"></i>
+          </p>
+          <h4 class="bold mb-3">What is your educational background?</h4>
+          <div *ngIf="expandTypeofEdu">
+            <div *ngFor="let education of learnerProfile.educationList; index as i" class="eduCont">
+              <div class="txt">
+                <h5 class="bold mt-0">{{education.school}}</h5>
+                <p class="mb-0 mt-3">{{education.qualifications}}</p>
+              </div>
+              <div class="actBtns">
+                <button (click)="updateEducation(education, i)" data-toggle="modal" data-target="#addEducationModal"
+                  class="btn primaryBtn px-4">Update</button>
+                <i (click)="removeEducation(i)" class="fas fa-trash-alt"></i>
+              </div>
+            </div>
+          </div>
+          <div (click)="newEducation()" data-toggle="modal" data-target="#addEducationModal" class="addIconCont">
+            <img src="/assets/imgs/addIcon.svg" height="35px">
+            <p class="mb-0 appTxt bold">Add School</p>
+          </div>
+        </div>
+
+        <div class="borderdSection">
+          <p>Employment
+            <i *ngIf="expandTypeofEmp" (click)="expandTypeofEmp=false" class="fas fa-angle-up float-right pointer"></i>
+            <i *ngIf="!expandTypeofEmp" (click)="expandTypeofEmp=true"
+              class="fas fa-angle-down float-right pointer"></i>
+          </p>
+          <h4 class="bold mb-3">Share with us your employment history?</h4>
+          <div *ngIf="expandTypeofEmp">
+            <div *ngFor="let employment of learnerProfile.employmentList; index as i" class="eduCont">
+              <div class="txt">
+                <h5 class="bold mt-0">{{employment.company}}</h5>
+                <p class="mb-0 mt-3">{{employment.role}}</p>
+              </div>
+              <div class="actBtns">
+                <button (click)="updateEmployment(employment, i)" data-toggle="modal" data-target="#addExperienceModal"
+                  class="btn primaryBtn px-4">Update</button>
+                <i (click)="removeEmployment(i)" class="fas fa-trash-alt"></i>
+              </div>
+            </div>
+          </div>
+          <div (click)="newEmployment()" data-toggle="modal" data-target="#addExperienceModal" class="addIconCont">
+            <img src="/assets/imgs/addIcon.svg" height="35px">
+            <p class="mb-0 appTxt bold">Add Employment</p>
+          </div>
+        </div>
+
+        <div class="borderdSection">
+          <p>Language
+            <i *ngIf="expandTypeoflang" (click)="expandTypeoflang=false"
+              class="fas fa-angle-up float-right pointer"></i>
+            <i *ngIf="!expandTypeoflang" (click)="expandTypeoflang=true"
+              class="fas fa-angle-down float-right pointer"></i>
+          </p>
+          <h4 class="bold mb-3">What is your primary language?</h4>
+          <div style="width: 40%" *ngIf="expandTypeoflang">
+            <ng-select [clearable]="false" [(ngModel)]="learnerProfile.language" [items]="dataHelper.languages"
+              placeholder="Choose language">
+            </ng-select>
+          </div>
+          <hr class="borderedItem" />
+          <h4 class="bold mb-3">Do you know any other language? (optional)</h4>
+          <button *ngFor="let lang of learnerProfile.otherLanguages; index as i"
+            class="btn btnRounded btn-light border px-4 mr-3">
+            {{lang}} <i (click)="removeLanguage(i)" class="fa fa-trash ml-2"></i>
+          </button>
+          <input [(ngModel)]="newLanguage" style="width: 150px;" type="text" placeholder="Language"
+            class="form-control btnRounded mr-3 d-inline">
+          <img (click)="addNewLanguage()" class="pointer" src="/assets/imgs/addIcon.svg">
+
+          <!-- <tag-input #input [modelAsStrings]="true" [placeholder]="'Add language'"
+            [secondaryPlaceholder]="'Add language'" [(ngModel)]="learnerProfile.otherLanguages">
+            <tag-input-dropdown [showDropdownIfEmpty]="true"></tag-input-dropdown>
+          </tag-input> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row fixed-bottom p-3 px-4 continueBackBtns">
+    <div class="col-md-6">
+      <button (click)="showStep1=true" class="btn btn-light btnRounded">Back</button>
+    </div>
+    <div class="col-md-6 text-right">
+      <button (click)="nextTab()" class="btn btnSecondary btnRounded">Continue</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Add Employment Modal -->
+<div class="modal fade portfolioModal" id="addExperienceModal">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-body p-4">
+        <div class="form-group">
+          <label>Company</label>
+          <input [(ngModel)]="currentEmployment.company" type="text" placeholder="Label" class="form-control">
+        </div>
+        <label>Location</label>
+        <div class="row">
+          <div class="col-md-6 pl-0">
+            <div class="form-group">
+              <input [(ngModel)]="currentEmployment.location" type="text" class="form-control" placeholder="City">
+            </div>
+          </div>
+          <div class="col-md-6 pr-0">
+            <ng-select [(ngModel)]="currentEmployment.country" [items]="dataHelper.countries"
+              placeholder="Choose a Country">
+            </ng-select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Role</label>
+          <input [(ngModel)]="currentEmployment.role" type="text" placeholder="Label" class="form-control">
+        </div>
+        <label class="w-100">Employment Period
+          <small class="float-right">(Skip if you're currently working here)</small>
+        </label>
+        <div class="row">
+          <div class="col-md-6 pl-0">
+            <div class="form-group">
+              <input [(ngModel)]="currentEmployment.startDate" type="date" class="form-control">
+            </div>
+          </div>
+          <div class="col-md-6 pr-0">
+            <div class="form-group">
+              <input [(ngModel)]="currentEmployment.endDate" type="date" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Description
+            <span style="font-weight: normal !important">
+              (please make sure that your description is concise - an optimum word count is 100-200 words)</span>
+          </label>
+          <textarea [(ngModel)]="currentEmployment.description" type="text" placeholder="Label" class="form-control"
+            rows="5"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="col-md-6">
+          <button id="closeEmploymentModal" data-dismiss="modal" class="btn cancelBtn btnRounded px-4">Cancel</button>
+        </div>
+        <div class="col-md-6 text-right">
+          <button [disabled]="!currentEmployment.company || !currentEmployment.role || !currentEmployment.location
+          || !currentEmployment.country ||  !currentEmployment.startDate || !currentEmployment.description"
+            (click)="saveEmployment()" class="btn btn-dark btnRounded px-4">Save and Exit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Add Education Modal -->
+<div class="modal fade portfolioModal" id="addEducationModal">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-body p-4">
+        <div class="form-group">
+          <label>School</label>
+          <input [(ngModel)]="currentEducation.school" type="text" placeholder="Label" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>Area of Study (Optional)</label>
+          <input [(ngModel)]="currentEducation.areaOfStudy" type="text" placeholder="Label" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>Qualifications</label>
+          <input [(ngModel)]="currentEducation.qualifications" type="text" placeholder="Label" class="form-control">
+        </div>
+        <label>Dates Attended (Optional)</label>
+        <div class="row">
+          <div class="col-md-6 pl-0">
+            <div class="form-group">
+              <input [(ngModel)]="currentEducation.startDate" type="date" class="form-control">
+            </div>
+          </div>
+          <div class="col-md-6 pr-0">
+            <div class="form-group">
+              <input [(ngModel)]="currentEducation.endDate" type="date" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Description
+            <span style="font-weight: normal !important">
+              (please make sure that your description is concise - an optimum word count is 100-200 words)</span>
+          </label>
+          <textarea [(ngModel)]="currentEducation.description" type="text" placeholder="Label" class="form-control"
+            rows="5"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="col-md-6">
+          <button id="closeEducationModal" data-dismiss="modal" class="btn cancelBtn btnRounded px-4">Cancel</button>
+        </div>
+        <div class="col-md-6 text-right">
+          <button [disabled]="!currentEducation.school || !currentEducation.qualifications || 
+          !currentEducation.description" (click)="saveEducation()" class="btn btn-dark btnRounded px-4">Save and
+            Exit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

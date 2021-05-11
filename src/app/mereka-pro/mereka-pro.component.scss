@@ -1,0 +1,212 @@
+.bgCont {
+  background: url("/assets/imgs/Hire_ExpertBg.png") center center no-repeat;
+  background-size: cover;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+
+  h1 {
+    font-size: 100px;
+  }
+}
+
+.mainCont {
+  justify-content: center;
+
+  .pricing {
+    border: 0px;
+    border-radius: 10px;
+    background-color: white;
+    padding: 30px 0px;
+    color: #161616;
+    margin: 6em 0em;
+
+    .priceCont {
+      border-right: 2px solid #dfdfdf;
+      min-height: 50vw;
+      position: relative;
+      padding-bottom: 65px;
+
+      .learnMore {
+        position: absolute;
+        bottom: 35px;
+        left: 0px;
+        text-align: center;
+        width: 100%;
+      }
+
+      .descp {
+        font-weight: 500;
+        min-height: 68.8px;
+        margin-bottom: 0px;
+      }
+
+      .darkBtn {
+        height: 50px;
+        font-weight: 500;
+        margin: 40px 0px 70px 0px;
+      }
+
+      .features {
+        display: flex;
+        margin-top: 35px;
+
+        p {
+          padding-left: 12px;
+          align-self: center;
+          font-size: 13px;
+        }
+      }
+    }
+
+    .priceCont:last-child {
+      border-right: 0px;
+    }
+  }
+
+  .detailTable {
+    border: 0px;
+    border-radius: 10px;
+    background-color: white;
+    padding: 30px 0px;
+    color: #797575;
+    margin-bottom: 4em;
+
+    .headerRow {
+      color: var(--primaryColor);
+      padding: 10px 0px 35px 0px;
+    }
+
+    .detailCont {
+      cursor: pointer;
+      padding: 15px 20px;
+    }
+
+    .detailCont:hover {
+      background-color: #eeeeee;
+    }
+  }
+}
+
+.benefitsCont {
+  margin: 4em 0em;
+  background-color: white;
+  padding: 50px 0px;
+  justify-content: center;
+
+  .logo {
+    border: 3px solid #797575;
+    min-height: 70px;
+    min-width: 70px;
+    max-height: 70px;
+    max-width: 70px;
+    border-radius: 50%;
+    margin-right: 20px;
+    cursor: pointer;
+  }
+}
+
+.sect2 {
+  padding-bottom: 4em;
+  .questCont {
+    margin-top: 35px;
+
+    .answerCont {
+      border-left: 1px solid #b2b2b2;
+    }
+  }
+}
+
+/* responsiveness */
+/* tablet 991px */
+@media screen and (max-width: 991px) and (min-width: 576px) {
+  .bgCont {
+    height: 25vh;
+    h1 {
+      font-size: 70px;
+    }
+  }
+  .mainCont {
+    .col-sm-10 {
+      .pricing {
+        margin: 3em 0em;
+        .priceCont {
+          flex: 0 0 50%;
+          max-width: 50%;
+          border: none;
+        }
+      }
+      .detailTable {
+        .headerRow {
+          .col-sm-2,
+          .col-sm-3 {
+          }
+        }
+        .headerRow div:nth-child(3),
+        .headerRow div:nth-child(4),
+        .headerRow div:nth-child(5) {
+        }
+        .detailCont {
+          .col-sm-2,
+          .col-sm-3 {
+          }
+        }
+      }
+    }
+  }
+}
+
+/*mobile 575px */
+@media only screen and (max-width: 575px) {
+  .bgCont {
+    height: 15vh;
+    h1 {
+      font-size: 50px !important;
+    }
+  }
+  .mainCont {
+    .col-sm-10 {
+      .pricing {
+        margin: 0em 0em !important;
+        border: 0px !important;
+        border-radius: 0px !important;
+        padding-bottom: 0px !important;
+        .priceCont {
+          border-bottom: 2px solid #dfdfdf;
+          margin-bottom: 30px;
+        }
+      }
+      .detailTable {
+        padding-top: 0px !important;
+        overflow-x: scroll;
+        .headerRow {
+          padding: 10px 0px 20px 0px !important;
+          flex-wrap: nowrap;
+          .col-sm-2,
+          .col-sm-3 {
+            flex: 0 0 40%;
+            max-width: 40%;
+            padding: 0px;
+          }
+        }
+        .headerRow div:nth-child(3),
+        .headerRow div:nth-child(4),
+        .headerRow div:nth-child(5) {
+          padding-right: 50px !important;
+        }
+        .detailCont {
+          padding-bottom: 10px !important;
+          flex-wrap: nowrap;
+          .col-sm-2,
+          .col-sm-3 {
+            flex: 0 0 40%;
+            max-width: 40%;
+            padding: 0px;
+          }
+        }
+      }
+    }
+  }
+}

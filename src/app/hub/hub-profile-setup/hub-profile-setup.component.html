@@ -1,0 +1,100 @@
+<ngx-loading [show]="loading"></ngx-loading>
+
+<h4 class="bold">Set up your Hub Profile</h4>
+<div class="parentContent rounded p-4 mt-3">
+    <p>Your Hub</p>
+    <h5 class="bold">Create a Business Card for Your Hub</h5>
+
+    <div class="coverImgContainer rounded">
+        <img *ngIf="agencyBannerPath" class="coverImg rounded" [src]="agencyBannerPath">
+        <img (click)="agencyCoverPicker.click()" class="uploadIcon pointer" src="/assets/imgs/uploadIcon.png">
+    </div>
+
+    <input (change)="onChangeLogoFile($event)" type="file" accept="image/*" hidden #agencyLogoPicker>
+    <input (change)="onChangeCoverFile($event)" type="file" accept="image/*" hidden #agencyCoverPicker>
+
+    <div class="row formContainer justify-content-center">
+        <div class="col-md-7">
+            <div class="formContent rounded shadow p-3">
+                <div class="row">
+                    <div class="col-md-10">
+                        <img (click)="agencyLogoPicker.click()" class="profileIcon pointer"
+                            [src]="agencyLogoPath || '/assets/imgs/hubProfile.png'">
+                    </div>
+                    <div class="col-md-2 text-right">
+                        <i class="fas fa-ellipsis-h pointer"></i>
+                    </div>
+                </div>
+
+                <div class="row formFields mt-2">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input [(ngModel)]="myAgency.agencyName" type="text" class="form-control"
+                                placeholder="Name">
+                        </div>
+                        <div class="form-group">
+                            <label>Hub Type</label>
+                            <ng-select [items]="hubTypesList" placeholder="Hub Type" [clearable]="false"
+                                [(ngModel)]="myAgency.companyType">
+                            </ng-select>
+                        </div>
+                        <div *ngIf="myAgency.location" class="form-group">
+                            <label>Location</label>
+                            <input [(ngModel)]="myAgency.location.city" type="text" class="form-control mb-3"
+                                placeholder="City">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Contact Information</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-white">
+                                    <img src="/assets/imgs/webicon.png">
+                                </span>
+                            </div>
+                            <input [(ngModel)]="myAgency.webUrl" type="text" class="form-control"
+                                placeholder="Website URL">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-white">
+                                    <img src="/assets/imgs/fb-icon.png">
+                                </span>
+                            </div>
+                            <input [(ngModel)]="myAgency.fbUrl" type="text" class="form-control"
+                                placeholder="Facebook URL">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-white">
+                                    <img src="/assets/imgs/insta-icon.png">
+                                </span>
+                            </div>
+                            <input [(ngModel)]="myAgency.instaUrl" type="text" class="form-control"
+                                placeholder="Instagram URL">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-white">
+                                    <img src="/assets/imgs/linkedin.png">
+                                </span>
+                            </div>
+                            <input [(ngModel)]="myAgency.linkedinUrl" type="text" class="form-control"
+                                placeholder="LinkedIn URL">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row fixed-bottom p-3 px-4 continueBackBtns">
+    <div class="col-md-6">
+        <button (click)="navigateBack()" class="btn grayChoiceHover btn-light btnRounded">Back</button>
+    </div>
+    <div class="col-md-6 text-right">
+        <button (click)="nextTab()" class="btn grayChoiceHover btnSecondary btnRounded">Continue</button>
+    </div>
+</div>

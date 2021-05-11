@@ -1,0 +1,35 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<app-navbar></app-navbar>
+
+<div class="mainContent">
+  <div class="row justify-content-center my-5">
+    <div class="col-md-12 maxWidthContent">
+      <h2 class="bold">Notifications</h2>
+      <div class="border mt-4 rounded bg-white">
+        <h5 *ngIf="!notifications.length" class="text-center my-5 text-secondary">No notifications found!</h5>
+
+        <div *ngFor="let notification of notifications; let i=index" class="notiyCont">
+          <div (click)="notificationDetails(notification)" class="detailCont">
+            <img [src]="getSenderImage(notification) || '/assets/imgs/GrayEllipse.png'" class="notifyImg">
+            <div class="details">
+              <div class="notifyTitle">
+                <h4 class="bold mb-0">{{notification.title}}</h4>
+                <!-- <div class="onlineIcon"></div> -->
+              </div>
+              <p class="msg">{{getNotificationText(notification)}}</p>
+              <p class="font-17 mb-0 bold">{{notification.timestamp | date: 'short'}}</p>
+            </div>
+          </div>
+          <div class="actBtnsCont">
+            <button [disabled]="userAuth.currentUser.agencyId || userAuth.currentUser.myAgency"
+              *ngIf="notification.receiver===userAuth.currentUser.email" (click)="createExpertProfile(notification)"
+              class="btn darkBtn acceptBtn">Accept Invitation</button>
+            <i (click)="removeNotification(i)" class="fas fa-times closeBtn"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

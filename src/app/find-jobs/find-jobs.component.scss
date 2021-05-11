@@ -1,0 +1,240 @@
+.pagesLog {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding-left: 3em;
+  border-bottom: 1px solid #d1cccc;
+}
+
+.mainCont {
+  margin: 3em 0em;
+
+  .filterTitle {
+    padding-left: 7px;
+    font-weight: bold;
+    border-left: 4px solid transparent;
+
+    &.active {
+      border-left: 4px solid #d72e34;
+    }
+  }
+
+  .searchBar {
+    border-radius: 12px;
+    height: 45px;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    background-color: #ffffff;
+    padding-left: 20px;
+    color: #7d7d7d;
+
+    i {
+      font-size: 22px;
+    }
+
+    input {
+      background-color: transparent;
+      color: #7f7f7f;
+      font-size: 14px;
+      padding-left: 35px;
+      height: unset;
+      border: none;
+    }
+  }
+
+
+  .filterItemCont {
+    padding: 16px 0px 16px 25px;
+    border-bottom: 1px solid #d1cccc;
+    margin-bottom: 24px;
+
+    .d-flex {
+      .ovalicon {
+        height: 10px;
+        width: 10px;
+        border-radius: 50%;
+        align-self: center;
+        background-color: #d72e34;
+      }
+
+      p {
+        font-size: 15px;
+        margin-left: 5px;
+        font-weight: 500;
+        color: #161616;
+        cursor: pointer;
+      }
+    }
+  }
+
+  #myTab {
+    .nav-item {
+      margin-right: 45px;
+    }
+
+    .nav-item:last-child {
+      margin-right: 0px !important;
+    }
+
+    .nav-link {
+      font-weight: 500;
+      border: none;
+      padding: 8px 2px 8px 2px;
+      min-width: 60px;
+      color: #161616;
+    }
+
+    .nav-link.active {
+      border: none;
+      border-bottom: 4px solid #161616;
+      font-weight: bold;
+      background-color: transparent;
+    }
+  }
+
+  .jobCont {
+    border: 0px;
+    border-radius: 10px;
+    min-height: 30vh;
+    margin-top: 30px;
+    color: #161616;
+
+    .titleCont {
+      display: flex;
+      height: 100px;
+      align-items: center;
+      padding-left: 30px;
+      border-bottom: 1px solid #d1cccc;
+    }
+
+    .jobCard {
+      justify-content: center;
+      padding: 30px 0px 25px 0px;
+      border-bottom: 1px solid #d1cccc;
+      cursor: pointer;
+      .wishIcon {
+        font-size: 20px;
+        position: absolute;
+        bottom: 5px;
+        right: 3%;
+        cursor: pointer;
+      }
+
+      .jobImg {
+        width: 95%;
+        object-fit: contain;
+        max-height: 120px;
+      }
+
+      .jobDetailsCont {
+        .jobTitle {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+          width: 100% !important;
+        }
+
+        .jobDescp {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          width: 100% !important;
+          font-size: 13px;
+        }
+
+        .iconCont {
+          display: inline-flex;
+        }
+      }
+    }
+
+    .jobCard:last-child {
+      border-bottom: 0px;
+      padding-bottom: 35px;
+    }
+  }
+}
+
+/* responsiveness */
+/* tablet 991px */
+@media screen and (max-width: 991px) and (min-width: 576px) {
+  .mainCont {
+    margin: 0px;
+    .tab-content {
+      .card {
+        .col-sm-3.pr-0 {
+          width: unset;
+          padding: 10px 0px;
+        }
+        .wishIcon {
+          bottom: 0px !important;
+          right: 5% !important;
+        }
+      }
+    }
+  }
+}
+
+/*mobile 575px */
+@media only screen and (max-width: 575px) {
+  .pagesLog {
+    padding-left: 20px;
+  }
+  .mainCont {
+    .col-sm-9 {
+      padding-left: 0px;
+    }
+    .nav-tabs {
+      .nav-item {
+        margin-right: 80px !important;
+      }
+    }
+    .tab-content {
+      .card {
+        .jobCard {
+          padding: 20px 0px 10px 0px;
+          .row {
+            .jobDetailsCont {
+              padding-top: 10px;
+            }
+            .col-sm-3.pr-0 {
+              width: unset;
+              padding: 10px 0px;
+            }
+            .wishIcon {
+              bottom: 22px !important;
+              right: 10% !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.customFilters {
+  border-bottom: 1px solid #dedede;
+  .nav-item {
+    margin-right: 3.5rem;
+    cursor: pointer;
+    a {
+      color: #000000 !important;
+      padding: 0.5rem 0rem !important;
+      &.active {
+        border-bottom: 3px solid #000000;
+        font-weight: bold !important;
+      }
+    }
+    .dropdown-item {
+      padding: 0.5rem 1rem !important;
+    }
+    i {
+      color: #000000 !important;
+    }
+  }
+}

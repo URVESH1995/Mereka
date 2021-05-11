@@ -1,0 +1,77 @@
+<app-navbar></app-navbar>
+
+<div class="row mainCont">
+  <div class="col-sm-3 stepsCont">
+    <app-post-job-menu></app-post-job-menu>
+  </div>
+
+  <div class="col-sm-9 pl-4 pr-0">
+    <div class="row detailsCont">
+      <div class="col-sm-11 px-0">
+        <div class="d-flex justify-content-between mb-4">
+          <h2 class="bold mb-0 align-center">Job Details</h2>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 px-0">
+            <div class="form-group mb-4">
+              <label class="font-14 mb-3 bold">Enter the name of your job post</label>
+              <input [(ngModel)]="jobDetails.jobTitle" type="text" class="form-control" placeholder="Enter">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 px-0">
+            <div class="form-group mb-4">
+              <h5 class="my-3 bold font-18">Description</h5>
+              <textarea (ngModelChange)="countLetters($event)" [(ngModel)]="jobDetails.description" class="form-control"
+                rows="8"></textarea>
+              <h6 *ngIf="!inlavidDescription" class="text-right text2 mb-0 mt-3">
+                {{lettersCount}}/5000 characters (minimun 50)</h6>
+              <h6 *ngIf="inlavidDescription" class="text-right mb-0 mt-3 text-danger">
+                {{lettersCount}}/5000 characters (minimun 50)</h6>
+            </div>
+            <div class="form-group mb-4">
+              <label class="font-14 mb-3 bold">Additional projects files (optional)</label>
+
+              <div *ngIf="jobDetails.fileUrls && jobDetails.fileUrls.length">
+                <button *ngFor="let file of jobDetails.fileUrls; index as i" class="btn btn-light mr-3 mb-3">
+                  <a [href]="file.url" target="_blank">{{file.name}}</a>
+                  <i (click)="removeFile(i)" class="fa fa-trash text-danger ml-5"></i>
+                </button>
+              </div>
+
+              <div class="projectImgCont">
+                <label style="max-width: fit-content" class="w-100 text-center pointer">
+                  Drag or <b class="blueTxt">upload</b> project images
+                  <span class="blueTxt" *ngIf="selectedFiles.length">
+                    ({{selectedFiles.length}} File(s) attached)
+                  </span>
+                  <input (change)="onChangeFile($event)" [multiple]="true" type="file"
+                    accept="file_extension | .jpg, .png, .doc, .pdf, .zip, .jpeg">
+                </label>
+              </div>
+              <p class="font-15 mb-0 mt-3">You may attach up to files under <b>100 MB</b> each</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="row detailsCont borderTop py-4">
+      <div class="col-sm-11 px-0">
+        <h5 class="mb-3 bold font-18">Job Category</h5>
+        <p class="font-15 my-3 w-50">Let’s categorize your job, which helps us personalize your job details and
+          match your job to relevant experts and agencies.</p>
+        <ng-select placeholder="Category" [items]="categories" [(ngModel)]="jobDetails.category"></ng-select>
+      </div>
+    </div> -->
+    <div class="row detailsCont borderTop py-4">
+      <div class="col-sm-11 px-0 py-2 d-flex justify-content-between">
+        <button routerLink="/home" class="btn btn-outline-primary">Back</button>
+        <button (click)="saveJobDetails()" class="btn darkBtn bold">Next</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<app-footer></app-footer>

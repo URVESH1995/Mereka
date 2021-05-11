@@ -1,0 +1,16 @@
+.borderedContent {
+  border: 1px solid #dcdcdc;
+  border-radius: 5px;
+  padding: 0px 40px;
+  background-color: white;
+  .eduCont
+  {
+      border-bottom: 1px solid #dcdcdc;
+      padding: 35px 0px;
+  }
+  .eduCont:last-child
+  {
+      border-bottom: 0px !important;
+  }
+}
+

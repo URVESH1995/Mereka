@@ -1,0 +1,121 @@
+<div class="borderdBlock">
+  <h4 class="bold mb-2">Chats</h4>
+  <p class="mb-0 text1 font-17">Receive chat messages from Experts and other Learners.</p>
+  <div class="toggleSwitchCont">
+    <div class="txtCont">
+      <h5 class="appTxt bold mb-2">Email</h5>
+      <p class="mb-0 text1">Chat messages will be sent to your email address</p>
+    </div>
+    <div class="switchToggler">
+      <label class="switch">
+        <input (change)="updateSettings()" [(ngModel)]="mySettings.receiveChatMessageOnEmail" type="checkbox">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+  <div class="toggleSwitchCont">
+    <div class="txtCont">
+      <h5 class="appTxt bold mb-2">Text Messages</h5>
+      <p class="mb-0 text1">Chat messages will be sent to your phone number. <u class="pointer">Add Phone Number</u></p>
+    </div>
+    <div class="switchToggler">
+      <label class="switch">
+        <input (change)="updateSettings()" [(ngModel)]="mySettings.receiveChatMessageOnPhone" type="checkbox">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+
+  <hr class="my-5" />
+  <h4 class="bold mb-2">My Bookings</h4>
+  <p class="mb-0 text1 font-17">Receive confirmations and updates related to your bookings.</p>
+  <div class="toggleSwitchCont">
+    <div class="txtCont">
+      <h5 class="appTxt bold mb-2">Email</h5>
+      <p class="mb-0 text1">Booking information will be sent to your email address</p>
+    </div>
+    <div class="switchToggler">
+      <label class="switch">
+        <input (change)="updateSettings()" [(ngModel)]="mySettings.receiveBookingDetailsOnEmail" type="checkbox">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+  <div class="toggleSwitchCont">
+    <div class="txtCont">
+      <h5 class="appTxt bold mb-2">Text Messages</h5>
+      <p class="mb-0 text1">Booking information will be sent to your phone number. <u class="pointer">Add Phone
+          Number</u></p>
+    </div>
+    <div class="switchToggler">
+      <label class="switch">
+        <input (change)="updateSettings()" [(ngModel)]="mySettings.receiveBookingDetailsOnPhone" type="checkbox">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+
+  <hr class="my-5" />
+  <h4 class="bold mb-2">My Jobs</h4>
+  <p class="mb-0 text1 font-17">Receive updates on the status of your job posts.</p>
+  <div class="toggleSwitchCont">
+    <div class="txtCont">
+      <h5 class="appTxt bold mb-2">Email</h5>
+      <p class="mb-0 text1">Job notifications will be sent to your email address</p>
+    </div>
+    <div class="switchToggler">
+      <label class="switch">
+        <input (change)="updateSettings()" [(ngModel)]="mySettings.receiveJobUpdatesOnEmail" type="checkbox">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+  <div class="toggleSwitchCont">
+    <div class="txtCont">
+      <h5 class="appTxt bold mb-2">Text Messages</h5>
+      <p class="mb-0 text1">Job notifications will be sent to your phone number. <u class="pointer">Add Phone Number</u>
+      </p>
+    </div>
+    <div class="switchToggler">
+      <label class="switch">
+        <input (change)="updateSettings()" [(ngModel)]="mySettings.receiveJobUpdatesOnPhone" type="checkbox">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+
+  <hr class="my-5" />
+  <h4 class="bold mb-2">Promotions and Updates</h4>
+  <p class="mb-0 text1 font-17">Receive special deals and stay updated with the platform features,events and news.</p>
+  <div class="toggleSwitchCont">
+    <div class="txtCont">
+      <h5 class="appTxt bold mb-2">In Platform</h5>
+      <p class="mb-0 text1">You will receive notifications about promotions and updates</p>
+    </div>
+    <div class="switchToggler">
+      <label class="switch">
+        <input (change)="updateSettings()" [(ngModel)]="mySettings.receivePromotionsAndUpdates" type="checkbox">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+
+  <hr class="my-5" />
+  <h4 class="bold mb-2">Summary</h4>
+  <p class="mb-0 text1 font-17">Receive a summary of your activities on the platform.</p>
+  <div class="toggleSwitchCont">
+    <div class="txtCont">
+      <h5 class="appTxt bold mb-2">Email</h5>
+      <p class="mb-0 text1">The summary will be sent to your email address</p>
+    </div>
+    <div class="switchToggler">
+      <label class="switch">
+        <input (change)="updateSettings()" [(ngModel)]="mySettings.receiveSummaryOnEmail" type="checkbox">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+  <ng-select (change)="updateSettings()" [(ngModel)]="mySettings.emailFrequency" [items]="emailFreq" class="mt-4 w-50"
+    placeholder="Frequency of emails">
+  </ng-select>
+</div>

@@ -1,0 +1,296 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<app-navbar></app-navbar>
+
+<div class="row justify-content-center parentContent">
+  <div class="col-md-12 maxWidthContent">
+    <h2>{{userAuth.currentUser.fullName}}'s Hub</h2>
+    <div class="d-flex mt-3">
+      <div class="leftMenu">
+        <p (click)="activeMenu2='My Dashboard'; userSubMenu=false; serviceSubMenu=false"
+          [class.active]="activeMenu2=='My Dashboard'" class="menu grayChoiceHover">My Dashboard
+        </p>
+        <p (click)="activeMenu2='Hub Profile'; userSubMenu=false; serviceSubMenu=false"
+          [class.active]="activeMenu2=='Hub Profile'" class="menu grayChoiceHover">Hub Profile</p>
+        <p (click)="userSubMenu=!userSubMenu; serviceSubMenu=false" [class.active]="userSubMenu"
+          class="menu grayChoiceHover mb-2">Users
+        </p>
+        <div *ngIf="userSubMenu">
+          <p class="subMenu grayChoiceHover" (click)="activeMenu2='Expert'" [class.active]="activeMenu2=='Expert'">
+            Experts</p>
+          <p class="subMenu grayChoiceHover" (click)="activeMenu2='Member'" [class.active]="activeMenu2=='Member'">
+            Members</p>
+        </div>
+        <p (click)="activeMenu2='Analytics'; userSubMenu=false; serviceSubMenu=false"
+          [class.active]="activeMenu2=='Analytics'" class="menu grayChoiceHover">Analytics</p>
+        <p (click)="activeMenu2='Messages'; userSubMenu=false; serviceSubMenu=false"
+          [class.active]="activeMenu2=='Messages'" class="menu grayChoiceHover">Messages</p>
+        <p (click)="serviceSubMenu=!serviceSubMenu; userSubMenu=false" [class.active]="serviceSubMenu"
+          class="menu grayChoiceHover mb-2">Manage Services
+        </p>
+        <div *ngIf="serviceSubMenu">
+          <p class="subMenu grayChoiceHover" (click)="activeMenu2='Experiences'"
+            [class.active]="activeMenu2=='Experiences'">Experiences
+          </p>
+          <p class="subMenu grayChoiceHover" (click)="activeMenu2='Spaces'" [class.active]="activeMenu2=='Spaces'">
+            Spaces</p>
+          <p class="subMenu grayChoiceHover" (click)="activeMenu2='Job Requests'"
+            [class.active]="activeMenu2=='Job Requests'">Job
+            Requests</p>
+          <p class="subMenu grayChoiceHover" (click)="activeMenu2='Machine Quotes'"
+            [class.active]="activeMenu2=='Machine Quotes'">
+            Machine Quotes</p>
+        </div>
+        <p (click)="activeMenu2='Payments and Billings'; userSubMenu=false; serviceSubMenu=false"
+          [class.active]="activeMenu2=='Payments and Billings'" class="menu grayChoiceHover">Payments and Billings</p>
+        <p (click)="activeMenu2='Security Center'; userSubMenu=false; serviceSubMenu=false"
+          [class.active]="activeMenu2=='Security Center'" class="menu grayChoiceHover">
+          Security Center</p>
+      </div>
+
+      <div class="rightContent">
+        <div *ngIf="activeMenu2==='My Dashboard'" class="borderdBlock">
+          <div class="d-flex p-4 currentPlanBlock">
+            <div class="w-50">
+              <h5 class="bold">Hub Account</h5>
+              <p *ngIf="!myAgency.isApproved" class="mb-0">Your Hub is Being Verified</p>
+              <p *ngIf="myAgency.isApproved" class="mb-0">
+                {{myAgency.packageInfo? myAgency.packageInfo : 'Basic Plan'}}
+              </p>
+            </div>
+            <div *ngIf="myAgency.isApproved && !myAgency.packageInfo" class="w-50 text-right">
+              <button routerLink="/mereka-pro" class="btn btn-dark btnRounded w-50">Upgrade to PRO</button>
+            </div>
+          </div>
+
+          <div *ngIf="!userAuth.currentUser.isExpert" class="d-flex p-4 currentPlanBlock mt-4">
+            <div class="w-50">
+              <h5 class="bold">Your Expertise</h5>
+              <p class="mb-0">
+                Share your expertise with the world and let your audience acquire invaluable skills!
+              </p>
+            </div>
+            <div class="w-50 text-right pt-3">
+              <button (click)="becomeAnExpert()" class="btn btn-dark btnRounded w-50">Become an Expert</button>
+            </div>
+          </div>
+
+          <div class="row infoBlocks mt-5">
+            <div class="col-md-12">
+              <p class="bold">Hub Information</p>
+            </div>
+            <div class="col-md-4">
+              <div class="roundedBlock">
+                <h5 class="bold">MYR {{hubTotalSales}}</h5>
+                <p class="mb-0">Current Sales</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="roundedBlock">
+                <h5 class="bold">
+                  {{myAgency.avgRating || 0}}
+                  <span *ngIf="myAgency.totalReviews"> ({{myAgency.totalReviews})</span>
+                                  </h5>
+                                  <p class="mb-0">Rating</p>
+                              </div>
+                          </div>
+                          <div class="col-md-4">
+                              <div class="roundedBlock">
+                                  <h5 class="bold">{{myAgency.experts?.length || 0}}</h5>
+                <p class="mb-0">Experts</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row reservationsBlock mt-5">
+            <div class="col-md-12 mb-4">
+              <!-- <p class="bold">Upcoming Reservations</p> -->
+              <button (click)="selectedTab='Experiences'" [class.activeTab]="selectedTab==='Experiences'"
+                class="btn btnRounded tabButtons grayChoiceHover">Experiences</button>
+              <button (click)="selectedTab='Spaces'" [class.activeTab]="selectedTab==='Spaces'"
+                class="btn btnRounded tabButtons grayChoiceHover">Spaces</button>
+              <button (click)="selectedTab='Machines'" [class.activeTab]="selectedTab==='Machines'"
+                class="btn btnRounded tabButtons grayChoiceHover">Machines</button>
+            </div>
+            <div class="col-md-12">
+
+              <div *ngFor="let workshop of myWorkshops | slice:0:3" class="row roundedBlock my-3">
+                <div class="col-md-9">
+                  <div class="d-flex mb-3">
+                    <p><i class="fas fa-clock"></i> {{workshop.experienceDuration.startDate}} <br />
+                      <span class="pl-3">
+                        <span *ngIf="workshop.experienceDuration.hourlyDuration">
+                          {{workshop.experienceDuration.hourlyDuration}}h </span>
+                        <span *ngIf="workshop.experienceDuration.minutesDuration">
+                          {{workshop.experienceDuration.minutesDuration}}mins</span>
+                      </span>
+                    </p>
+                    <p>
+                      <i class="fas fa-users ml-5"></i> For {{workshop.guestLearners}} <u>Learners</u>
+                    </p>
+                  </div>
+                  <h4>{{workshop.experienceTitle}}</h4>
+                  <span *ngFor="let tag of workshop.tags" class="badges">{{tag}}</span>
+                </div>
+                <div class="col-md-3 text-center">
+                  <button (click)="editWorkshop(workshop)" class="blackBgBtn btn btn-dark btnRounded w-75">Edit
+                    Experience</button>
+                </div>
+              </div>
+
+              <p *ngIf="!myWorkshops.length" class="my-5 text-center text-secondary">No workshops found!</p>
+
+              <div *ngIf="myWorkshops.length" class="text-center py-3">
+                <button routerLink="/my-workshops" class="blackBgBtn btn btn-dark btnRounded" style="width: 120px;">View
+                  All</button>
+              </div>
+            </div>
+          </div>
+
+          <div hidden class="row hubMessagesSection mt-3">
+            <div class="col-md-12 mb-4">
+              <p class="bold">Recent Hub Messages</p>
+              <div class="row roundedBlock">
+                <div class="row rowItem noBorderd">
+                  <div class="col-md-2">
+                    <p class="bold">Ansy H</p>
+                  </div>
+                  <div class="col-md-3">
+                    <p class="bold">Join Figma Account</p>
+                  </div>
+                  <div class="col-md-5">
+                    <p class="messageTxt">We have figma account we want you to join...</p>
+                  </div>
+                  <div class="col-md-2 text-center">
+                    <p class="bold">Dec 20th</p>
+                  </div>
+                </div>
+              </div>
+              <div class="text-right py-3">
+                <button class="btn btn-dark btnRounded blackBgBtn" style="width: 120px;">Show All</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="row reviewsSection mt-3">
+            <div class="col-md-12 mb-4">
+              <p class="bold">Reviews</p>
+              <div *ngIf="allWorkshopsReviews.length" class="row roundedBlock">
+                <p class="topRating">
+                  <i class="fas fa-star"></i>
+                  <span> {{avgRatingOfAllWorkshops}} ({{allWorkshopsReviews.length}})</span>
+                  <!-- <span class="badges ml-4">5 (12)</span>
+                                      <span class="badges">4 (8)</span>
+                                      <span class="badges">3 (1)</span>
+                                      <span class="badges">2 (5)</span>
+                                      <span class="badges">1 (3)</span> -->
+                </p>
+
+                <div class="row p-5">
+                  <div *ngFor="let review of allWorkshopsReviews" class="col-md-6 reviewBlock mb-4">
+                    <i class="fas fa-ellipsis-h text-secondary moreIcon pointer"></i>
+                    <div class="d-flex mb-2">
+                      <img class="userAvatar" [src]="review.ratingUser.profileUrl || '/assets/imgs/userIcon.PNG'">
+                      <div class="pl-3 pt-1">
+                        <p class="mb-0 mt-2">{{review.ratingUser.fullName}}</p>
+                        <i class="fas fa-star"></i>
+                        <span class="gray"> {{review.rating}}</span>
+                      </div>
+                    </div>
+                    <p>{{review.review}}</p>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="allWorkshopsReviews.length" class="text-right py-3">
+                <button class="btn btn-dark btnRounded blackBgBtn" style="width: 120px;">Show All</button>
+              </div>
+
+              <p *ngIf="!allWorkshopsReviews.length" class="my-5 text-center text-secondary">No reviews found!</p>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="activeMenu2==='Hub Profile'" class="borderdBlock">
+          <div class="d-flex justify-content-between mb-4">
+            <h2 class="bold my-0 align-center">Hub Profile</h2>
+            <button routerLink="/hub-basic-details" class="btn blackBgBtn primaryBtn" style="min-width: 150px;">Update
+              Hub</button>
+          </div>
+          <div class="bannerContent">
+            <img [src]="myAgency.coverImage">
+          </div>
+          <div class="row profileContent justify-content-center mb-5">
+            <div class="col-md-8">
+              <div class="profileCard p-4 rounded shadow">
+                <img class="userAvatar" [src]="myAgency.agencyLogo">
+                <img class="heartIcon" src="/assets/imgs/heart-icon.png">
+                <img class="chatIcon" src="/assets/imgs/chat-icon.png">
+                <div class="mt-3 pl-2">
+                  <div class="row">
+                    <div class="col-md-7 px-0">
+                      <p class="bold">{{myAgency.agencyName}}</p>
+                    </div>
+                    <div class="col-md-5 px-0 rightImgs text-right">
+                      <a *ngIf="myAgency.webUrl" [href]="myAgency.webUrl" target="_blank">
+                        <img src="/assets/imgs/gray-web-icon.png">
+                      </a>
+                      <a *ngIf="myAgency.linkedinUrl" [href]="myAgency.linkedinUrl" target="_blank">
+                        <img src="/assets/imgs/linkedin.png">
+                      </a>
+                      <a *ngIf="myAgency.fbUrl" [href]="myAgency.fbUrl" target="_blank">
+                        <img src="/assets/imgs/gray-fb-icon.png">
+                      </a>
+                      <a *ngIf="myAgency.instaUrl" [href]="myAgency.instaUrl" target="_blank">
+                        <img src="/assets/imgs/insta-icon.png">
+                      </a>
+                    </div>
+                  </div>
+                  <p class="mb-1">Social Enterprise</p>
+                  <p>
+                    <i class="fas fa-map-marker-alt"></i> {{myAgency.location.location}}
+                    <i class="fas fa-star ml-5"></i> {{myAgency.avgRating}} ({{myAgency.totalReviews}})
+                  </p>
+                  <button class="btn whiteOutlinedBtn cardBtns btnRounded">Become a Member</button>
+                  <button class="btn whiteOutlinedBtn cardBtns btnRounded">Post a Job</button>
+                  <button class="btn whiteOutlinedBtn cardBtns btnRounded">Instant Quote</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12 my-5">
+              <h2 class="bold">About Us</h2>
+              <div class="row contentSection bg-white p-4 mt-4 rounded">
+                <div class="col-md-8 leftSection pl-0">
+                  <p>{{myAgency.agencyDescription}}</p>
+                </div>
+                <div class="col-md-4">
+                  <p class="bold">Amenities</p>
+                  <p class="m-0">
+                    <span *ngFor="let amenity of myAgency.amenities" class="badges">{{amenity}}</span>
+                  </p>
+                  <p class="bold mt-4">Facilities</p>
+                  <p class="m-0">
+                    <span *ngFor="let facility of myAgency.facilities" class="badges">{{facility}}</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <app-hub-experts *ngIf="activeMenu2=='Expert'"></app-hub-experts>
+        <app-hub-members *ngIf="activeMenu2=='Member'"></app-hub-members>
+        <app-hub-analytics *ngIf="activeMenu2=='Analytics'"></app-hub-analytics>
+        <app-hub-messages *ngIf="activeMenu2=='Messages'"></app-hub-messages>
+        <app-hub-experiences *ngIf="activeMenu2=='Experiences'"></app-hub-experiences>
+        <app-hub-spaces *ngIf="activeMenu2=='Spaces'"></app-hub-spaces>
+        <app-hub-machine-quotes *ngIf="activeMenu2=='Machine Quotes'"></app-hub-machine-quotes>
+        <app-hub-job-requests *ngIf="activeMenu2=='Job Requests'"></app-hub-job-requests>
+        <app-hub-billing-information [hubTotalSales]="hubTotalSales" *ngIf="activeMenu2=='Payments and Billings'">
+        </app-hub-billing-information>
+        <app-hub-security-center *ngIf="activeMenu2=='Security Center'"></app-hub-security-center>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

@@ -1,0 +1,53 @@
+.borderdBlock {
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  background: white;
+  padding: 45px 32px;
+
+  .lastWithdrawlCont {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    padding: 30px;
+    margin-top: 20px;
+
+    .desp {
+      width: 70%;
+    }
+  }
+
+  .cardInfoCont {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .creditCardInfo {
+      width: 50%;
+      border: 1px solid #dcdcdc;
+      border-radius: 8px;
+      min-height: 120px;
+      padding: 5px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      &.addCardBtn {
+        min-height: 60px;
+        text-align: center;
+        justify-content: center;
+        font-weight: bold;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+      }
+    }
+
+    .addCardBtn:hover {
+      background: var(--primaryColor);
+      color: white;
+    }
+
+  }
+}

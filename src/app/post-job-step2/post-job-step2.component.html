@@ -1,0 +1,143 @@
+<app-navbar></app-navbar>
+
+<div class="row mainCont">
+  <div class="col-sm-3 stepsCont">
+    <app-post-job-menu></app-post-job-menu>
+  </div>
+
+  <div class="col-sm-9 pl-4 pr-0">
+    <div class="row detailsCont">
+      <div class="col-sm-12 px-0">
+        <div class="row sectCont">
+          <div class="col-sm-11 px-0">
+            <div class="d-flex justify-content-between mb-4">
+              <h2 class="bold mb-0 align-center">Expertise</h2>
+            </div>
+            <p class="font-15"><b>Screening Question</b> (optional)</p>
+            <p class="font-15">Add screening questions and/or require a cover letter</p>
+
+            <div *ngFor="let question of jobDetails.questions; index as i" class="input-group mb-2 w-75">
+              <label class="form-control">{{question}}</label>
+              <div class="input-group-append">
+                <button (click)="editQuestion(i)" data-target="#addQuestionModal" data-toggle="modal"
+                  class="btn btn-primary" type="button">Edit</button>
+                <button (click)="removeQuestion(i)" class="btn btn-danger" type="button">Remove</button>
+              </div>
+            </div>
+
+            <div (click)="newQuestion()" data-toggle="modal" data-target="#addQuestionModal"
+              class="blueTxt d-flex pointer pt-3"><i class="fas fa-plus-circle subTxt"></i>
+              <p class="font-14 bold my-0 align-center pl-2">Add a question</p>
+            </div>
+          </div>
+        </div>
+        <div class="row sectCont">
+          <div class="col-sm-11 px-0">
+            <p class="font-15 bold">Cover letter</p>
+            <p class="font-15 mb-0">If you don’t add any screening questions, we’ll require a cover letter to allow
+              freelancers and agencies to introduce themselves.</p>
+          </div>
+        </div>
+
+        <div class="row sectCont">
+          <div class="col-sm-11 px-0">
+            <div class="primary d-flex pointer mb-3">
+              <h5 class="font-18 bold my-0 align-center pr-2">Job Category</h5>
+            </div>
+            <div class="form-group">
+              <p class="font-15 my-3 w-50">Let’s categorize your job, which helps us personalize your job details and
+                match your job to relevant experts and agencies.</p>
+              <ng-select (change)="getCategorySkills($event, 'changeCategory')" placeholder="Category"
+                [items]="categories" [(ngModel)]="jobDetails.category"></ng-select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row sectCont">
+          <div class="col-sm-11 px-0">
+            <div class="primary d-flex pointer mb-3">
+              <p class="font-14 bold my-0 align-center pr-2">Skill set</p>
+            </div>
+            <div class="form-group">
+              <label class="mb-3 bold">{{jobDetails.category}}</label>
+              <ng-select [items]="selectedCategorySkills" [multiple]="true" placeholder="Choose skills"
+                [(ngModel)]="jobDetails.skills">
+              </ng-select>
+            </div>
+          </div>
+        </div>
+        <div class="row sectCont">
+          <div class="col-sm-11 px-0">
+            <h5 class="bold font-18">Team Size</h5>
+            <p class="mt-4 font-15 bold mb-3">How many people do you need for this job?</p>
+            <div class="row mt-2">
+              <div class="col-sm-3 px-0">
+                <div class="custom-control custom-radio">
+                  <input [(ngModel)]="jobDetails.teamSize" type="radio" class="custom-control-input" id="customRadio"
+                    name="example" value="One Expert/Hub">
+                  <label class="custom-control-label" for="customRadio">One Expert/Hub</label>
+                </div>
+              </div>
+              <div class="col-sm-4 px-0">
+                <div class="custom-control custom-radio">
+                  <input [(ngModel)]="jobDetails.teamSize" type="radio" class="custom-control-input" id="customRadio2"
+                    name="example" value="Multiple Experts/Agencies">
+                  <label class="custom-control-label" for="customRadio2">Multiple Experts/Agencies</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row sectCont">
+          <div class="col-sm-11 px-0">
+            <h5 class="bold font-18">Preferences (optional)</h5>
+            <p class="mt-4 font-15 bold mb-3">Location</p>
+            <div class="form-group regionsCont">
+              <ng-select placeholder="Add region or country" [items]="allCountries"
+                [(ngModel)]="jobDetails.preferredLocation">
+              </ng-select>
+            </div>
+            <div class="form-group mt-4">
+              <label class="mb-3 bold">Language Spoken</label>
+              <ng-select [items]="allLanguages" bindLabel="name" bindValue="id" [multiple]="true"
+                placeholder="Choose languages" [(ngModel)]="jobDetails.languages">
+              </ng-select>
+            </div>
+          </div>
+        </div>
+        <div class="row sectCont">
+          <div class="col-sm-11 px-0 py-2 d-flex justify-content-between">
+            <button routerLink="/post-job" class="btn btn-outline-primary">Back</button>
+            <button (click)="saveJobDetails()" class="btn darkBtn bold">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<app-footer></app-footer>
+
+
+<div class="modal fade" id="addQuestionModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h4 class="modal-title">Add Question</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Question</label>
+          <input [(ngModel)]="question" type="text" placeholder="Enter" class="form-control">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button [disabled]="!question" (click)="saveQuestion()" type="button" class="btn btn-success"
+          data-dismiss="modal">Save</button>
+      </div>
+    </div>
+  </div>
+</div>

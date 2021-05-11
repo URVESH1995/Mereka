@@ -1,0 +1,540 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<nav class="navbar navbar-expand-sm navbar-dark fixed-top">
+
+  <a routerLink="/home" class="navbar-brand text-center pointer">
+    <img class="blackNavbar appLogo" src="/assets/imgs/black_logo.svg">
+  </a>
+
+  <ul class="navbar-nav mx-auto searchBarCont">
+    <div class="roundedBar">
+      <div *ngIf="workshopFilters.type==='online'" class="toggleBtnContainer d-flex p-1">
+        <div (click)="workshopFilters.type='physical'; getFilteredWorkshops()" class="soloIcon">
+          <i class="fas fa-running"></i>
+        </div>
+        <button class="btn btn-dark">
+          <i class="fas fa-desktop"></i>
+        </button>
+      </div>
+      <div *ngIf="workshopFilters.type==='physical'" class="toggleBtnContainer d-flex p-1">
+        <button class="btn btn-dark">
+          <i class="fas fa-running"></i>
+        </button>
+        <div (click)="workshopFilters.type='online'; getFilteredWorkshops()" class="soloIcon">
+          <i class="fas fa-desktop"></i>
+        </div>
+      </div>
+      <div class="dropdown borderedColumn categoryCont">
+        <p [class.selectedCategory]="workshopFilters.category" class="pointer mb-0 text-secondary"
+          data-toggle="dropdown">{{workshopFilters.category || 'Select a category'}}</p>
+        <!-- <div class="dropdown-menu categoryDropdown shadow p-3 pr-5">
+          <a (click)="workshopFilters.category=category; getFilteredWorkshops()"
+            *ngFor="let category of workshopCategories"
+            class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">{{category}}</a>
+        </div> -->
+        <div class="dropdown-menu categoryDropdown shadow">
+          <div class="innerContent">
+            <p *ngFor="let category of workshopCategories" class="dropdown-item"
+              (click)="workshopFilters.category=category; getFilteredWorkshops()">
+              <span class="p-3">{{category}}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div (click)="checkNgxInput()" class="borderedColumn locationCont">
+        <ngxgeo-autocomplete id="autoCompleteOnFilters" [userSettings]="userSettings"
+          (componentCallback)="autoCompleteCallback($event)">
+        </ngxgeo-autocomplete>
+      </div>
+      <div class="borderedColumn dateCont">
+        <input [class.selectedCategory]="workshopFilters.date" (change)="getFilteredWorkshops()"
+          [(ngModel)]="workshopFilters.date" type="date" placeholder="Enter date" class="form-control">
+      </div>
+    </div>
+    <div class="filterBtnCont">
+      <button class="btn filterBtn">
+        <img src="/assets/imgs/filterIcon.svg" height="30px">
+      </button>
+    </div>
+  </ul>
+
+  <ul *ngIf="!userAuth.currentUser.uid" class="navbar-right text-center pl-5 pt-3">
+    <button (click)="dataHelper.openSpecificModal('preSignupModalOpener')"
+      class="btn btn-dark navbarBtn getStartedBtn blackBgBtn">Get Started</button>
+  </ul>
+
+  <ul *ngIf="userAuth.currentUser.uid" class="navbar-right text-center float-right pt-3 d-flex pl-0">
+    <div [class.vHidden]="!userAuth.currentUser.isExpert" *ngIf="profileViewMode()==='learner'"
+      class="profileToggleBtn d-flex p-2">
+      <button (click)="updateViewMode('learner')" class="btn btn-dark blackBgBtn btn-sm">Learner</button>
+      <p class="soloText pointer" (click)="updateViewMode('expert')">Expert</p>
+    </div>
+    <div [class.vHidden]="!userAuth.currentUser.isExpert" *ngIf="profileViewMode()==='expert'"
+      class="profileToggleBtn d-flex p-2">
+      <p class="soloText pointer" (click)="updateViewMode('learner')">Learner</p>
+      <button (click)="updateViewMode('expert')" class="btn btn-dark blackBgBtn btn-sm">Expert</button>
+    </div>
+
+    <div class="dropdown">
+      <i data-toggle="dropdown" class="far fa-bell bellIcon pointer"></i>
+      <div class="dropdown-menu moreDropdown shadow p-3 pr-5">
+        <a routerLink="/chats" class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">Messages</a>
+        <a routerLink="/notifications" class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">Notifications</a>
+        <a routerLink="/my-workshop-bookings" class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">My
+          Bookings</a>
+      </div>
+    </div>
+
+    <div class="dropdown">
+      <img class="profileIcon pointer" [src]="userAuth.currentUser.profileUrl || '/assets/imgs/userIcon.PNG'"
+        data-toggle="dropdown">
+      <div class="dropdown-menu moreDropdown shadow p-3 pr-5">
+        <a *ngIf="userAuth.currentUser.learnerProfile && userAuth.currentUser.learnerProfile.educationList.length"
+          routerLink="/learner-dashboard" class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">My
+          Dashboard</a>
+        <a *ngIf="!userAuth.currentUser.learnerProfile || (userAuth.currentUser.learnerProfile && !userAuth.currentUser.learnerProfile.educationList.length)"
+          routerLink="/create-learner-profile" class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">Learner
+          Profile</a>
+        <a *ngIf="userAuth.currentUser.isExpert" routerLink="/profile"
+          class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">Expert Profile</a>
+        <a routerLink="/my-orders" class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">My Jobs</a>
+        <a routerLink="/favourites" class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">Favourites</a>
+        <a class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">Settings</a>
+        <hr class="m-0" />
+
+        <a *ngIf="!dataHelper.myAgency && !userAuth.currentUser.agencyId" routerLink="/add-hub"
+          class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">Add your Hub</a>
+        <a *ngIf="dataHelper.myAgency" routerLink="/hub-dashboard"
+          class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">Manage Hubs</a>
+        <a *ngIf="dataHelper.myAgency" routerLink="/my-workshops"
+          class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">Manage Workshops</a>
+        <a *ngIf="dataHelper.myAgency" routerLink="/add-service"
+          class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">Add a Service</a>
+
+        <a class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">Help</a>
+        <a (click)="userAuth.logoutUser()" class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">Log Out</a>
+      </div>
+    </div>
+  </ul>
+
+</nav>
+
+
+<div class="row filtermainCont sticky-top">
+  <div class="col-sm-12 maxWidthContent">
+    <div class="otherFiltersCont">
+      <div class="leftFilters">
+        <div class="dropdown">
+          <button (click)="showLevelDropdown=false; showLanguageDropdown=false;"
+            class="btn otherFilterBtn whiteOutlinedBtn" data-toggle="dropdown">Topic <i
+              class="fas fa-chevron-down"></i></button>
+          <div class="dropdown-menu shadow topicFiltersCont">
+            <div (click)="selectedTopic=topic; getFilteredWorkshops();" [class.selectedTopic]="selectedTopic===topic"
+              *ngFor="let topic of allTopics | slice:0:50" class="filterName">{{topic}}</div>
+          </div>
+        </div>
+
+        <div class="dropdown">
+          <button (click)="showLevelDropdown=false; showLanguageDropdown=false;"
+            class="btn otherFilterBtn whiteOutlinedBtn" data-toggle="dropdown">Access <i
+              class="fas fa-chevron-down"></i></button>
+          <div class="dropdown-menu shadow accessFiltersCont">
+            <div class="custom-control custom-switch">
+              <input (change)="updateAccessibilitySwitch($event)"
+                [checked]="workshopFilters.accessibility==='everybody'" type="checkbox" class="custom-control-input"
+                id="switch1" name="example">
+              <label class="custom-control-label" for="switch1">
+                {{workshopFilters.accessibility==='everybody' ? 'Public': 'Private'}}
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="dropdown">
+          <button (click)="showLevelDropdown=!showLevelDropdown; showLanguageDropdown=false"
+            class="btn otherFilterBtn whiteOutlinedBtn">Level <i class="fas fa-chevron-down"></i></button>
+          <div style="top: 60px !important;" id="levelDropdownMenu" [class.show]="showLevelDropdown"
+            class="dropdown-menu shadow levelsFiltersCont">
+            <div class="custom-control custom-checkbox">
+              <input [checked]="isSkillsetAdded('Beginner')" (change)="updateSkillsets('Beginner')" type="checkbox"
+                class="custom-control-input" id="customCheck1">
+              <label class="custom-control-label" for="customCheck1">Beginner</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+              <input [checked]="isSkillsetAdded('Intermediate')" (change)="updateSkillsets('Intermediate')"
+                type="checkbox" class="custom-control-input" id="customCheck2">
+              <label class="custom-control-label" for="customCheck2">Intermediate</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+              <input [checked]="isSkillsetAdded('Advanced')" (change)="updateSkillsets('Advanced')" type="checkbox"
+                class="custom-control-input" id="customCheck3">
+              <label class="custom-control-label" for="customCheck3">Advanced</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="dropdown">
+          <button (click)="showLanguageDropdown=!showLanguageDropdown; showLevelDropdown=false"
+            class="btn otherFilterBtn whiteOutlinedBtn">Language <i class="fas fa-chevron-down"></i></button>
+          <div style="top: 60px !important;" id="languageDropdownMenu" [class.show]="showLanguageDropdown"
+            class="dropdown-menu shadow levelsFiltersCont languagesFilter">
+            <div [checked]="isLanguageAdded(language)" (change)="updateLanguages(language)"
+              *ngFor="let language of dataHelper.languages" class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="{{language}}">
+              <label class="custom-control-label" for="{{language}}">{{language}}</label>
+            </div>
+          </div>
+        </div>
+        <div (click)="showLevelDropdown=false; showLanguageDropdown=false;" class="dropdown">
+          <button data-toggle="modal" data-target="#myModal" class="btn otherFilterBtn whiteOutlinedBtn">More Filters <i
+              class="fas fa-chevron-down"></i></button>
+        </div>
+      </div>
+
+      <div class="rightFilter">
+        <div class="dropdown">
+          <button class="btn otherFilterBtn mr-0 whiteOutlinedBtn" data-toggle="dropdown">Sort By <i
+              class="fas fa-chevron-down"></i></button>
+          <div class="dropdown-menu dropdown-menu-right shadow levelsFiltersCont">
+
+            <div *ngFor="let option of sortOptions" class="custom-control custom-radio pointer mb-2">
+              <input [(ngModel)]="selectedSortBy" (change)="sortDisplayWorkshops()" type="radio"
+                class="custom-control-input" id="{{option}}" name="example1" [value]="option">
+              <label class="custom-control-label" for="{{option}}">{{option}}</label>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="mainContent">
+  <div class="row py-5">
+    <div class="col-md-8" [class.col-md-12]="hideMap">
+      <div class="row">
+        <div class="col-md-10 px-0">
+          <h3 class="bold">Unleash your creative potential</h3>
+          <p class="text-secondary font-14">Description of what to expect or some cool feature</p>
+        </div>
+        <div class="col-md-2 px-0 text-right">
+          <button *ngIf="hideMap" (click)="hideMap=!hideMap" class="btn btnRounded mapToggleBtn whiteOutlinedBtn">
+            Show Map
+          </button>
+          <button *ngIf="!hideMap" (click)="hideMap=!hideMap" class="btn btnRounded mapToggleBtn whiteOutlinedBtn">
+            Hide Map
+          </button>
+        </div>
+      </div>
+
+      <p *ngIf="!displayWorkshops.length" class="text-center my-5 text-secondary">No workshops found!</p>
+
+      <div *ngIf="hideMap">
+        <div class="row">
+          <div *ngFor="let workshop of displayWorkshops | paginate: { itemsPerPage: 8, currentPage: currentPage }"
+            class="col-md-3 mt-3">
+            <div class="horizontalItem cardView pointer">
+              <div class="workshopCard">
+                <!-- <button class="btn text-white btn-sm leftCornerBtn">BEST SELLER</button> -->
+                <button (click)="favUnfavWorkshop(workshop)" class="btn text-white btn-dark btn-sm rightCornerBtn">
+                  <i class="fa-heart" [class.far]="!isMyFavWorkshop(workshop)"
+                    [class.fas]="isMyFavWorkshop(workshop)"></i>
+                </button>
+
+                <div id="{{workshop.workshopKey}}" class="carousel slide" data-ride="carousel">
+                  <div (click)="workshopDetails(workshop)" class="carousel-inner">
+                    <div class="carousel-item active">
+                      <img [src]="workshop.coverImage">
+                    </div>
+                    <div *ngFor="let img of workshop.additionalPhotos; index as i" class="carousel-item">
+                      <img [src]="img">
+                    </div>
+                  </div>
+                  <a class="carousel-control-prev" [attr.data-target]="'#' + workshop.workshopKey" data-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                  </a>
+                  <a class="carousel-control-next" [attr.data-target]="'#' + workshop.workshopKey" data-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                  </a>
+                </div>
+
+              </div>
+              <div (click)="workshopDetails(workshop)" class="py-4 px-3">
+                <p class="font-13 text-secondary">{{workshop.location.city}}, {{workshop.location.country}}
+                  <span class="float-right">
+                    <i class="fa fa-star"></i> {{workshop.avgRating || 'No rating'}}
+                  </span>
+                </p>
+                <p class="bold mb-1">{{workshop.experienceTitle}}</p>
+                <p class="text-secondary font-14 mb-2">{{workshop.mainLanguage}} | {{workshop.sessions.length}} Sessions
+                </p>
+                <p class="text-secondary font-14 mb-2">{{getWorkshopHost(workshop.uid) || 'N/A'}}</p>
+                <p class="mb-0">
+                  <span *ngIf="workshop.ratePerLearner">
+                    <span class="bold">MYR {{workshop.ratePerLearner}}</span><small> / learner </small>
+                  </span>
+                  <span *ngIf="workshop.ratePerMember">
+                    <span class="bold"> MYR {{workshop.ratePerMember}}</span><small> / member</small>
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="!hideMap">
+        <div *ngFor="let workshop of displayWorkshops | paginate: { itemsPerPage: 8, currentPage: currentPage }"
+          class="horizontalItem row pointer mt-3">
+          <div class="col-md-4 workshopCard px-0">
+            <!-- <button class="btn text-white btn-sm leftCornerBtn">BEST SELLER</button> -->
+            <button (click)="favUnfavWorkshop(workshop)" class="btn text-white btn-dark btn-sm rightCornerBtn">
+              <i class="fa-heart" [class.far]="!isMyFavWorkshop(workshop)" [class.fas]="isMyFavWorkshop(workshop)"></i>
+            </button>
+
+            <div id="{{workshop.workshopKey}}" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img [src]="workshop.coverImage">
+                </div>
+                <div *ngFor="let img of workshop.additionalPhotos; index as i" class="carousel-item">
+                  <img [src]="img">
+                </div>
+              </div>
+              <a class="carousel-control-prev" [attr.data-target]="'#' + workshop.workshopKey" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+              </a>
+              <a class="carousel-control-next" [attr.data-target]="'#' + workshop.workshopKey" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+              </a>
+            </div>
+
+          </div>
+          <div (click)="workshopDetails(workshop)" class="col-md-8 py-4">
+            <p class="font-13 text-secondary">{{workshop.location.city}}, {{workshop.location.country}}
+              <span class="float-right">
+                <i class="fa fa-star"></i> {{workshop.avgRating || 'No rating'}}
+              </span>
+            </p>
+            <p class="bold mb-1">{{workshop.experienceTitle}}</p>
+            <p class="font-14 workshopDescription">{{workshop.experienceDescription}}</p>
+            <p class="text-secondary font-14 mb-2">{{workshop.mainLanguage}} | {{workshop.sessions.length}} Sessions</p>
+            <p class="text-secondary font-14 mb-2">{{getWorkshopHost(workshop.uid) || 'N/A'}}</p>
+            <p class="text-right mb-0">
+              <span *ngIf="workshop.ratePerLearner">
+                <span class="bold">MYR {{workshop.ratePerLearner}}</span><small> / learner</small>
+              </span>
+              <span *ngIf="workshop.ratePerMember">
+                <span class="bold"> MYR {{workshop.ratePerMember}}</span><small> / member</small>
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="displayWorkshops.length" class="text-center w-100 mt-5">
+        <app-custom-pagination (pageChange)="currentPage = $event"></app-custom-pagination>
+      </div>
+    </div>
+    <div *ngIf="!hideMap" class="col-md-4">
+      <agm-map #gm style="width: 100%; height: 100%;" [zoom]="13" [latitude]="workshopsLatLngList[0]?.lat"
+        [longitude]="workshopsLatLngList[0]?.lng">
+        <agm-marker *ngFor="let workshop of workshopsLatLngList" [latitude]="workshop.lat" [longitude]="workshop.lng">
+          <agm-info-window [disableAutoPan]="true">
+            <strong>{{workshop.title}}</strong>
+          </agm-info-window>
+        </agm-marker>
+      </agm-map>
+    </div>
+  </div>
+</div>
+
+
+<app-footer></app-footer>
+
+
+<div class="modal filterModal fade" id="myModal">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title bold">More Filters</h3>
+        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+      </div>
+      <div class="modal-body otherFiltersMainCont">
+        <div class="filterCategory">
+          <h5 class="filterTitle pb-4">Learners</h5>
+          <span class="learnerInput">{{workshopFilters.moreFilters.numberOfLearners}}</span>
+          <span class="pl-3">Learners</span>
+          <div class="custom-slider rangebbarContainer mt-4">
+            <ngx-slider (valueChange)="updateSelectedLearners($event)"
+              [(value)]="workshopFilters.moreFilters.numberOfLearners" [options]="rangeBarOptions"></ngx-slider>
+          </div>
+        </div>
+        <div class="filterCategory">
+          <h5 class="filterTitle">Group</h5>
+          <div class="row">
+            <div *ngFor="let option of groupOptions" class="col-sm-6 px-0">
+              <div class="custom-control custom-checkbox">
+                <input [checked]="isGroupAdded(option)" (change)="updateGroups(option)" type="checkbox"
+                  class="custom-control-input" id="{{option}}">
+                <label class="custom-control-label" for="{{option}}">{{option}}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button (click)="resetMoreFilters()" type="button" class="btn darkBtn clearBtn" data-dismiss="modal">Clear
+          All</button>
+        <button (click)="getFilteredWorkshops()" type="button" class="btn darkBtn bold" data-dismiss="modal">Apply and
+          Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <ngx-loading [show]="loading"></ngx-loading>
+<app-navbar></app-navbar>
+
+<div class="row searchBarCont">
+  <div class="col-sm-11 px-0">
+    <div class="row">
+      <div class="col-sm-3 borderRight">
+        <ul class="nav nav-justified" id="myTab" role="tablist">
+          <li class="nav-item pointer">
+            <a [class.active]="workshopFilters.accessibility==='Public'" (click)="switchWorkshopAccessibility('Public')"
+              class="nav-link" data-toggle="tab" role="tab">Public</a>
+          </li>
+          <li class="nav-item pointer">
+            <a [class.active]="workshopFilters.accessibility==='Private'"
+              (click)="switchWorkshopAccessibility('Private')" class="nav-link" data-toggle="tab" role="tab">Private</a>
+          </li>
+          <li class="nav-item pointer">
+            <a [class.active]="workshopFilters.accessibility==='Public + Private'"
+              (click)="switchWorkshopAccessibility('Public + Private')" class="nav-link" data-toggle="tab"
+              role="tab">Both</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-sm-3 borderRight">
+        <div class="txt pl-3">
+          <p class="font-18 bold mb-2">Category</p>
+          <ng-select [clearable]="false" (change)="getFilteredWorkshops()" [items]="workshopCategories"
+            [(ngModel)]="workshopFilters.category"></ng-select>
+        </div>
+      </div>
+      <div class="col-sm-3 borderRight">
+        <div class="txt pl-3">
+          <p class="font-18 bold mb-2">Location</p>
+          <ngxgeo-autocomplete id="autoComplete" [userSettings]="userSettings"
+            (componentCallback)="autoCompleteCallback($event)" (change)="checkLocationString()">
+          </ngxgeo-autocomplete>
+        </div>
+      </div>
+      <div class="col-sm-3 borderRight">
+        <div class="txt pl-3">
+          <p class="font-18 bold mb-0">Date</p>
+          <input (change)="getFilteredWorkshops()" type="date" [(ngModel)]="workshopFilters.date"
+            class="customInput text1 fw500">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row filterCont shadow">
+  <div class="col-sm-11 px-0">
+    <div class="row">
+      <div class="col-sm-9 align-center">
+        <button class="btn filterBtn"><i class="fas fa-filter"></i></button>
+        <div class="filters">
+          <div class="form-group mb-0 pl-3">
+            <ng-select [clearable]="false" (change)="getFilteredWorkshops()" [items]="allLanguages"
+              [(ngModel)]="workshopFilters.language">
+            </ng-select>
+          </div>
+          <div class="form-group mb-0 pl-3">
+            <ng-select [clearable]="false" (change)="getFilteredWorkshops()" [items]="allTags"
+              [(ngModel)]="workshopFilters.tag">
+            </ng-select>
+          </div>
+          <div class="form-group mb-0 ml-3">
+            <input style="height: 50px;" (keyup.enter)="getFilteredWorkshops()" class="form-control"
+              placeholder="Search type..." [(ngModel)]="workshopFilters.type">
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="d-flex justify-content-end">
+          <button class="btn filterBtn"><i class="fas fa-filter"></i></button>
+          <div class="form-group mb-0 px-3">
+            <ng-select [clearable]="false" (change)="sortDisplayWorkshops()" [items]="sortOptions"
+              [(ngModel)]="selectedSortBy"></ng-select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mainCont">
+  <div class="col-sm-12 px-5">
+    <div class="row">
+      <div class="col-sm-5 pb-5">
+
+        <p *ngIf="!displayWorkshops.length" class="text-center mt-5 text-secondary">No workshops found!</p>
+
+        <div (click)="workshopDetails(workshop)" *ngFor="let workshop of displayWorkshops" class="workshopCont">
+          <img [src]="workshop.coverPhotos[0].url" class="itemImg">
+          <div class="row textCont">
+            <div class="col-sm-11 px-2">
+              <h5 class="mb-2 bold">{{workshop.title}}</h5>
+              <p class="font-14 my-0 text1">A workshop by {{getWorkshopHost(workshop.uid) || 'N/A'}}</p>
+              <div class="iconCont">
+                <div class="icons">
+                  <i class="fas fa-user"></i>
+                  <p class="font-14 text1 my-0 pl-2">{{workshop.bookedBy?.length || 0}} Students</p>
+                </div>
+                <div class="icons ml-5">
+                  <i class="fas fa-thumbs-up"></i>
+                  <p class="font-14 text1 my-0 pl-2">98% (1.8k)</p>
+                </div>
+              </div>
+              <div class="d-flex">
+                <h4 *ngIf="workshop.workshopAccessibility!=='Public + Private'" class="bold mb-0">
+                  RM {{workshop.price}}</h4>
+                <h4 *ngIf="workshop.workshopAccessibility==='Public + Private'" class="bold mb-0">
+                  <i class="fas fa-user-lock mr-2"></i> RM {{workshop.privatePrice}}, </h4>
+                <h4 *ngIf="workshop.workshopAccessibility==='Public + Private'" class="bold mb-0 ml-3">
+                  <i class="fas fa-globe mr-2"></i> RM {{workshop.publicPrice}}</h4>
+              </div>
+              <div class="d-flex justify-content-between my-3">
+                <p class="font-14 bold align-center my-0">{{workshop.workshopTheme}}</p>
+                <button [disabled]="isMyWorkshop(workshop)" class="btn darkBtn"> Buy Now
+                  <i *ngIf="workshop.workshopAccessibility==='Private' || workshop.workshopAccessibility==='Public + Private'"
+                    class="fas fa-user-lock ml-2"></i>
+                  <i *ngIf="workshop.workshopAccessibility==='Public' || workshop.workshopAccessibility==='Public + Private'"
+                    class="fas fa-globe ml-2"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-7 text-center pt-5 mt-3">
+        <agm-map #gm style="width: 100%; height: 500px;" [zoom]="13" [latitude]="workshopsLatLngList[0]?.lat"
+          [longitude]="workshopsLatLngList[0]?.lng">
+          <agm-marker *ngFor="let workshop of workshopsLatLngList" [latitude]="workshop.lat" [longitude]="workshop.lng">
+            <agm-info-window>{{workshop.location}}</agm-info-window>
+          </agm-marker>
+        </agm-map>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer> -->

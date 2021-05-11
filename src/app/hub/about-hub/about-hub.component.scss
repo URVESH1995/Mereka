@@ -1,0 +1,12 @@
+.parentContent {
+  border: 1px solid #eaeaea;
+  .leftContent {
+    border-right: 1px solid #eaeaea;
+  }
+
+  .formContent {
+    label {
+      font-size: 14px;
+    }
+  }
+}

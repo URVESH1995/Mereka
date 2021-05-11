@@ -1,0 +1,206 @@
+<ngx-loading [show]="loading"></ngx-loading>
+
+<div class="borderdBlock">
+    <div *ngIf="lastWithdraw.key">
+        <h5 class="bold mb-2">Last Withdrawal</h5>
+        <div class="lastWithdrawlCont">
+            <div class="desp">
+                <p class="font-17 bold">You Withdraw the balance</p>
+                <p class="mb-0">{{lastWithdraw.description}}</p>
+            </div>
+            <div class="date">
+                <p>{{lastWithdraw.timestamp | date}}</p>
+                <p class="text-danger mb-0">-RM {{lastWithdraw.withdrawAmount}}</p>
+            </div>
+        </div>
+        <hr style="margin: 40px 0px;" />
+    </div>
+
+    <h5 class="bold mb-2">Your Balance</h5>
+    <div class="d-flex my-3 justify-content-between">
+        <h2 class="bold align-center my-0">RM {{hubAvailabledBalance || 0}}</h2>
+        <button data-toggle="modal" data-target="#addBankDetailsModal" *ngIf="!myAgency.bankDetails.bankName"
+            class="btn primaryBtn blackBgBtn px-4">Withdraw Balance</button>
+        <button data-toggle="modal" data-target="#addWithdrawAmountModal" [disabled]="hubAvailabledBalance===0"
+            *ngIf="myAgency.bankDetails.bankName" class="btn primaryBtn blackBgBtn px-4">Withdraw Balance</button>
+    </div>
+
+    <div *ngIf="myAgency.bankDetails.bankName">
+        <hr style="margin: 40px 0px;" />
+        <h5 class="bold mb-2">Banking Details</h5>
+        <div class="lastWithdrawlCont">
+            <div class="desp">
+                <p class="font-17 bold">{{myAgency.bankDetails.bankName}}</p>
+                <p class="mb-0">{{myAgency.bankDetails.accountNumber}}</p>
+            </div>
+            <div class="date">
+                <p>{{myAgency.bankDetails.country}}</p>
+                <p class="text-secondary mb-0">Added on: {{myAgency.bankDetails.dateAdded | date}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="borderdBlock shadow my-4">
+    <div class="d-flex px-4">
+        <div class="w-50">
+            <h5 class="bold">Hub Account</h5>
+            <p *ngIf="!myAgency.isApproved" class="mb-0">Your Hub is Being Verified</p>
+            <p *ngIf="myAgency.isApproved" class="mb-0">
+                {{myAgency.packageInfo? myAgency.packageInfo : 'Basic Plan'}}
+            </p>
+        </div>
+        <div *ngIf="myAgency.isApproved && !myAgency.packageInfo" class="w-50 text-right">
+            <button routerLink="/mereka-pro" class="btn blackBgBtn btnRounded w-50">Upgrade to PRO</button>
+        </div>
+    </div>
+</div>
+
+<div class="borderdBlock">
+    <h5 class="bold mb-3">Transactions
+        <button (click)="exportCsv()" class="btn btn-dark blackBgBtn btnRounded float-right">Export to CSV</button>
+    </h5>
+    <div class="membersMainCont">
+        <div class="headerRow">
+            <div class="w-25 mr-3">
+                <ng-select [(ngModel)]="selectedType" (change)="filterTransaction()" [clearable]="false"
+                    placeholder="Type" [items]="transactionTypes"></ng-select>
+            </div>
+            <div class="w-25 mr-3">
+                <ng-select [(ngModel)]="selectedMonth" (change)="filterTransaction()" [clearable]="false"
+                    placeholder="Month" [items]="dataHelper.months"></ng-select>
+            </div>
+            <div class="w-25">
+                <ng-select [(ngModel)]="selectedYear" (change)="filterTransaction()" [clearable]="false"
+                    placeholder="Year" [items]="years"></ng-select>
+            </div>
+            <div class="w-50 text-right">
+                <button (click)="clearFilters()" class="btn btn-dark blackBgBtn btnRounded">Clear Filters</button>
+            </div>
+        </div>
+
+        <p class="text-secondary my-5 text-center" *ngIf="!displayTransactions.length">No transactions found!</p>
+
+        <div *ngFor="let transaction of displayTransactions" class="historyCont">
+            <div class="desp">
+                <h5 class=" mt-0 mb-3 bold">{{transaction.paymentPurpose}}</h5>
+                <p class="mb-0">{{transaction.entityTitle}}</p>
+            </div>
+            <div class="date">
+                <p class="appTxt">{{transaction.timestamp | date:'mediumDate'}}</p>
+                <h5 *ngIf="transaction.paymentFrom===userAuth.currentUser.uid" class="text-danger bold mb-0">-RM
+                    {{transaction.amount}}</h5>
+                <h5 *ngIf="transaction.paymentFrom!==userAuth.currentUser.uid" class="text-success bold mb-0">+RM
+                    {{transaction.amount}}</h5>
+            </div>
+            <button class="btn whiteOutlinedBtn primaryBtn text-dark">Dispute Resolution</button>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade portfolioModal" id="addBankDetailsModal">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <h3 class="bold">Add Bank Account</h3>
+                <p>Add your Bank Account details to transfer funds from the platform</p>
+                <div class="form-group">
+                    <label>Country</label>
+                    <ng-select [(ngModel)]="myAgency.bankDetails.country" [items]="dataHelper.countries"></ng-select>
+                </div>
+                <div class="form-group">
+                    <label>Bank Name</label>
+                    <input [(ngModel)]="myAgency.bankDetails.bankName" type="text" placeholder="Bank Name"
+                        class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Account Number</label>
+                    <input [(ngModel)]="myAgency.bankDetails.accountNumber" type="text" placeholder="Account Number"
+                        class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-6">
+                    <button id="closeBankDetailsModal" data-dismiss="modal"
+                        class="btn cancelBtn btnRounded whiteOutlinedBtn px-4">Cancel</button>
+                </div>
+                <div class="col-md-6 text-right">
+                    <button (click)="saveBankDetails()" class="btn blackBgBtn btn-dark btnRounded px-4">Done</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade portfolioModal" id="addWithdrawAmountModal">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <h5 class="bold">Withdraw Balance</h5>
+                <hr class="my-4" />
+
+                <h5 class="bold">Your Balance
+                    <span class="float-right">MYR {{hubAvailabledBalance || 0}}</span>
+                </h5>
+                <hr class="my-4" />
+
+                <div class="row mb-4">
+                    <div class="col-md-6 pl-0">
+                        <h5 class="bold mt-2">Withdrawal Amount</h5>
+                    </div>
+                    <div class="col-md-6 pr-0">
+                        <div class="rateInputCont">
+                            <p class="mb-0 font-14 bold">MYR</p>
+                            <input [(ngModel)]="withdrawAmount" min="1" type="number" placeholder="0.00"
+                                class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <p>
+                    <span class="text-secondary">Withdrawal Fee
+                        <img class="infoIcon" src="/assets/imgs/info.png">
+                    </span>
+                    <span *ngIf="withdrawAmount" class="bold float-right">MYR {{getMerekaFee()}}</span>
+                </p>
+                <p>
+                    <span class="text-secondary">Total Hub gets</span>
+                    <span *ngIf="withdrawAmount" class="bold float-right">MYR {{withdrawAmount-getMerekaFee()}}</span>
+                </p>
+                <hr class="my-4" />
+
+                <h5 class="bold mb-4">Withdrawal Information</h5>
+                <div class="row">
+                    <div class="col-md-6 pl-0">
+                        <p class="text-secondary mb-0 mt-3">Primary Withdrawal Account</p>
+                    </div>
+                    <div class="col-md-6 pr-0 mb-3">
+                        <div class="border rounded p-3">
+                            <p class="mb-0">
+                                <span>{{myAgency.bankDetails.bankName}}</span>
+                                <span class="float-right">{{myAgency.bankDetails.accountNumber}}</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pl-0">
+                        <p class="text-secondary mb-0 mt-3">Reference</p>
+                    </div>
+                    <div class="col-md-6 pr-0">
+                        <input style="height: 50px !important;" [(ngModel)]="description" placeholder="Label"
+                            class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-6">
+                    <button id="closeAmountModal" data-dismiss="modal"
+                        class="btn cancelBtn btnRounded whiteOutlinedBtn px-4">Cancel</button>
+                </div>
+                <div class="col-md-6 text-right">
+                    <button [disabled]="!withdrawAmount || !description" (click)="submitWithdrawRequest()"
+                        class="btn blackBgBtn btn-dark btnRounded px-4">Withdraw Balance</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

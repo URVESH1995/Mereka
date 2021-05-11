@@ -1,0 +1,756 @@
+<app-navbar></app-navbar>
+<app-expert-profile [expertProfile]="userAuth.currentUser"></app-expert-profile>
+
+<!-- <ngx-loading [show]="loading"></ngx-loading>
+<app-navbar></app-navbar>
+
+<div class="pagesLog">
+  <img src="/assets/imgs/M-Logo.PNG" height="25px">
+  <i class="fas fa-chevron-right lightGray px-3"></i>
+  <p class="bold my-0">Profile</p>
+</div>
+
+<div class="row justify-content-center mainCont">
+  <div class="col-sm-12 maxWidthContent pb-5">
+    <div class="row">
+      <div class="col-sm-3 pl-0 pr-4">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link parentTab pointer">General Profile</a>
+          </li>
+          <li class="nav-item">
+            <a [class.bold]="activeSideMenu==='profile'" (click)="activeSideMenu='profile'"
+              class="nav-link pointer">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a [class.bold]="activeSideMenu==='billingInfo'" (click)="activeSideMenu='billingInfo'"
+              class="nav-link pointer">Billing Information</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link pointer">Transaction History</a>
+          </li>
+          <li class="nav-item">
+            <a [class.bold]="activeSideMenu==='password'" (click)="activeSideMenu='password'"
+              class="nav-link pointer">Password and Security</a>
+          </li>
+          <li class="nav-item">
+            <a [class.bold]="activeSideMenu==='myMembers'" (click)="activeSideMenu='myMembers'"
+              class="nav-link pointer">My Memberships</a>
+          </li>
+
+          <span *ngIf="userAuth.currentUser.isExpert && !myAgency.expertUid">
+            <li class="nav-item pt-2">
+              <a class="nav-link parentTab pointer">Expert Profile</a>
+            </li>
+            <li class="nav-item">
+              <a [class.bold]="activeSideMenu==='expertProfile'" (click)="activeSideMenu='expertProfile'"
+                class="nav-link pointer">Upgrade to Pro Hub</a>
+            </li>
+          </span>
+
+          <span *ngIf="myAgency.expertUid">
+            <li class="nav-item pt-2">
+              <a [class.bold]="activeSideMenu==='expertProfile'" (click)="activeSideMenu='expertProfile'"
+                class="nav-link parentTab pointer">Expert Profile</a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/dashboard" class="nav-link pointer">Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a [class.bold]="activeSideMenu==='agencyTeams'" (click)="activeSideMenu='agencyTeams'"
+                class="nav-link pointer">Teams</a>
+            </li>
+            <li class="nav-item">
+              <button class="btn proBtn">Pro</button>
+              <a [class.bold]="activeSideMenu==='settings'" (click)="activeSideMenu='settings'"
+                class="nav-link pointer">Hub Settings</a>
+            </li>
+          </span>
+        </ul>
+      </div>
+
+      <div class="col-sm-9">
+        <div class="tab-content" id="myTabContent">
+
+          <div *ngIf="userAuth.currentUser.expertProfile && !userAuth.currentUser.isExpert"
+            class="rounded d-flex p-3 bg-light mb-3">
+            <i class="fas fa-info-circle pt-1"></i>
+            <h5 class="text1 bold mb-0 align-center font-18 pl-3 text-secondary">
+              Your expert profile is being reviewed by our team. Soon you will be a verified expert.
+            </h5>
+          </div>
+
+          <div *ngIf="activeSideMenu==='profile'" class="tab-pane active" id="profile" role="tabpanel">
+            <div class="card profileCard">
+              <div class="row justify-content-center">
+                <div class="col-sm-11 px-0">
+                  <div class="borderItem">
+                    <div class="d-flex mt-4 justify-content-between">
+                      <div style="width: 80%" class="txt">
+                        <h5 class="mb-1 bold">
+                          {{userAuth.currentUser.expertProfile?.overview?.title || 'General'}}</h5>
+                        <p class="font-15 mb-0 text1">
+                          {{userAuth.currentUser.expertProfile?.overview?.overview || 'N/A'}}</p>
+                      </div>
+                      <button routerLink="/general-profile" class="btn darkBtn">Edit Profile</button>
+                    </div>
+                    <img [src]="userAuth.currentUser.profileUrl || '/assets/imgs/profileImg.svg'" class="profileImg">
+                  </div>
+                  <div class="borderItem">
+                    <p class="mt-3 bold mb-0">Name</p>
+                    <p class="mb-0 font-15">{{userAuth.currentUser.fullName}}</p>
+                    <p class="mt-4 bold mb-0">Email</p>
+                    <p class="mb-0 font-15">{{userAuth.currentUser.email}}</p>
+                    <p class="mt-4 bold mb-0">Phone</p>
+                    <p class="mb-0 font-15">{{userAuth.currentUser.phone || 'N/A'}}</p>
+                  </div>
+                  <div class="borderItem pb-5">
+                    <p class="mt-4 bold mb-0">Address</p>
+                    <p class="mb-0 font-15">{{userAuth.currentUser.location?.streetAddress || 'N/A'}}</p>
+                    <p class="mt-4 bold mb-0">Password</p>
+                    <p (click)="activeSideMenu='password'" class="mb-0 font-15 blueTxt pointer">Change password</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="card profileCard mt-4">
+              <div class="row justify-content-center">
+                <div class="col-sm-11 px-0">
+                  <div class="d-flex mt-4 justify-content-between">
+                    <div class="txt">
+                      <h5 class="mb-1 bold">Expert</h5>
+                      <p class="font-15 mb-0 text1">{{userAuth.currentUser.isExpert? 'Active': 'Inactive'}}</p>
+                    </div>
+                    <button (click)="editExpertProfile()" class="btn darkBtn">
+                      {{userAuth.currentUser.isExpert? 'Edit Profile' : 'Become An Expert'}}
+                    </button>
+                  </div>
+                  <p class="mt-4 bold mb-0">Tax Information
+                    <span (click)="updateBusinessID()" data-toggle="modal" data-target="#businessIdModal"
+                      *ngIf="userAuth.currentUser.businessRegID" class="blueTxt pointer ml-2">
+                      <u>Update</u></span>
+                  </p>
+                  <p (click)="createNewBusinessID()" data-toggle="modal" data-target="#businessIdModal"
+                    *ngIf="!userAuth.currentUser.businessRegID" class="font-15"><span class="blueTxt pointer">
+                      Enter your Business Registration ID </span>to enable tax information.</p>
+                  <p *ngIf="userAuth.currentUser.businessRegID" class="font-15">
+                    {{userAuth.currentUser.businessRegID}}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+
+            <div *ngIf="userAuth.currentUser.isExpert " class="card profileCard mt-4">
+              <div class="row justify-content-center">
+
+                <div class="col-sm-11 px-0" *ngIf="myAgency && myAgency.expertUid === userAuth.currentUser.uid">
+                  <div class="borderItem">
+                    <div class="d-flex mt-4 justify-content-between">
+                      <div class="txt">
+                        <h5 class="mb-1 bold">Hub</h5>
+                        <p class="font-15 mb-0 text1">Active</p>
+                      </div>
+                      <button class="btn dangerBtn">Manage PRO Subscription</button>
+                    </div>
+
+                  </div>
+                  <div class="d-flex mt-3 justify-content-between borderItem">
+                    <div class="d-flex justify-content-center">
+                      <img [src]="agencyImagePath" class="profileImg mr-3">
+                      <div class="txt">
+                        <p class="mb-1 bold">Hub Name</p>
+                        <p class="font-15 mb-0">{{myAgency.agencyName}}</p>
+                        <p class="mb-1 mt-2 bold">Hub Owner</p>
+                        <p class="font-15 mb-0">You</p>
+                      </div>
+                    </div>
+
+                    <button (click)="scrollTop(); activeSideMenu='expertProfile'" aria-controls="expertProfile"
+                      class="btn darkBtn">Manage Team</button>
+                  </div>
+                  <div class="d-flex mt-3 justify-content-between borderItem">
+                    <div class="txt">
+                      <p class="mb-1 bold">Company Phone</p>
+                      <p class="font-15 mb-0">{{userAuth.currentUser.phone || 'N/A'}}</p>
+                      <p class="mb-1 mt-4 bold">Official Business Address</p>
+                      <p class="font-15 mb-0">{{userAuth.currentUser.location?.streetAddress}}
+                        <br /> {{userAuth.currentUser.location?.city}} {{userAuth.currentUser.location?.stateProvince}}
+                        {{userAuth.currentUser.location?.zipcode}} {{userAuth.currentUser.location?.country}}</p>
+                    </div>
+                    <button (click)="editExpertProfile()" class="btn darkBtn">Edit Profile</button>
+                  </div>
+                </div>
+
+                <div class="col-sm-11 px-0" *ngIf="myAgencyInvites.length">
+
+                  <div class="row mt-3 justify-content-between borderItem pb-2"
+                    *ngFor="let hub of myAgencyInvites; let i=index">
+
+                    <div class="col-md-2">
+                      <img [src]="hub.agencyLogo || agencyImagePath" class="profileImg mr-3">
+                    </div>
+                    <div class="col-md-7 d-flex justify-content-start">
+                      <div class="txt mx-2">
+                        <p class="mb-1 bold">Hub Name</p>
+                        <p class="font-15 mb-0">{{hub.agencyName}}</p>
+                        <p class="mb-1 mt-2 bold">Hub Owner</p>
+                        <p class="font-15 mb-0">{{getAgencyOwnerIfo(hub.expertUid, 'name') | titlecase}}</p>
+                      </div>
+                      <div class="txt ml-3">
+                        <p class="mb-1 bold">Company Phone</p>
+                        <p class="font-15 mb-0">{{getAgencyOwnerIfo(hub.expertUid, 'phone') || 'N/A'}} </p>
+                        <p class="mb-1 mt-2 bold">Official Business Address</p>
+                        <p class="font-15 mb-0">{{getAgencyOwnerIfo(hub.expertUid, 'street') || 'N/A'}}
+                          <br /> {{getAgencyOwnerIfo(hub.expertUid, 'city') }}
+                          {{getAgencyOwnerIfo(hub.expertUid, 'state')}}
+                          {{getAgencyOwnerIfo(hub.expertUid, 'country') }}</p>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <button (click)="approveHubRequest(hub.expertUid , userAuth.currentUser.uid, i)"
+                        class="btn darkBtn m-1">Join Hub Team</button>
+                      <button (click)="cancelHubRequest(hub.expertUid , userAuth.currentUser.uid, i)"
+                        class="btn darkBtn dangerBtn m-1">Cancel</button>
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div class="col-sm-11 px-0" *ngIf="joinedAgency">
+
+                  <div class=" row mt-3 justify-content-between borderItem pb-2">
+                    <div class="col-md-2">
+                      <img [src]="joinedAgency.agencyLogo || agencyImagePath" class="profileImg mr-3">
+                    </div>
+                    <div class="col-md-7 d-flex justify-content-start">
+                      <div class="txt mx-2">
+                        <p class="mb-1 bold">Hub Name</p>
+                        <p class="font-15 mb-0">{{joinedAgency.agencyName}}</p>
+                        <p class="mb-1 mt-2 bold">Hub Owner</p>
+                        <p class="font-15 mb-0">{{getAgencyOwnerIfo(joinedAgency.expertUid, 'name') | titlecase}}</p>
+                      </div>
+                      <div class="txt ml-3">
+                        <p class="mb-1 bold">Company Phone</p>
+                        <p class="font-15 mb-0">{{getAgencyOwnerIfo(joinedAgency.expertUid, 'phone') || 'N/A'}} </p>
+                        <p class="mb-1 mt-2 bold">Official Business Address</p>
+                        <p class="font-15 mb-0">{{getAgencyOwnerIfo(joinedAgency.expertUid, 'street') || 'N/A'}}
+                          <br /> {{getAgencyOwnerIfo(joinedAgency.expertUid, 'city') }}
+                          {{getAgencyOwnerIfo(joinedAgency.expertUid, 'state')}}
+                          {{getAgencyOwnerIfo(joinedAgency.expertUid, 'country') }}</p>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <button (click)="leaveHubTeam(joinedAgency.expertUid , userAuth.currentUser.uid)"
+                        class="btn darkBtn dangerBtn m-1">Leave Hub</button>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="activeSideMenu==='billingInfo'" class="tab-pane active" id="billing" role="tabpanel">
+            <div class="card billingCard">
+              <div class="row justify-content-center">
+                <div class="col-sm-11 px-0">
+                  <div class="d-flex py-4">
+                    <i class="fas fa-info-circle subTitle align-center"></i>
+                    <p class="pl-3 mb-0 bold font-18">Billing Information</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card billingCard mt-4">
+              <div class="row justify-content-center header">
+                <div class="col-sm-11 px-0">
+                  <h5 class="mb-0 bold">Get Paid</h5>
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-sm-11 px-0">
+                  <p class="mb-1 bold">Balance</p>
+                  <p class="font-15 mb-0">Your balance is <b>$0.00</b></p>
+                  <div class="d-flex justify-content-between pb-2 my-4">
+                    <div class="txt">
+                      <p class="mb-1 bold">Last Withdrawal</p>
+                      <p class="font-15 mb-0">RM500 | 12-Jun-2020</p>
+                    </div>
+                    <button class="btn darkBtn withdraw align-center">Withdraw Now</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card billingCard mt-4">
+              <div class="row justify-content-center header">
+                <div class="col-sm-11 px-0">
+                  <h5 class="mb-0 bold">Banking information</h5>
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-sm-11 px-0">
+                  <p class="mb-1 bold mt-2">You have not set up any payment methods yet</p>
+                  <p class="font-15 mb-0">Tell us how you want to receive your funds.<br />
+                    It may take upto 3 days to activate your payment method</p>
+                  <div class="text-right pb-2 mt-2 mb-4">
+                    <button class="btn darkBtn">Add</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="activeSideMenu==='password'" class="tab-pane active" id="password" role="tabpanel">
+            <div class="card billingCard">
+              <div class="row justify-content-center header">
+                <div class="col-sm-11 px-0">
+                  <h5 class="mb-0 bold">Password & Security</h5>
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-sm-11 px-0">
+                  <div class="row">
+                    <div class="col-sm-5 pl-0">
+                      <div class="form-group mb-4">
+                        <label class="mb-3 pt-2 font-15 bold">Old Password</label>
+                        <input [(ngModel)]="oldPassword" type="password" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-5 pl-0">
+                      <div class="form-group mb-4">
+                        <label class="mb-3 pt-2 font-15 bold">New Password</label>
+                        <input [(ngModel)]="newPassword" type="password" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-right pb-2 mt-2 mb-4">
+                    <button (click)="updatePassword()" [disabled]="!oldPassword || !newPassword"
+                      class="btn dangerBtn">Change Password</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="activeSideMenu==='myMembers'" class="tab-pane active" id="members" role="tabpanel">
+            <div class="card billingCard">
+              <div class="row justify-content-center header">
+                <div class="col-sm-11 px-0">
+                  <h5 class="mb-0 bold">My Memberships</h5>
+                </div>
+              </div>
+              <div class="row justify-content-center memberShips">
+                <div class="col-sm-12 maxWidthContent">
+                  <p class="font-17 bold mb-1">Spaces</p>
+                  <div class="d-flex pt-1 justify-content-between">
+                    <p class="font-14 mb-0 pointer">BigRoom</p>
+                    <p class="text1 mb-0 font-13 align-center pointer">Leave</p>
+                  </div>
+                  <div class="d-flex pt-1 justify-content-between">
+                    <p class="font-14 mb-0 pointer">Event Space</p>
+                    <p class="text1 mb-0 font-13 align-center pointer">Leave</p>
+                  </div>
+                  <p class="font-17 mb-1 bold mt-5">Workshops</p>
+                  <div class="d-flex pt-1 justify-content-between">
+                    <p class="font-14 mb-0 pointer">Workshop 1</p>
+                    <p class="text1 mb-0 font-13 align-center pointer">Leave</p>
+                  </div>
+                  <div class="d-flex pt-1 justify-content-between">
+                    <p class="font-14 mb-0 pointer">Workshop 1</p>
+                    <p class="text1 mb-0 font-13 align-center pointer">Leave</p>
+                  </div>
+                  <p class="font-17 mb-1 bold mt-5">Agencies</p>
+                  <div class="d-flex pt-1 justify-content-between">
+                    <p class="font-14 mb-0 pointer">Hub 1</p>
+                    <p class="text1 mb-0 font-13 align-center pointer">Leave</p>
+                  </div>
+                  <div class="d-flex pt-1 justify-content-between">
+                    <p class="font-14 mb-0 pointer">Hub 1</p>
+                    <p class="text1 mb-0 font-13 align-center pointer">Leave</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="activeSideMenu==='expertProfile' || activeSideMenu==='agencyTeams'" class="tab-pane active"
+            id="expertProfile" role="tabpanel">
+            <div *ngIf="!myAgency.expertUid" class="card billingCard">
+              <div class="row justify-content-center header">
+                <div class="col-sm-11 px-0">
+                  <h5 class="mb-0 bold">Expert Profile</h5>
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-sm-11 px-0">
+                  <p class="mt-3 mb-2 font-17 bold">Plan</p>
+                  <div class="d-flex">
+                    <img src="/assets/imgs/logo2.PNG" height="20px">
+                    <p class="text1 mb-0 bold pl-2">Basic</p>
+                  </div>
+                  <p class="mb-0 mt-1 font-15 text1">Free</p>
+                  <p class="mt-5 mb-0 font-17 bold">Billing</p>
+                  <p class="font-15 mt-1 text1 mb-0">Not applicable</p>
+                  <div class="text-right mb-4 pb-2 mt-2">
+                    <button class="btn dangerBtn" data-toggle="modal" data-target="#portfolioModal"
+                      [disabled]="userAuth.currentUser.agencyId">
+                      Upgrade to Pro Hub</button>
+
+                    <p class="red-alert mb-2" *ngIf="userAuth.currentUser.agencyId">
+                      To Create your own Hub, You should left the already joined Hub team.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="myAgency.expertUid">
+              <div class="card expertDetailCont mt-4">
+                <div class="row justify-content-center" style="border-bottom: 1px solid #d1cccc;">
+                  <div class="col-sm-11 px-0">
+                    <div class="row">
+                      <div class="col-sm-7 pl-0">
+                        <ul class="nav nav-tabs" id="myTab2" role="tablist">
+                          <li (click)="toggelAgencyTabs('members')" class="nav-item">
+                            <a class="nav-link active" id="activeMemb-tab" data-toggle="tab" href="#activeMemb"
+                              role="tab" aria-controls="activeMemb" aria-selected="true">Active Members</a>
+                          </li>
+                          <li (click)="toggelAgencyTabs('experts')" class="nav-item">
+                            <a class="nav-link" id="activeExp-tab" data-toggle="tab" href="#activeExp" role="tab"
+                              aria-controls="activeExp" aria-selected="false">Active Experts</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active pt-3" id="activeMemb" role="tabpanel">
+                    <div class="row memberList py-2">
+                      <div class="col-sm-4 px-0">
+                        <p class="font-15 mb-0 bold">Name</p>
+                      </div>
+                      <div class="col-sm-4 pr-0">
+                        <p class="font-15 mb-0 bold">Role</p>
+                      </div>
+                    </div>
+
+                    <div class="row memberList">
+                      <div class="col-sm-4 px-0">
+                        <p>{{userAuth.currentUser.fullName}}</p>
+                      </div>
+                      <div class="col-sm-4 pr-0">
+                        <div class="d-flex">
+                          <p *ngIf="dataHelper.myAgency">Admin</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="tab-pane fade" id="activeExp" role="tabpanel">
+                    <div class="row justify-content-center">
+                      <div class="col-sm-11 px-0">
+                        <div class="row justify-content-between my-4">
+                          <div class="col-sm-5 pl-0">
+                            <div class="searchBar">
+                              <i class="fas fa-search pointer"></i>
+                              <input [(ngModel)]="agencySearchQuery" (ngModelChange)="searchMembersExperts()"
+                                placeholder="Search" class="form-control">
+                            </div>
+                          </div>
+                          <div class="col-sm-3 px-0">
+                            <div class="actionBtn" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                              aria-haspopup="true" aria-expanded="false">
+                              <p class="mb-0 font-15">Actions</p>
+                              <i class="fas fa-chevron-down font-15"></i>
+                            </div>
+                            <div class="dropdown-menu dropdown-menu-right shadow" aria-labelledby="userDropdown">
+                              <a class="dropdown-item pointer">
+                                Bulk CSV Upload
+                              </a>
+                              <a class="dropdown-item pointer">
+                                <p (click)="removeMembersExperts()" class="my-0 font-14 text1 removeText">Remove</p>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row memberList py-2">
+                      <div class="col-sm-4 px-0">
+                        <div class="custom-control custom-checkbox">
+                          <input (change)="selectUnselectAllExperts($event)" type="checkbox"
+                            class="custom-control-input" id="allExpertsBox" name="example1">
+                          <label class="custom-control-label bold" for="allExpertsBox">Name</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4 pr-0">
+                        <p class="font-15 mb-0 bold">Role</p>
+                      </div>
+                    </div>
+
+                    <p *ngIf="!agencyExpertsList.length" class="text-center text-secondary mt-5">No experts invited</p>
+
+                    <div *ngFor="let expert of agencyExpertsList; index as i" class="row memberList">
+                      <div class="col-sm-4 px-0">
+                        <div class="custom-control custom-checkbox">
+                          <input [(ngModel)]="expert.isSelected" type="checkbox" class="custom-control-input"
+                            id="{{'checkBox1' + i}}" name="example1">
+                          <label class="custom-control-label" for="{{'checkBox1' + i}}">
+                            {{expert.profile.fullName || 'N/A'}}
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4 pr-0">
+                        <div class="d-flex">
+                          <label>{{expert.role}}</label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row my-4 justify-content-center">
+                      <div class="col-sm-11 px-0 text-right">
+                        <button class="btn darkBtn mr-4">Submit</button>
+                        <button (click)="removeMembersExperts()" class="btn dangerBtn"
+                          style="width:160px">Remove</button>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="card myTeamsCont mt-4">
+                <div class="row justify-content-center">
+                  <div class="col-sm-2 pl-0 align-center">
+                    <h5 class="mb-0 bold">My Teams</h5>
+                  </div>
+                  <div class="col-sm-9 text-right pr-0">
+                    <button class="btn darkBtn mr-4" (click)="SelectFiles.click()">Upload Experts CSV</button>
+                    <input #SelectFiles class="d-none" type="file" accept=".CSV" (change)="onChangeCsvFile($event)">
+                    <button routerLink="/find-expert" class="btn darkBtn mr-4">Invite Expert</button>
+                    <button class="btn darkBtn">Invite Member</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div *ngIf="activeSideMenu==='settings'" class="tab-pane active" id="settings" role="tabpanel">
+            <div class="card billingCard">
+              <div class="row justify-content-center header">
+                <div class="col-sm-11 px-0">
+                  <h5 class="mb-0 bold">Hub Profile</h5>
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-sm-11 px-0">
+                  <div class="form-group mb-3 w-25">
+                    <label class="mb-3 pt-2 bold">Name</label>
+                    <input [(ngModel)]="myAgency.agencyName" type="text" class="form-control px-2"
+                      style="height: 40px; border:1.5px solid #979797; border-radius: 10px;">
+                  </div>
+
+                  <img *ngIf="agencyImagePath" class="profileImg" [src]="agencyImagePath">
+
+                  <p class="bold mb-1 mt-5">Upload Hub Logo</p>
+                  <p (click)="filePicker.click()" class="bold danger font-14 mb-0 pointer">Browse</p>
+                  <input ccept="image/*" (change)="onChangeFile($event)" #filePicker type="file"
+                    style="visibility: hidden">
+                  <div class="d-flex justify-content-between mt-5 mb-4 pb-2">
+                    <button (click)="activeSideMenu='expertProfile'" class="btn darkBtn" style="width: 220px;">Edit Team
+                      Profile</button>
+                    <button [disabled]="!myAgency.agencyName" (click)="saveAgency()" class="btn dangerBtn">Update
+                      Profile</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <app-footer></app-footer>
+
+
+  <button id="deleteExpertsModalButton" data-toggle="modal" data-target="#deleteExpertsModal"
+    style="visibility: hidden; position: absolute; bottom: 0; right: 0"></button>
+
+  <div class="modal fade" id="deleteExpertsModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h4 class="modal-title">Remove Experts</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+          Are you sure you want to remove expert(s)?
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button (click)="removeExpertsFromAgency()" type="button" class="btn btn-danger"
+            data-dismiss="modal">Remove</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="portfolioModal">
+    <div class="modal-dialog myModal modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title bold">Upgrade to Pro Hub</h5>
+          <i class="fas fa-times align-center pointer text1" data-dismiss="modal" style="font-size: 22px;"></i>
+        </div>
+
+        <div class="modal-body px-0 pt-0 pb-4">
+          <div class="row justify-content-center borderItem">
+            <div class="col-sm-11 px-0">
+              <p class="font-18 mb-3 bold">Membership</p>
+            </div>
+            <div class="col-sm-11 px-0">
+              <p class="fon-18 mb-1 bold">Please select Package from the list </p>
+              <a class="pointer" data-target="_blank" (click)='newtab()'>View Details</a>
+              <div *ngIf="suggestedPackages.length" class="txt">
+                <ng-select [clearable]="false" bindLabel="display" (change)="updatePackagePrice($event)"
+                  style="max-width: 300px !important;" [items]="suggestedPackages" [(ngModel)]="selectedPackage">
+                </ng-select>
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-sm-11 px-0">
+
+              <div class="row">
+                <div class="col-sm-8 px-0" *ngIf="selectedPackage.value===0">
+                  <h4 class="bold">Current Plan: {{selectedPackage.display}}</h4>
+                </div>
+                <div class="col-sm-8 px-0" *ngIf="selectedPackage.value!==0">
+                  <h4 class="bold">Current Plan: {{selectedPackage.display}}</h4>
+                  <p class="font-18 mb-4">Payment Information</p>
+                  <div class="form-group mb-4">
+                    <label class="mb-3 font-15 bold">Name on Card</label>
+                    <input type="text" placeholder="Enter Name" class="form-control" [(ngModel)]="paymentObj.cardName">
+                    <span class="red-alert" *ngIf="submitted && 
+                      (!paymentObj.cardName || paymentObj.cardName.length<3 || paymentObj.cardName.length>20)">
+                      Card Name of 3 to 20 characters is required. </span>
+                  </div>
+                  <div class="form-group mb-4">
+                    <label class="mb-3 font-15 bold">Card Number</label>
+                    <input type="text" placeholder="Card Number" class="form-control"
+                      [(ngModel)]="paymentObj.cardNumber">
+                    <span class="red-alert" *ngIf="submitted && 
+                    (!paymentObj.cardNumber || paymentObj.cardNumber.length!=16 || invalidCardNumber() )">
+                      Invalid Card Number. Valid card nummber should contain 16 digits only. </span>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-4 pl-0">
+                      <div class="form-group mb-4">
+                        <label class="mb-3 font-15 bold">Expiry Month</label>
+                        <ng-select [items]="suggestedMonths" [(ngModel)]="paymentObj.expiryMonth">
+                        </ng-select>
+                        <span class="red-alert" *ngIf="submitted && !paymentObj.expiryMonth ">
+                          Card expiry month is required. </span>
+                      </div>
+                    </div>
+                    <div class="col-sm-4 px-1">
+                      <div class="form-group mb-4">
+                        <label class="mb-3 font-15 bold">Year</label>
+                        <ng-select [items]="suggestedYears" [(ngModel)]="paymentObj.expiryYear">
+                        </ng-select>
+                        <span class="red-alert" *ngIf="submitted && !paymentObj.expiryMonth ">
+                          Card expiry year is required. </span>
+                      </div>
+                    </div>
+                    <div class="col-sm-4 pr-0 pl-0">
+                      <div class="form-group mb-4">
+                        <label class="mb-3 font-15 bold">CVC</label>
+                        <input type="number" placeholder="Enter" class="form-control" min="100" max="9999"
+                          [(ngModel)]="paymentObj.cvc">
+                        <span class="red-alert" *ngIf="submitted && 
+                        (!paymentObj.cvc || paymentObj.cvc<100 || paymentObj.cvc>9999)">
+                          Card CVC number of 3 to 4 digits is required. </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="cryptedBtn">
+                    <p class="font-13 mb-0 bold pl-2"> <i class="fas fa-lock"></i>Your credit card information is
+                      encrypted</p>
+                  </div>
+                </div>
+              </div>
+
+              <p class="mt-5 mb-3 font-15">You can change your membership plan at anytime</p>
+              <p class="mb-0 font-15">By selecting confirm, you agree to chnage you plan to basic</p>
+              <img src="/assets/imgs/users.svg" height="60px" class="my-5">
+              <h5 class="mb-0 bold mb-4">Mereka Hub Pro</h5>
+              <div class="d-flex mt-3">
+                <i class="fas fa-check subTxt"></i>
+                <p class="font-14 mb-0 pl-2">Manage multiple experts under one account.</p>
+              </div>
+              <div class="d-flex mt-3">
+                <i class="fas fa-check subTxt"></i>
+                <p class="font-14 mb-0 pl-2">Post your own machines.</p>
+              </div>
+              <div class="text-right mt-4">
+                <button class="btn btn-outline-primary" id="closePaymentMd" data-dismiss="modal">Cancel</button>
+                <button (click)="updateAgencyProfile()" class="btn darkBtn ml-4" data-dismiss="modal"
+                  *ngIf="selectedPackage.value===0">Confirm</button>
+
+                <button (click)="confirmPayment()" class="btn darkBtn ml-4" *ngIf="selectedPackage.value!==0">
+                  Pay RM{{pakagePrice}} with Stripe Checkout</button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="businessIdModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h4 class="modal-title">Business Registration ID</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Business Registration ID</label>
+            <input [(ngModel)]="businessRegID" type="text" placeholder="Enter" class="form-control">
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button [disabled]="!businessRegID" (click)="saveBusinessRegID()" type="button" class="btn btn-success"
+            data-dismiss="modal">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div> -->

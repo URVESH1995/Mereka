@@ -1,0 +1,46 @@
+.borderdBlock {
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  background: white;
+  padding: 45px 32px;
+
+  .form-group {
+    width: 50%;
+
+    input {
+      height: 65px;
+      border-radius: 8px;
+      font-size: 17px;
+    }
+
+    label {
+      font-size: 14px;
+      margin: 8px 0px 8px 0px;
+      font-weight: bold;
+    }
+  }
+
+  .historyMainCont {
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    margin-top: 20px;
+    .deviceHistCont {
+      display: flex;
+      align-items: center;
+      min-height: 150px;
+      border-bottom: 1px solid #dcdcdc;
+      padding: 8px 35px;
+
+      .laptopIcon {
+        font-size: 65px;
+        margin-right: 20px;
+      }
+    }
+    .deviceHistCont:last-child
+    {
+        border-bottom: 0px;
+    }
+  }
+
+
+}

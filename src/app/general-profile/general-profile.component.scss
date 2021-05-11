@@ -1,0 +1,119 @@
+.mainCont {
+  .userIcon {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .detailsCont {
+    background-color: white;
+    justify-content: center;
+    padding-top: 10px;
+    min-height: 105vh;
+    position: relative;
+
+    .sectCont {
+      justify-content: center;
+      padding: 30px 0px 171px 0px;
+    }
+
+    .userImg {
+      margin: 30px 0px;
+      height: 120px;
+      width: 120px;
+      border-radius: 50%;
+      display: block;
+    }
+
+    .addBtn {
+      cursor: pointer;
+      color: #1cabe9;
+      display: inline-flex;
+    }
+
+    .form-control {
+      height: 45px;
+      font-size: 14px;
+      padding: 0.5rem 15px;
+    }
+    select {
+      background: #ffffff url("/assets/imgs/downArrow2.svg") no-repeat right
+        1.2rem center/12px 12px !important;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+    .darkBtn {
+      height: 48px;
+      font-size: 15px;
+      width: 150px;
+    }
+
+    .bottomBtnsCont {
+      border-top: 1px solid #e3e3e4;
+      justify-content: center;
+      padding: 30px 0px;
+      position: absolute;
+      bottom: 0px;
+      left: 0px;
+    }
+  }
+}
+
+/* responsiveness */
+/* tablet 991px */
+@media screen and (max-width: 991px) and (min-width: 576px) {
+  .mainCont {
+    .stepsCont {
+      padding: 20px 0px !important;
+    }
+    .col-sm-9 {
+      padding-left: 10px !important;
+      .detailsCont {
+        .sectCont {
+          padding: 20px 10px 150px 10px;
+        }
+      }
+    }
+  }
+}
+
+/*mobile 575px */
+@media only screen and (max-width: 575px) {
+  .mainCont {
+    .stepsCont {
+      .col-sm-11 {
+        .stepCont {
+          .col-sm-2,
+          .col-sm-3 {
+            width: 12%;
+          }
+          .col-sm-7 {
+            width: 76% !important;
+          }
+        }
+      }
+    }
+    .col-sm-9 {
+      padding-left: 0px !important;
+      .detailsCont {
+        .row {
+          .col-sm-5.pr-0.pl-4 {
+            padding-left: 0px !important;
+            padding-right: 0px !important;
+          }
+        }
+        .sectCont {
+          padding: 20px 10px 20px 10px;
+        }
+        .bottomBtnsCont {
+          padding: 30px 20px !important;
+        }
+      }
+    }
+  }
+}
+
+input[type="file"] {
+  display: none;
+}

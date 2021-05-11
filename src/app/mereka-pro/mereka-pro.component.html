@@ -1,0 +1,304 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<app-navbar></app-navbar>
+
+<section class="bgCont">
+  <div class="text-center mt-5">
+    <h1 class="bold">PRO</h1>
+  </div>
+</section>
+
+<div class="row  mainCont">
+  <div class="col-sm-12 maxWidthContent">
+    <div class="row pricing">
+
+      <div *ngFor="let package of allPackages; index as i" class="col-sm-3 priceCont">
+        <div class="row justify-content-center">
+          <div class="col-sm-11 px-0">
+            <h4 class="bold mb-2">{{package.packageTitle}}</h4>
+            <p class="font-15 descp">{{package.description}}</p>
+            <div class="d-flex">
+              <h4 class="mb-0" style="font-weight: 900;">${{package.price}} USD/</h4>
+              <p *ngIf="package.limit==='1 Month'" class="font-15 mb-0 bold pl-2 align-center"> mo*</p>
+              <p *ngIf="package.limit==='7 Days'" class="font-15 mb-0 bold pl-2 align-center"> 7 days*</p>
+              <p *ngIf="package.limit==='6 Months'" class="font-15 mb-0 bold pl-2 align-center"> 6 mo*</p>
+              <p *ngIf="package.limit==='1 Year'" class="font-15 mb-0 bold pl-2 align-center"> year*</p>
+              <p *ngIf="package.limit==='Unlimited'" class="font-15 mb-0 bold pl-2 align-center"> Unlimited</p>
+            </div>
+            <!-- <button class="btn darkBtn btn-block">Premium (User)</button> -->
+            <p *ngIf="package.packageTitle==='Standard'" class="mb-3 bold pt-2 font-14">All the benefits of
+              Free, and:</p>
+            <p *ngIf="package.packageTitle==='Plus'" class="mb-3 bold pt-2 font-14">All the goodness of
+              Standard, and:</p>
+            <p *ngIf="package.packageTitle==='Enterprise Grid'" class="mb-3 bold pt-2 font-14">All the greatness
+              of Plus, and:</p>
+            <div *ngFor="let benefit of package.benefits" class="features">
+              <i class="fas fa-check pt-1"></i>
+              <p class="mb-0">{{benefit}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="learnMore text-center">
+          <button [disabled]="i===0" (click)="selectedPackage=package" data-toggle="modal"
+            data-target="#hubPaymentModal" class="btn btn-dark w-75">Select Package</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="detailTable">
+      <div class="row headerRow">
+        <div class="col-sm-3 col-3"></div>
+        <div class="col-sm-2 col-2 text-center">
+          <p class="mb-0 bold font-17 ">Premium (User)</p>
+        </div>
+        <div class="col-sm-2 col-2 text-center">
+          <p class="mb-0 bold font-17">Studio</p>
+        </div>
+        <div class="col-sm-3 col-3 text-center">
+          <p class="mb-0 bold font-17">Hubs</p>
+        </div>
+        <div class="col-sm-2 col-2 text-center">
+          <p class="mb-0 bold font-17">Academic ins</p>
+        </div>
+      </div>
+      <div class="row detailCont">
+        <div class="col-sm-3 col-3">
+          <p class="mb-0 bold">Number of Machines</p>
+        </div>
+        <div class="col-sm-2 col-2 text-center"></div>
+        <div class="col-sm-2 col-2 text-center">
+          <p class="mb-0 bold">2</p>
+        </div>
+        <div class="col-sm-3 col-3 text-center">
+          <p class="mb-0 bold">2</p>
+        </div>
+        <div class="col-sm-2 col-2 text-center">
+          <p class="mb-0 bold">5</p>
+        </div>
+      </div>
+      <div class="row detailCont">
+        <div class="col-sm-3 col-3">
+          <p class="mb-0 bold">Number of Spaces</p>
+        </div>
+        <div class="col-sm-2 col-2 text-center"></div>
+        <div class="col-sm-2 col-2 text-center">
+          <p class="mb-0 bold">5</p>
+        </div>
+        <div class="col-sm-3 col-3 text-center">
+          <p class="mb-0 bold">10</p>
+        </div>
+        <div class="col-sm-2 col-2 text-center">
+          <p class="mb-0 bold">10+</p>
+        </div>
+      </div>
+      <div class="row detailCont">
+        <div class="col-sm-3 col-3">
+          <p class="mb-0 bold">Number of Experts</p>
+        </div>
+        <div class="col-sm-2 col-2 text-center">
+          <p class="mb-0 bold">1</p>
+        </div>
+        <div class="col-sm-2 col-2 text-center">
+          <p class="mb-0 bold">5</p>
+        </div>
+        <div class="col-sm-3 col-3 text-center">
+          <p class="mb-0 bold">10</p>
+        </div>
+        <div class="col-sm-2 col-2 text-center">
+          <p class="mb-0 bold">10+</p>
+        </div>
+      </div>
+      <div class="row detailCont">
+        <div class="col-sm-3 col-2">
+          <p class="mb-0 bold">Number of Members</p>
+        </div>
+        <div class="col-sm-2 col-2 text-center"></div>
+        <div class="col-sm-2 col-2 text-center"> </div>
+        <div class="col-sm-3 col-3 text-center"></div>
+        <div class="col-sm-2 col-2 text-center"></div>
+      </div>
+      <div class="row detailCont">
+        <div class="col-sm-3 col-3">
+          <p class="mb-0 bold">Number of Courses & Workshops</p>
+        </div>
+        <div class="col-sm-2 col-2 text-center"></div>
+        <div class="col-sm-2 col-2 text-center">
+          <p class="mb-0 bold">5</p>
+        </div>
+        <div class="col-sm-3 col-3 text-center">
+          <p class="mb-0 bold">15</p>
+        </div>
+        <div class="col-sm-2 col-2 text-center">
+          <p class="mb-0 bold">15+</p>
+        </div>
+      </div>
+      <div class="row detailCont">
+        <div class="col-sm-3 col-3">
+          <p class="mb-0 bold">Services</p>
+        </div>
+        <div class="col-sm-2 col-2 text-center">
+          <p class="mb-0 bold">1</p>
+        </div>
+        <div class="col-sm-2 col-2 text-center">
+          <p class="mb-0 bold">2</p>
+        </div>
+        <div class="col-sm-3 col-3 text-center">
+          <p class="mb-0 bold">All</p>
+        </div>
+        <div class="col-sm-2 col-2 text-center">
+          <p class="mb-0 bold">All</p>
+        </div>
+      </div>
+      <div class="row detailCont">
+        <div class="col-sm-3 col-3">
+          <p class="mb-0 bold">Teams / Hub</p>
+        </div>
+        <div class="col-sm-2 col-2 text-center">
+        </div>
+        <div class="col-sm-2 col-2 text-center">
+          <i class="fas fa-check subTxt"></i>
+        </div>
+        <div class="col-sm-3 col-3 text-center">
+          <i class="fas fa-check subTxt"></i>
+        </div>
+        <div class="col-sm-2 col-2 text-center">
+          <i class="fas fa-check subTxt"></i>
+        </div>
+      </div>
+      <div class="row detailCont">
+        <div class="col-sm-3 col-3">
+          <p class="mb-0 bold">Monthly Reports</p>
+        </div>
+        <div class="col-sm-2 col-2 text-center">
+        </div>
+        <div class="col-sm-2 col-2 text-center">
+        </div>
+        <div class="col-sm-3 col-3 text-center">
+          <i class="fas fa-check subTxt"></i>
+        </div>
+        <div class="col-sm-2 col-2 text-center">
+          <i class="fas fa-check subTxt"></i>
+        </div>
+      </div>
+      <div class="row detailCont">
+        <div class="col-sm-3 col-3">
+          <p class="mb-0 bold">Email Support</p>
+        </div>
+        <div class="col-sm-2 col-2 text-center">
+        </div>
+        <div class="col-sm-2 col-2 text-center">
+        </div>
+        <div class="col-sm-3 col-3 text-center">
+        </div>
+        <div class="col-sm-2 col-2 text-center">
+        </div>
+      </div>
+      <div class="row detailCont">
+        <div class="col-sm-3 col-3">
+          <p class="mb-0 bold">Video Support</p>
+        </div>
+        <div class="col-sm-2 col-2 text-center">
+        </div>
+        <div class="col-sm-2 col-2 text-center">
+          <i class="fas fa-check subTxt"></i>
+        </div>
+        <div class="col-sm-3 col-3 text-center">
+        </div>
+        <div class="col-sm-2 col-2 text-center">
+        </div>
+      </div>
+    </div>
+
+    <p class="mb-4 fw500 font-17">If you want to create an hub and sell the services of other workers, you’ll first
+      need to
+      create an Expert account for the hub owner.</p>
+    <p class="font-18 bold mb-3">Once that account activated:</p>
+    <p class="font-17 mb-1">1. Go to Settings > <span class="pointer bold">My Teams</span></p>
+    <p class="font-17 mb-1">2. Select the <span class="pointer bold">Create a new account</span> button at the bottom
+    </p>
+    <p class="font-17 mb-1">3. Select the <span class="pointer bold">New Expert Hub Account</span> option and fill
+      out the form</p>
+    <p class="mt-4 mb-0">After you create your Hub, the account menu will be where you can switch between your
+      personal and hub account. A person can only have one Hub Mereka. You won’t be able to make another one.</p>
+
+  </div>
+</div>
+
+<div class="row benefitsCont">
+  <div class="col-sm-12 maxWidthContent">
+    <h2 class="mb-0 bold pl-3">Mereka PRO - Benefits</h2>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="d-flex mt-5">
+          <span class="logo"></span>
+          <div class="txt">
+            <h5 class="mb-2 bold">Title Here</h5>
+            <p class="font-14 mb-0">Mereka is currently setup so that you must create an expert account to create an
+              hub. This is somethings that we are working on for the future.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="d-flex mt-5">
+          <span class="logo"></span>
+          <div class="txt">
+            <h5 class="mb-2 bold">Title Here</h5>
+            <p class="font-14 mb-0">Mereka is currently setup so that you must create an expert account to create an
+              hub. This is somethings that we are working on for the future.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="d-flex mt-5">
+          <span class="logo"></span>
+          <div class="txt">
+            <h5 class="mb-2 bold">Title Here</h5>
+            <p class="font-14 mb-0">Mereka is currently setup so that you must create an expert account to create an
+              hub. This is somethings that we are working on for the future.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="d-flex mt-5">
+          <span class="logo"></span>
+          <div class="txt">
+            <h5 class="mb-2 bold">Title Here</h5>
+            <p class="font-14 mb-0">Mereka is currently setup so that you must create an expert account to create an
+              hub. This is somethings that we are working on for the future.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row justify-content-center sect2">
+  <div class="col-sm-10">
+    <h2 class="mb-5 bold pb-3">Frequently Asked Questions</h2>
+    <div *ngFor="let faq of appData.faqs" class="row questCont">
+      <div class="col-sm-3 pl-0 align-center">
+        <h6 class="my-0 bold">{{faq.question}}</h6>
+      </div>
+      <div class="col-sm-9 pr-0 answerCont py-1">
+        <p class="my-0 font-15">{{faq.answer}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>
+
+<div *ngIf="selectedPackage" class="modal fade" id="hubPaymentModal">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-body p-4">
+        <app-payment-card [deductionAmount]="selectedPackage.price" (onValidateCard)="confirmPayment($event)">
+        </app-payment-card>
+      </div>
+      <div class="modal-footer text-right">
+        <button id="closeHubPaymentModal" data-dismiss="modal"
+          class="btn cancelBtn btnRounded px-4 mr-3">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

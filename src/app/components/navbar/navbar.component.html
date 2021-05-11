@@ -1,0 +1,88 @@
+<nav class="navbar navbar-expand-sm navbar-dark fixed-top p-0">
+    <a routerLink="/home" class="navbar-brand text-center pointer" style="width: 320px;">
+        <img class="blackNavbar appLogo" src="/assets/imgs/logo.PNG">
+        <img class="whiteNavbar appLogo" src="/assets/imgs/logo2.PNG">
+    </a>
+    <ul class="navbar-nav mx-auto">
+        <li class="nav-item">
+            <button (click)="toggleWorkshopFilters()"
+                [class.activeBtn]="router.url==='/workshops' || router.url==='/home'"
+                class="btn btn-light navbarBtn mx-3 px-4 lightBlackBtn">Experiences</button>
+        </li>
+        <li class="nav-item">
+            <button routerLink="/spaces" [class.activeBtn]="router.url==='/spaces'"
+                class="btn btn-light navbarBtn mx-3 px-4 lightBlackBtn">Spaces</button>
+        </li>
+        <!-- <li class="nav-item dropdown">
+            <button class="btn btn-light navbarBtn mx-3 px-4 lightBlackBtn" data-toggle="dropdown">
+                More <i class="fas fa-angle-down pl-2"></i>
+            </button>
+            <div class="dropdown-menu moreDropdown shadow p-3 pr-5">
+                <a routerLink="/hire-expert" class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">
+                    Hire an Expert</a>
+                <a class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">Get an Instant Quote</a>
+                <a class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">Book a Machine</a>
+            </div>
+        </li> -->
+    </ul>
+
+    <ul *ngIf="!userAuth.currentUser.uid" class="navbar-right text-center float-right pt-3">
+        <button (click)="dataHelper.openSpecificModal('preSignupModalOpener')"
+            class="btn btn-light navbarBtn px-4 getStartedBtn lightBlackBtn">Get Started</button>
+    </ul>
+
+    <ul *ngIf="userAuth.currentUser.uid" class="navbar-right text-center float-right pt-3 d-flex">
+        <div [class.vHidden]="!userAuth.currentUser.isExpert" *ngIf="profileViewMode()==='learner'"
+            class="profileToggleBtn d-flex p-2">
+            <button (click)="updateViewMode('learner')" class="btn btn-dark blackBgBtn btn-sm">Learner</button>
+            <p class="soloText pointer" (click)="updateViewMode('expert')">Expert</p>
+        </div>
+        <div [class.vHidden]="!userAuth.currentUser.isExpert" *ngIf="profileViewMode()==='expert'"
+            class="profileToggleBtn d-flex p-2">
+            <p class="soloText pointer" (click)="updateViewMode('learner')">Learner</p>
+            <button (click)="updateViewMode('expert')" class="btn btn-dark blackBgBtn btn-sm">Expert</button>
+        </div>
+        <div class="dropdown">
+            <i data-toggle="dropdown" class="far fa-bell bellIcon pointer"></i>
+            <div class="dropdown-menu moreDropdown shadow p-3 pr-5">
+                <a routerLink="/chats" class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">Messages</a>
+                <a routerLink="/notifications"
+                    class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">Notifications</a>
+                <a routerLink="/my-workshop-bookings" class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">My
+                    Bookings</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <img class="profileIcon pointer" [src]="userAuth.currentUser.profileUrl || '/assets/imgs/userIcon.PNG'"
+                data-toggle="dropdown">
+            <div class="dropdown-menu moreDropdown shadow p-3 pr-5">
+                <a *ngIf="userAuth.currentUser.learnerProfile && userAuth.currentUser.learnerProfile.educationList?.length"
+                    routerLink="/learner-dashboard" class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">My
+                    Dashboard</a>
+                <a *ngIf="!userAuth.currentUser.learnerProfile || (userAuth.currentUser.learnerProfile && !userAuth.currentUser.learnerProfile.educationList?.length)"
+                    routerLink="/create-learner-profile"
+                    class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">Learner
+                    Profile</a>
+                <a *ngIf="userAuth.currentUser.isExpert" routerLink="/profile"
+                    class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">Expert Profile</a>
+                <a routerLink="/my-orders" class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">My Jobs</a>
+                <a routerLink="/favourites" class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">Favourites</a>
+                <a class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">Settings</a>
+                <hr class="m-0" />
+
+                <a *ngIf="!dataHelper.myAgency && !userAuth.currentUser.agencyId" routerLink="/add-hub"
+                    class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">Add your Hub</a>
+                <a *ngIf="dataHelper.myAgency" routerLink="/hub-dashboard"
+                    class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">Manage Hubs</a>
+                <a *ngIf="dataHelper.myAgency" routerLink="/my-workshops"
+                    class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">Manage Workshops</a>
+                <a *ngIf="dataHelper.myAgency" routerLink="/add-service"
+                    class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">Add a Service</a>
+
+                <a class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">Help</a>
+                <a (click)="userAuth.logoutUser()" class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">Log Out</a>
+            </div>
+        </div>
+    </ul>
+
+</nav>

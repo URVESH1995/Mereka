@@ -1,0 +1,76 @@
+<div class="borderdBlock">
+    <h5 class="bold mb-3">Incoming Requests</h5>
+
+    <div *ngIf="memberRequests.length" class="membersMainCont">
+        <div class="memberCont headerRow">
+            <div style="width: 10%">
+                <input type="checkbox" class="form-control">
+            </div>
+            <p class="hubName">Name</p>
+            <p class="date">Email</p>
+            <p class="leave">Action</p>
+        </div>
+        <div *ngFor="let request of memberRequests; index as i" class="memberCont">
+            <div style="width: 10%">
+                <input type="checkbox" class="form-control">
+            </div>
+            <p (click)="learnerDetails(request)" class="hubName pointer">{{request.fullName}}</p>
+            <p class="date">{{request.email}}</p>
+            <p class="leave pointer">
+                <span (click)="acceptRequest(request.uid, i)" class="text-success">Accept</span>
+                <span class="mx-2">|</span>
+                <span (click)="rejectRequest(request.uid, i)" class="text-danger"> Reject</span>
+            </p>
+        </div>
+    </div>
+
+    <p *ngIf="!memberRequests.length" class="text-center text-secondary mt-5">No join requests!</p>
+</div>
+
+<div class="borderdBlock mt-4">
+    <h5 class="bold mb-3">Members</h5>
+    <p class="text-secondary">You have {{myAgency.agencyMembers?.length || 0}} members at your Hub</p>
+
+    <div *ngIf="myAgency.agencyMembers" class="membersMainCont">
+        <div class="memberCont headerRow">
+            <div style="width: 10%">
+                <input type="checkbox" class="form-control">
+            </div>
+            <p class="hubName">Name</p>
+            <p class="date">Date Joined</p>
+            <p class="date">Plan</p>
+            <p class="leave">Leave Hub</p>
+            <p class="leave">Actions</p>
+        </div>
+        <div *ngFor="let member of myAgency.agencyMembers" class="memberCont">
+            <div style="width: 10%">
+                <input type="checkbox" class="form-control">
+            </div>
+            <p (click)="learnerDetails(member.profile)" class="hubName pointer">{{member.profile.fullName}}</p>
+            <p class="date">{{member.joinDate | date}}</p>
+            <p class="date">Free Member</p>
+            <p (click)="activeMember=member.uid" data-toggle="modal" data-target="#leaveHubConfirmationModal"
+                class="leave"><i class="fas fa-user-slash"></i></p>
+            <p class="leave"><i class="fas fa-ellipsis-h"></i></p>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="leaveHubConfirmationModal">
+    <div class="modal-dialog myModal modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <i class="far fa-times-circle"></i>
+                </button>
+            </div>
+            <div class="modal-body pt-0 px-5 text-center">
+                <h4 class="mb-3 bold lh-5">Remove member?</h4>
+                <p class="appTxt mb-4">This member will lose access to the insider news and events of your Hub</p>
+                <button data-dismiss="modal" class="btn primaryBtn btn-block">No, I have changed my mind</button>
+                <button (click)="removeMemberFromHub()" data-dismiss="modal"
+                    class="btn primaryBtn whiteBtn btn-block">Yes, I'm sure to remove this member</button>
+            </div>
+        </div>
+    </div>
+</div>

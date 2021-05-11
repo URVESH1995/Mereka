@@ -1,0 +1,78 @@
+.topNavbar {
+  background: #fafafa;
+  border-bottom: 1px solid #eaeaea;
+
+  img {
+    width: 200px;
+  }
+  .btn-inactive {
+    border-radius: 30px;
+    margin: 1em;
+  }
+  .activeBtn {
+    background: #eaeaea;
+  }
+}
+
+.innerBlock {
+  border-radius: 8px;
+  border: 1px solid #dcdcdc;
+
+  &.selected {
+    background: #ebebeb;
+  }
+}
+
+.parentContent {
+  padding-top: 7em;
+  padding-bottom: 7em;
+  height: 120vh;
+  overflow-y: scroll;
+
+  .borderdSection {
+    border: 1px solid #dadada;
+    border-radius: 10px;
+    .leftContent {
+      border-right: 1px solid #dcdcdc;
+
+      .toggleBtnContainer {
+        background: #eaeaea;
+        border: 1px solid #c7c7c7;
+        border-radius: 30px;
+        padding-left: 10px;
+        width: 35%;
+        text-align: center;
+        padding-right: 10px;
+
+        button {
+          width: 50%;
+          border-radius: 30px;
+        }
+        span {
+          width: 50%;
+        }
+      }
+    }
+
+    .learnerInput {
+      padding: 10px 0;
+      border: 1px solid #dcdcdc;
+      border-radius: 30px;
+      width: 100px;
+      text-align: center;
+    }
+  }
+
+  .locationBlock {
+    .leftContent {
+      border-right: 1px solid #eaeaea;
+
+      .formContent {
+        input,
+        select {
+          height: 50px;
+        }
+      }
+    }
+  }
+}

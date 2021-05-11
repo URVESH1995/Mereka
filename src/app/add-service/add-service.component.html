@@ -1,0 +1,25 @@
+<div class="parentContent bg-white">
+    <div class="logoContent py-3">
+        <img routerLink="/home" src="/assets/imgs/logo2.PNG" class="pointer mx-5">
+    </div>
+
+    <div class="infoContent row justify-content-center">
+        <div class="col-md-7">
+            <h1>What do you want to offer?</h1>
+            <p>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellendus dicta odio.
+            </p>
+            <div class="row mt-5">
+                <div *ngFor="let service of servicesList; even as isEven" [class.pl-0]="isEven" [class.pr-0]="!isEven"
+                    class="col-md-6 pointer">
+                    <div (click)="navigatePage(service.navigateUrl)"
+                        class="featuredBlock whiteOutlinedBtn p-4 bg-white mb-4">
+                        <img [src]="service.iconUrl">
+                        <p class="bold mb-0">{{service.title}}</p>
+                        <p class="mb-0">{{service.shortDescription}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,353 @@
+<!-- <ngx-loading [show]="loading"></ngx-loading>
+
+<app-navbar></app-navbar>
+
+<div class="pagesLog">
+  <img src="/assets/imgs/M-Logo.PNG" height="25px">
+  <i class="fas fa-chevron-right lightGray px-3"></i>
+  <p class="bold my-0">Browse</p>
+</div>
+
+<div class="row mainCont">
+  <div class="col-sm-10">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="!activeTab" id="imhiring-tab" data-toggle="tab" href="#imhiring" role="tab"
+          aria-controls="home" aria-selected="true">I’m Hiring</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="activeTab" id="hireme-tab" data-toggle="tab" href="#hireme" role="tab"
+          aria-controls="profile" aria-selected="false">Hire Me</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="invite-tab" data-toggle="tab" href="#invitations" role="tab" aria-controls="profile"
+          aria-selected="false">Invitations</a>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade" [class.show]="!activeTab" [class.active]="!activeTab" id="imhiring" role="tabpanel"
+        aria-labelledby="imhiring-tab">
+        <div class="d-flex mt-5">
+          <h3 class="bold mb-0 align-center mr-3">My Orders</h3>
+          <button (click)="postNewJob()" class="btn darkBtn addBtn"><i class="fas fa-plus"></i></button>
+        </div>
+        <div class="card postsCard">
+          <div class="row header">
+            <div class="col-sm-12 px-0">
+              <div class="d-flex justify-content-between">
+                <div class="txt">
+                  <h5 class="mb-1 bold">My Postings</h5>
+                  <p class="text1 font-13 mb-0">All jobs posted</p>
+                </div>
+                <div style="width: 200px;" class="form-group mb-0">
+                  <ng-select (change)="applyFilter()" placeholder="Filters" [items]="suggestedFilters"
+                    [(ngModel)]="statusFilter">
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="!displayPostedJobs.length" class="text-center py-5">
+            <p>No jobs posted yet!</p>
+            <button (click)="postNewJob()" class="btn btn-dark">Post A Job</button>
+          </div>
+
+          <div *ngFor="let job of displayPostedJobs" class="postDetailCont">
+            <img (click)="editJob(job)" src="/assets/imgs/edit.svg" class="editPost pointer">
+            <div class="row justify-content-between">
+              <div class="col-sm-12 px-0">
+                <p class="font-17 mb-0 bold">{{job.jobTitle}}
+                  <span (click)="jobDetails(job)" class="blueTxt pointer pl-3">Review</span>
+                </p>
+                <p [class.text-danger]="!job.isVerified" class="m-0 text-success">
+                  <small>{{job.isVerified? 'Verified': 'Non verified'}}</small>
+                </p>
+                <div class="d-flex justify-content-between mt-3">
+                  <div class="txt">
+                    <p class="font-15 mb-4">{{job.jobType}}</p>
+                    <p class="font-15 mb-0">Public - Created {{job.timestamp | date:'mediumDate'}}</p>
+                  </div>
+                  <div class="d-flex align-center">
+                    <div class="iconCont">
+                      <p class="mb-4 font-15 bold">{{job.bids?.length || 0}}</p>
+                      <p class="font-15 mb-0">Bids</p>
+                    </div>
+                    <div class="iconCont">
+                      <p class="mb-4 font-15 bold">{{job.hired?.length || 0}}</p>
+                      <div class="icon">
+                        <p class="font-15 mb-0">Expert(s) Hired</p>
+                        <i class="far fa-comment-alt pointer"></i>
+                      </div>
+                    </div>
+                    <div class="iconCont">
+                      <p class="mb-4 font-15 bold" style="visibility: hidden;">0</p>
+                      <div class="icon">
+
+                        <div class="dropdown">
+                          <p class="font-15 mb-0 dropdown-toggle mr-2" data-toggle="dropdown">
+                            {{job.status || 'Open'}}
+                          </p>
+                          <div class="dropdown-menu">
+                            <a [class.text-primary]="!job.status" class="dropdown-item"
+                              (click)="updateJobStatus('Open', job)">Open</a>
+                            <a [class.text-primary]="job.status==='Closed'" class="dropdown-item"
+                              (click)="updateJobStatus('Closed', job)">Closed</a>
+                          </div>
+                        </div>
+
+                        <i data-toggle="modal" data-target="#deleteJobModal" (click)="removeJob(job)"
+                          class="fas fa-trash-alt pointer"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="tab-pane fade" [class.show]="activeTab" [class.active]="activeTab" id="hireme" role="tabpanel"
+        aria-labelledby="hireme-tab">
+        <div class="card contractCard">
+          <div class="row header">
+            <div class="col-sm-3 px-0">
+              <h4 class="mb-0 bold">Contracts</h4>
+            </div>
+            <div class="col-sm-9 px-0">
+              <div class="d-flex justify-content-end">
+                <div style="width: 280px;" class="form-group mb-0">
+                  <ng-select (change)="applyContractsFilter()" placeholder="Filters" [items]="contractFilters"
+                    [(ngModel)]="contractStatus">
+                  </ng-select>
+                </div>
+                <div class="searchBar">
+                  <i class="fas fa-search pointer"></i>
+                  <input [(ngModel)]="searchContractQuery" (ngModelChange)="searchContracts()" placeholder="Search"
+                    class="form-control">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p *ngIf="!displayContracts.length" class="text-center text-secondary my-5">No contracts found!</p>
+
+          <div *ngFor="let contract of displayContracts; index as i" class="row contractDetail">
+            <div class="col-sm-6">
+              <div class="d-flex">
+                <div class="userImgCont">
+                  <img [src]="contract.ownerProfile.profileUrl || '/assets/imgs/userIcon.PNG'" class="userImg">
+                  <img (click)="chatWithClient(contract)" src="/assets/imgs/chatIcon.svg" class="chatIcon">
+                </div>
+                <div class="txt pl-4 align-center">
+                  <h5 class="font-18 mb-0 bold">{{contract.jobDetails.jobTitle}}</h5>
+                  <p class="mb-4 mt-3">{{contract.ownerProfile.fullName}}</p>
+                  <p class="mb-0 text1 font-13">{{contract.timestamp | date: 'fullDate'}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-2 px-0 align-center">
+              <p class="font-13 mb-0">Rate: <b>RM {{contract.totalPrice}}</b></p>
+              <p class="font-13" style="margin: 10px 0px;">Hours Logged: <b>3.5 hrs</b></p>
+
+              <p *ngIf="contract.type==='milestone'" class="font-13 mb-0">{{contract.milestones.length}} milestones</p>
+              <p *ngIf="contract.type==='fixed'" class="font-13 mb-0">No active milestones</p>
+            </div>
+            <div class="col-sm-4 align-center pl-0">
+              <div class="d-flex justify-content-end">
+                <button *ngIf="contract.type==='fixed' && contract.status==='accepted'" (click)="completeJob(contract)"
+                  class="btn darkBtn">Complete Job</button>
+                <button *ngIf="contract.type==='milestone' && contract.status==='accepted'"
+                  (click)="contractMilestones(contract)" class="btn darkBtn">Update Milestones</button>
+                <button *ngIf="contract.completionDate" class="btn btn-success mr-4">
+                  <i class="fa fa-check mr-2"></i> {{contract.completionDate | date: 'medium'}}
+                </button>
+                <i class="fas fa-ellipsis-h subTitle align-center pointer" href="#" id="userDropdown" role="button"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                <div class="dropdown-menu dropdown-menu-right shadow" aria-labelledby="userDropdown">
+                  <a class="dropdown-item pointer">
+                    <p (click)="jobOwnerDetails(contract.ownerProfile)" class="my-0 font-14">Contact Client</p>
+                  </a>
+                  <a class="dropdown-item pointer">
+                    <p class="my-0 font-14">Cancel Project</p>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="invitations" role="tabpanel" aria-labelledby="invite-tab">
+        <div class="card contractCard">
+          <div class="row header">
+            <div class="col-sm-3 px-0">
+              <h4 class="mb-0 bold">Invitations</h4>
+            </div>
+            <div class="col-sm-9 px-0">
+              <div class="d-flex justify-content-end">
+                <div style="width: 280px;" class="form-group mb-0"></div>
+                <div class="searchBar">
+                  <i class="fas fa-search pointer"></i>
+                  <input [(ngModel)]="searchInvitesQuery" placeholder="Search" class="form-control">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p *ngIf="!myInvitaions.length" class="text-center text-secondary my-5">No invites found!</p>
+
+          <div *ngFor="let job of myInvitaions | search:searchInvitesQuery:searchFields" (click)="othersJobDetails(job)"
+            class="row jobCard">
+            <div class="col-sm-12 px-4">
+              <div class="row">
+                <div class="col-sm-3 pl-0">
+                  <img [src]="getJobImage(job)" class="jobImg">
+                </div>
+                <div class="col-sm-6 pl-1 pr-0 jobDetailsCont">
+                  <h5 class="bold mb-2 jobTitle">{{job.jobTitle}}</h5>
+                  <p class="jobDescp">{{job.description}}</p>
+                  <p class="font-13 mt-2 bold">Bids: {{job.bids?.length || 0}}</p>
+                  <div class="d-flex">
+                    <div class="iconCont">
+                      <img src="/assets/imgs/Oval2.svg" class="align-center" height="10px">
+                      <p class="font-13 my-0 bold pl-2">{{job.jobType || 'N/A'}}</p>
+                    </div>
+                    <div class="iconCont ml-5">
+                      <i class="fas fa-map-marker-alt font-14 align-center"></i>
+                      <p class="font-13 my-0 bold pl-2">{{job.preferredLocation || 'N/A'}}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-3 pr-0">
+                  <p class="text1 bold font-13 text-right">Posted : {{job.timestamp | date: 'mediumDate'}}</p>
+                  <p *ngIf="alreadyBidSubmitted(job)" class="text-success bold font-13 text-right">Bid Submitted</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<app-footer></app-footer>
+
+
+<div class="modal fade" id="deleteJobModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h4 class="modal-title">Remove Job</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        Are you sure you want to remove this job?
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button (click)="removePostedJob()" type="button" class="btn btn-danger" data-dismiss="modal">Remove</button>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<ngx-loading [show]="loading"></ngx-loading>
+<app-navbar></app-navbar>
+
+<div class="mainContent">
+  <div class="row justify-content-center my-5">
+    <div class="col-md-12 maxWidthContent">
+      <div class="heading">
+        <h2 class="bold">Manage your jobs</h2>
+        <div class="toggleBtnsCont">
+          <div class="toggleBtn" [class.active]="activeUserRole==='Learner'" (click)="activeUserRole='Learner'">Learner
+          </div>
+          <div class="toggleBtn" [class.active]="activeUserRole==='Expert'" (click)="activeUserRole='Expert'">Experts
+          </div>
+        </div>
+      </div>
+      <div class="subHeading">
+        <h3 class="bold my-0">My Job Posts</h3>
+      </div>
+      <div class="card jobCard">
+        <!-- <div class="text-center my-5">
+          <p class="font-18">Once you’ve posted a job proposal, you can manage your posts here.</p>
+          <button class="btn primaryBtn px-5">Post a Job Now</button>
+        </div> -->
+        <div class="jobCont">
+          <div class="summaryCont">
+            <div class="postedByCont">
+              <p class="text1">Posted By: Ansy H (Learner)</p>
+              <div class="iconCont ml-3">
+                <i class="fas fa-map-marker-alt mr-2"></i>
+                <p class="text1">Kuala Lumpur, Malaysia</p>
+              </div>
+            </div>
+            <div class="statusCont">
+              <div class="iconCont">
+                <i class="fas fa-star mr-2 font-17"></i>
+                <p class="text1">4.3 (38)</p>
+              </div>
+              <div class="form-group jobStatus">
+                <select class="form-control" id="sel1">
+                  <option>Open</option>
+                  <option>Close</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <h4 class="bold my-2">Short Title of Job Needs to be Done</h4>
+          <h6 class="my-2 appTxt">Oct 2020 - Dec 2020</h6>
+          <p class="jobDesp">“Review by Client for completed Jobs: Aliquet fames eget nisi amet. Nisi erat
+            tincidunt
+            lectus ornare sagittis, sit enim vitae fusce. Aliquet fames eget nisi amet.Aliquet fames eget nisi amet"
+          </p>
+          <div class="bottomBtns">
+            <div class="skillsCont">
+              <div class="skill">UX Design</div>
+              <div class="skill">Webflow</div>
+              <div class="skill">Figma</div>
+            </div>
+            <div class="actBtn">
+              <button class="btn darkBtn">Edit</button>
+              <button class="btn darkBtn ml-3 delBtn">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="subHeading">
+        <h3 class="bold my-0">My Drafts</h3>
+        <p class="viewAll">View All</p>
+      </div>
+      <div class="mt-4 card draftCont">
+        <h5 class="bold mb-4">Produce Animations</h5>
+        <div class="actBtn">
+          <p class="viewAll">Continue</p>
+          <p class="viewAll">Delete</p>
+        </div>
+      </div>
+      <div class="subHeading">
+        <h3 class="bold my-0">My Contracts</h3>
+      </div>
+      <div class="jobCard">
+        <div class="text-center my-5">
+          <p class="font-18">All active job contracts will appear in this section.</p>
+          <button class="btn primaryBtn px-5">Post a Job Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

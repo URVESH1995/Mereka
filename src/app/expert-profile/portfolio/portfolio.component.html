@@ -1,0 +1,61 @@
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="bold mb-3">Portfolio</h3>
+    </div>
+    <div *ngFor="let portfolio of expertProfile.expertProfile.portfolio" class="col-md-4 mb-4">
+        <div (click)="openPortfolioDetails(portfolio)" data-toggle="modal" data-target="#portfolioDetailModal"
+            class="portfolioItem shadow-sm pointer">
+            <img [src]="portfolio.attachedFiles[0].url">
+            <div class="pt-3 px-3">
+                <p class="bold mb-2">{{portfolio.title}}</p>
+                <p class="text-secondary font-14">
+                    <span *ngFor="let skill of portfolio.skills">{{skill}} | </span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade portfolioModal" id="portfolioDetailModal">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <h3><span class="bold">{{portfolioDetails.title}}</span>
+                    <small *ngIf="portfolioDetails.projectLink" class="float-right">
+                        <u><a target="_blank" [href]="portfolioDetails.projectLink">View</a></u>
+                    </small>
+                </h3>
+                <p class="text-secondary">
+                    <span *ngFor="let skill of portfolioDetails.skills">{{skill}} | </span>
+                    <span class="ml-5">
+                        {{portfolioDetails.startYear}} - {{portfolioDetails.endYear}}
+                    </span>
+                </p>
+
+                <div id="carousel-thumb" class="carousel slide carousel-fade carousel-thumbnails" data-ride="carousel">
+                    <div class="carousel-inner" role="listbox">
+                        <div *ngFor="let file of portfolioDetails.attachedFiles; first as isFirst" class="carousel-item"
+                            [class.active]="isFirst"><img [src]="file.url">
+                        </div>
+                    </div>
+
+                    <a class="carousel-control-prev" href="#carousel-thumb" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    </a>
+                    <a class="carousel-control-next" href="#carousel-thumb" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    </a>
+
+                    <ol class="carousel-indicators">
+                        <li *ngFor="let file of portfolioDetails.attachedFiles; index as i"
+                            data-target="#carousel-thumb" [attr.data-slide-to]="i" [class.active]="i===0">
+                            <img [src]="file.url" class="img-fluid">
+                        </li>
+                    </ol>
+                </div>
+
+                <p style="margin-top: 7em;">{{portfolioDetails.description}}</p>
+            </div>
+        </div>
+    </div>
+</div>

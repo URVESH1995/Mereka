@@ -1,0 +1,44 @@
+.borderdBlock {
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  background: white;
+  padding: 45px 32px;
+
+  .membersMainCont {
+    border: 1px solid #dadada;
+    border-radius: 10px;
+    margin-top: 24px;
+
+    .headerRow {
+      display: flex;
+      align-items: center;
+      min-height: 100px;
+      border-bottom: 1px solid #dadada;
+      background: #ececec;
+      padding: 5px 30px;
+    }
+
+    .historyCont {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5px 30px;
+      min-height: 130px;
+      border-bottom: 1px solid #dcdcdc;
+
+      .desp {
+        width: 50%;
+      }
+
+      .primaryBtn {
+        min-width: 220px;
+        height: 48px;
+        margin-left: 15px;
+      }
+    }
+
+    .historyCont:last-child {
+      border-bottom: 0px;
+    }
+  }
+}

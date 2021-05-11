@@ -1,0 +1,146 @@
+<div class="row topNavbar fixed-top">
+    <div class="col-md-3 py-3">
+        <img routerLink="/home" src="/assets/imgs/grayLogo.png" class="pointer ml-4">
+    </div>
+    <div class="col-md-9 text-right">
+        <button (click)="navigatePage(btn.navigatePage)" *ngFor="let btn of tabButtons"
+            [class.activeBtn]="activeTab===btn.title" class="btn btn-inactive grayChoiceHover">{{btn.title}}</button>
+    </div>
+</div>
+
+<div class="parentContent bg-white">
+    <div class="row justify-content-center">
+        <div class="col-md-12 maxWidthContent">
+            <h2 class="bold my-3">Set up your Expert Profile</h2>
+            <div class="borderdSection p-4 mt-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Your Expertise
+                            <i *ngIf="expandSkillsets" (click)="expandSkillsets=false"
+                                class="fas fa-angle-up float-right pointer"></i>
+                            <i *ngIf="!expandSkillsets" (click)="expandSkillsets=true"
+                                class="fas fa-angle-down float-right pointer"></i>
+                        </p>
+                    </div>
+                </div>
+                <div *ngIf="expandSkillsets" class="row">
+                    <div class="col-md-12">
+                        <h4 class="bold">What is the main skillset that you have to offer?</h4>
+                        <p class="text-secondary">Share with us your expertise to get started.</p>
+                    </div>
+                    <div class="col-md-4 mb-3" *ngFor="let skillset of allSkillsets">
+                        <div (click)="updateExpertiseTitle(skillset)"
+                            class="featuredBlock whiteOutlinedBtn bg-white px-4 p-3"
+                            [class.selectedSkillset]="expertProfile.expertise?.title===skillset.title">
+                            <img [src]="skillset.icon">
+                            <p class="bold mb-0">{{skillset.title}}</p>
+                            <p class="mb-0">{{skillset.specialities?.length || 0}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <hr />
+                    </div>
+                    <div class="col-md-12">
+                        <h4 class="bold mt-3">What type of {{expertProfile.expertise?.title}} do you do? (Max 4)</h4>
+                        <div class="d-flex selectContainer">
+                            <div *ngIf="categorySpecilities.length" class="form-group">
+                                <ng-select [(ngModel)]="expertProfile.expertise.skillTypes" [multiple]="true"
+                                    [items]="categorySpecilities" bindValue="name" bindLabel="name"
+                                    placeholder="Choose type" [maxSelectedItems]="4"
+                                    (change)="updateSkillsArray($event); emptySelectedSkills()">
+                                </ng-select>
+                            </div>
+                            <!-- <img class="addIcon pointer" src="/assets/imgs/add-icon.png"> -->
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div *ngIf="expertProfile.expertise?.skills" class="skillInputSection">
+                            <h4 class="bold mt-3">Do you do any type of {{expertProfile.expertise?.title}}?</h4>
+                            <p class="text-secondary">Create additional search tags for your experience.</p>
+
+                            <!-- <div *ngFor="let skill of expertProfile.expertise.skills; index as i"
+                                class="inputContainer">
+                                <div class="input-group">
+                                    <input [(ngModel)]="expertProfile.expertise.skills[i]" type="text"
+                                        class="form-control" placeholder="Type Skill">
+                                    <div class="input-group-append">
+                                        <span (click)="removeSkill(i)" class="input-group-text">
+                                            <i class="fas fa-times text-danger pointer"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div> -->
+
+                            <tag-input #input [placeholder]="'Add skill'" [modelAsStrings]="true"
+                                [onlyFromAutocomplete]="true" [secondaryPlaceholder]="'Add skill'"
+                                [(ngModel)]="expertProfile.expertise.skills">
+                                <tag-input-dropdown [autocompleteItems]="selectedCategorySkills"
+                                    [showDropdownIfEmpty]="true">
+                                </tag-input-dropdown>
+                            </tag-input>
+
+                            <!-- <input type="text" class="form-control soloInput"
+                                placeholder="Type Skill">
+                            <img class="addIcon pointer" src="/assets/imgs/add-icon.png"> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="borderdSection p-4 mt-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Skills
+                            <i *ngIf="expandSkills" (click)="expandSkills=false"
+                                class="fas fa-angle-up float-right pointer"></i>
+                            <i *ngIf="!expandSkills" (click)="expandSkills=true"
+                                class="fas fa-angle-down float-right pointer"></i>
+                        </p>
+                    </div>
+                </div>
+                <div *ngIf="expandSkills" class="row">
+                    <div class="col-md-12">
+                        <div class="skillInputSection">
+                            <h4 class="bold mt-3">What skills do you offer to your clients?</h4>
+                            <p class="text-secondary">Description of something here.</p>
+
+                            <tag-input #input [placeholder]="'Add skill'" [modelAsStrings]="true"
+                                [onlyFromAutocomplete]="true" [secondaryPlaceholder]="'Add skill'"
+                                [(ngModel)]="expertProfile.skills">
+                                <tag-input-dropdown [autocompleteItems]="selectedCategorySkills"
+                                    [showDropdownIfEmpty]="true">
+                                </tag-input-dropdown>
+                            </tag-input>
+
+                            <!-- <div class="inputContainer">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Type Skill">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-times text-danger pointer"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <input type="text" class="form-control soloInput" placeholder="Type Skill">
+                            <img class="addIcon pointer" src="/assets/imgs/add-icon.png"> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row fixed-bottom p-3 px-4 continueBackBtns">
+    <div class="col-md-4">
+        <button routerLink="/add-service" class="btn grayChoiceHover btn-light btnRounded">Back</button>
+    </div>
+    <div class="col-md-4 text-center">
+        <p (click)="saveAndExit()" class="mb-0 mt-2 pointer">Save and Exit</p>
+    </div>
+    <div class="col-md-4 text-right">
+        <button (click)="saveAndNext()" class="btn grayChoiceHover btnSecondary btnRounded">Continue</button>
+    </div>
+</div>

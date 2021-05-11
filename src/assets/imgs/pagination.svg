@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="212.8" height="32" viewBox="0 0 212.8 32">
+  <g id="Group_22" data-name="Group 22" transform="translate(-1.6)">
+    <g id="Group_30" data-name="Group 30">
+      <g id="Group_29" data-name="Group 29">
+        <g id="Group_21" data-name="Group 21" transform="translate(0.093)">
+          <g id="Group_19" data-name="Group 19">
+            <g id="Group_5" data-name="Group 5" transform="translate(21.907)">
+              <g id="Pagination_2" data-name="Pagination 2">
+                <g id="Pagination">
+                  <rect id="pgntn_bg_active" width="32" height="32" rx="10"/>
+                  <text id="_1" data-name="1" transform="translate(13 7)" fill="#fff" font-size="12.693" font-family="Montserrat-Bold, Montserrat" font-weight="700"><tspan x="0.512" y="12">1</tspan></text>
+                  <text id="_2" data-name="2" transform="translate(52 7)" fill="#2d2a26" font-size="13" font-family="SegoeUI, Segoe UI"><tspan x="-0.504" y="14">2</tspan></text>
+                  <text id="_" data-name="…" transform="translate(82.5 20)" fill="#0b2e82" font-size="12.693" font-family="Roboto-Regular, Roboto"><tspan x="-4.246" y="0">…</tspan></text>
+                  <text id="_5" data-name="5" transform="translate(107 7)" fill="#2d2a26" font-size="13" font-family="SegoeUI, Segoe UI"><tspan x="-0.504" y="14">5</tspan></text>
+                  <text id="_6" data-name="6" transform="translate(133 7)" fill="#2d2a26" font-size="13" font-family="SegoeUI, Segoe UI"><tspan x="-0.504" y="14">6</tspan></text>
+                  <text id="_7" data-name="7" transform="translate(159 7)" fill="#2d2a26" font-size="13" font-family="SegoeUI, Segoe UI"><tspan x="-0.504" y="14">7</tspan></text>
+                </g>
+              </g>
+              <path id="_2-2" data-name="&gt;" d="M5.4,4.444a.533.533,0,0,0-.178-.391L1.022.165A.621.621,0,0,0,.6,0,.583.583,0,0,0,0,.556V8.333a.583.583,0,0,0,.6.556.621.621,0,0,0,.422-.165l4.2-3.889A.533.533,0,0,0,5.4,4.444Z" transform="translate(187 11)"/>
+            </g>
+            <path id="_3" data-name="&lt;" d="M5.4,4.444a.533.533,0,0,0-.178-.391L1.022.165A.621.621,0,0,0,.6,0,.583.583,0,0,0,0,.556V8.333a.583.583,0,0,0,.6.556.621.621,0,0,0,.422-.165l4.2-3.889A.533.533,0,0,0,5.4,4.444Z" transform="translate(6.907 21) rotate(-180)" fill="#ccccde"/>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,43 @@
+<div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+        <div class="modal-body p-5">
+            <div class="row">
+                <div class="col-md-12 mb-4">
+                    <h5>Invite your Experts to the platform</h5>
+                    <p>Share your Experts' email with us and we'll send them an invitation!</p>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="bold mt-2">Expert's Email</h5>
+                </div>
+                <div class="col-md-6">
+                    <input [(ngModel)]="inviteEmail" class="form-control btnRounded mb-3" type="email"
+                        placeholder="john@email.com">
+
+                    <div *ngFor="let mail of inviteMails; index as i" class="input-group mb-3">
+                        <input [value]="mail" (change)="updateInvitesArray($event, i)" type="email"
+                            class="form-control btnRounded" placeholder="Email">
+                        <div class="input-group-append">
+                            <button (click)="removeMail(i)" class="btn btn-danger" type="button">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 my-4">
+                    <button [disabled]="!inviteEmail" (click)="pushInviteMail()"
+                        class="btn whiteOutlinedBtn border rounded">
+                        <i class="fa fa-plus-circle pr-2"></i> Add Email
+                    </button>
+                </div>
+                <div class="col-md-6">
+                    <button id="closeInviteExpertModal" data-dismiss="modal"
+                        class="btn btnRounded border whiteOutlinedBtn w-50 mt-2">Cancel</button>
+                </div>
+                <div class="col-md-6 text-right">
+                    <button (click)="inviteExpertToHub()" [disabled]="!inviteMails.length"
+                        class="btn btn-dark btnRounded border w-50 mt-2">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

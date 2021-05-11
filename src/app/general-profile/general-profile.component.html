@@ -1,0 +1,102 @@
+<app-navbar></app-navbar>
+<app-expert-profile [expertProfile]="currentUser"></app-expert-profile>
+
+
+<!-- <app-navbar></app-navbar>
+<div class="row mainCont">
+
+    <div class="col-sm-3 stepsCont">
+        <div class="text-center pt-5">
+            <img class="userIcon" [src]="imagePath || '/assets/imgs/userIcon.PNG'">
+            <div class="p-4">
+                <label class="btn btn-light w-100 pointer">
+                    Update Profile Picture <input type="file" accept="image/*" (change)="onChangeFile($event)">
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-9 pl-4 pr-0">
+        <div class="row detailsCont">
+            <div class="col-sm-12 px-0">
+                <div class="row sectCont">
+                    <div class="col-sm-11 px-0">
+                        <div class="d-flex justify-content-between mb-4 pb-2">
+                            <h2 class="bold align-center">General profile</h2>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-7 pr-4 pl-0">
+                                <div class="form-group mb-4 pb-1">
+                                    <label class="mb-3 font-15 bold">Full Name</label>
+                                    <input [(ngModel)]="currentUser.fullName" type="text" class="form-control"
+                                        placeholder="Ex. John Doe">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-5 pl-0 pr-4">
+                                <div class="form-group mb-4">
+                                    <label class="mb-3 font-15 bold">Email</label>
+                                    <input [(ngModel)]="currentUser.email" type="text" class="form-control" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-5 pr-0 pl-4">
+                                <div class="form-group mb-4">
+                                    <label class="mb-3 font-15 bold">Phone</label>
+                                    <input [(ngModel)]="currentUser.phone" type="text" class="form-control"
+                                        placeholder="Phone number">
+                                    <p *ngIf="invalidPhonePattern()" class="text-right text-danger">
+                                        <small>Invalid phone number!</small>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-sm-5 pl-0 pr-4">
+                                <div class="form-group mb-4">
+                                    <label class="mb-3 font-15 bold">Street Address</label>
+                                    <input [(ngModel)]="currentUser.location.streetAddress" type="text"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-5 pr-0 pl-4">
+                                <div class="form-group mb-4">
+                                    <label class="mb-3 font-15 bold">Country</label>
+                                    <ng-select [items]="dataHelper.countries"
+                                        [(ngModel)]="currentUser.location.country">
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-sm-5 pl-0 pr-4">
+                                <div class="form-group mb-4">
+                                    <label class="mb-3 font-15 bold">City</label>
+                                    <input [(ngModel)]="currentUser.location.city" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-5 pr-0 pl-4">
+                                <div class="form-group mb-4">
+                                    <label class="mb-3 font-15 bold">Zip/ Postal Code</label>
+                                    <input [(ngModel)]="currentUser.location.zipcode" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-5 pl-0 pr-4">
+                                <div class="form-group mb-4">
+                                    <label class="mb-3 font-15 bold">State/Province</label>
+                                    <input [(ngModel)]="currentUser.location.stateProvince" type="text"
+                                        class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row bottomBtnsCont">
+                    <div class="col-sm-11 px-0 py-2 text-right">
+                        <button (click)="saveAndExit()" class="btn darkBtn bold">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<app-footer></app-footer> -->

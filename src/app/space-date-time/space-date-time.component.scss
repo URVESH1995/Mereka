@@ -1,0 +1,78 @@
+.pagesLog {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding-left: 3em;
+  border-bottom: 1px solid #d1cccc;
+}
+
+.mainCont {
+  border: 0px;
+  border-radius: 10px;
+  min-height: 40vw;
+  margin: 3em 0em;
+
+  .calendarCont {
+    background-color: #329cb7;
+    color: white;
+    min-height: 40vw;
+    border-radius: 10px 0px 0px 10px;
+    padding: 50px 0px;
+
+    .calendar {
+      width: 100%;
+      margin-top: 65px;
+      cursor: pointer;
+    }
+  }
+
+  .inputCont {
+    padding-top: 60px;
+
+    select {
+      background: #ffffff url("/assets/imgs/downArrow2.svg") no-repeat right
+        0.7rem center/12px 12px !important;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      height: 45px;
+      font-size: 14px;
+      padding: 0.5rem 15px;
+    }
+
+    .darkBtn {
+      width: 160px;
+      height: 48px;
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+  }
+}
+
+/* responsiveness */
+/* tablet 991px */
+@media screen and (max-width: 991px) and (min-width: 576px) {
+}
+
+/*mobile 575px */
+@media only screen and (max-width: 575px) {
+  .mainCont {
+    .calendarCont {
+      border-radius: 0px;
+      padding: 10px 0px;
+      .calendar {
+        margin-top: 30px;
+      }
+    }
+    .inputCont {
+      padding-bottom: 20px;
+    }
+  }
+}
+
+.workshopAvatar {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}

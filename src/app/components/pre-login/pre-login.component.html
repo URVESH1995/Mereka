@@ -1,0 +1,45 @@
+<div class="modal-dialog myModal modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" id="closePreLoginModal" class="close" data-dismiss="modal">
+                <i class="far fa-times-circle"></i>
+            </button>
+        </div>
+        <div class="modal-body pt-0 px-5">
+            <div class="text-center mb-4">
+                <img style="width: 200px" src="/assets/imgs/logo2.PNG">
+            </div>
+            <button data-dismiss="modal" (click)="continueWithGoogle()"
+                class="whiteOutlinedBtn btn btn-outline-light btn-block text-dark mb-2">
+                <img src="/assets/imgs/googleIcon.png"> Continue with Google
+            </button>
+            <button (click)="continueWithFacebook()" data-dismiss="modal"
+                class="whiteOutlinedBtn btn btn-outline-light btn-block text-dark mb-2">
+                <img src="/assets/imgs/fbIcon.png"> Continue with Facebook
+            </button>
+            <div class="row">
+                <div class="col-md-5 px-0">
+                    <hr />
+                </div>
+                <div class="col-md-2 text-center px-0">
+                    <p class="text-secondary font-13">OR</p>
+                </div>
+                <div class="col-md-5 px-0">
+                    <hr />
+                </div>
+            </div>
+            <button (click)="dataHelper.openSpecificModal('loginModalOpener')" data-dismiss="modal"
+                class="whiteOutlinedBtn btn btn-outline-light btn-block text-dark mb-3">
+                <img src="/assets/imgs/emailIcon.png"> Continue with Email
+            </button>
+            <p class="font-13 text-secondary text-center">
+                By signing up you accept our <u class="text-dark pointer">terms of use</u> and
+                <u class="text-dark pointer"> privacy policy</u>
+            </p>
+            <p (click)="dataHelper.openSpecificModal('preSignupModalOpener')" data-dismiss="modal"
+                class="text-center text-secondary pointer">Not yet a learner?
+                <span class="text-dark">Sign Up</span>
+            </p>
+        </div>
+    </div>
+</div>

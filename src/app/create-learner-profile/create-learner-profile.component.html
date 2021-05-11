@@ -1,0 +1,147 @@
+<div class="row topNavbar fixed-top">
+  <div class="col-md-3 py-3 px-0">
+    <img routerLink="/home" src="/assets/imgs/grayLogo.png" class="pointer ml-4">
+  </div>
+  <div class="col-md-9 text-right">
+    <button *ngFor="let btn of tabButtons" [class.activeBtn]="activeTab===btn.title"
+      class="btn btn-inactive">{{btn.title}}</button>
+  </div>
+</div>
+
+<div class="parentContent bg-white">
+  <div class="row justify-content-center">
+    <div class="col-md-12 maxWidthContent">
+
+      <div class="pageHeading">
+        <h3 class="bold">What are you looking for?</h3>
+        <div class="categBtnsCont">
+          <div class="cateBtn" [class.active]="mainCateActive=='experience'">
+            Experiences
+            <img src="/assets/imgs/experienceIcon.svg"></div>
+          <div class="cateBtn" [class.active]="mainCateActive=='space'">Spaces <img src="/assets/imgs/calendarIcon.svg">
+          </div>
+          <div class="cateBtn" [class.active]="mainCateActive=='expert'">Experts <img src="/assets/imgs/expertIcon.svg">
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="mainCateActive=='experience'" class="borderdSection">
+        <h5 class="bold mt-0">What are you hoping to do in Experiences?</h5>
+        <div class="custom-control custom-checkbox">
+          <input [checked]="isExperiencePurposeAdded('Develop skills')"
+            (change)="updateExperiencePurposes('Develop skills')" type="checkbox" class="custom-control-input"
+            id="exp1"><label class="custom-control-label" for="exp1">Develop skills</label>
+        </div>
+        <div class="custom-control custom-checkbox">
+          <input [checked]="isExperiencePurposeAdded('Learn something new')"
+            (change)="updateExperiencePurposes('Learn something new')" type="checkbox" class="custom-control-input"
+            id="exp2"><label class="custom-control-label" for="exp2">Learn something new</label>
+        </div>
+        <div class="custom-control custom-checkbox">
+          <input [checked]="isExperiencePurposeAdded('Expand my network')"
+            (change)="updateExperiencePurposes('Expand my network')" type="checkbox" class="custom-control-input"
+            id="exp3"><label class="custom-control-label" for="exp3">Expand my network</label>
+        </div>
+        <hr class="borderedItem" />
+        <h5 class="bold mt-0 mb-3">What type of experience are you interested in discovering?</h5>
+        <p class="text1">A workshop is a hands-on, interactive experience which often involves group activities. A talk
+          is an
+          experience which offers an expert's insight into a subject. A class is a one-time, expert-led session on a
+          particular topic. A course is a series of classes. A program is a combination of classes, workshops and talks.
+        </p>
+        <div class="workshopCateCont">
+          <div *ngFor="let Cate of workshopCates" (click)="addInExperienceInterests(Cate)"
+            [class.selected]="isInterestedInExperience(Cate)" class="WorkshopcateBtn">
+            <p class="bold m-0">{{Cate}}
+              <i *ngIf="isInterestedInExperience(Cate)" class="fas fa-check ml-4"></i>
+            </p>
+          </div>
+        </div>
+        <hr class="borderedItem" />
+        <h5 class="bold mt-0 mb-3">What are the themes you are interested in?</h5>
+        <!-- <ng-select [multiple]="true" [maxSelectedItems]="4" [(ngModel)]="learnerProfile.interestedThemes"
+          [items]="dataHelper.workshopCategories" placeholder="Theme"></ng-select> -->
+
+        <div class="workshopCateCont">
+          <div *ngFor="let Cate of dataHelper.workshopCategories" (click)="addInExperienceThemes(Cate)"
+            [class.selected]="isAddedInThemes(Cate)" class="WorkshopcateBtn">
+            <p class="bold m-0">{{Cate}}</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div *ngIf="mainCateActive=='space'" class="borderdSection">
+        <h5 class="bold mt-0">What are you hoping to do in Spaces?</h5>
+        <div class="custom-control custom-checkbox">
+          <input [checked]="isSpacePurposeAdded('Create something')" (change)="updateSpacePurposes('Create something')"
+            type="checkbox" class="custom-control-input" id="exp4">
+          <label class="custom-control-label" for="exp4">Create something</label>
+        </div>
+        <div class="custom-control custom-checkbox">
+          <input [checked]="isSpacePurposeAdded('Find a place to work')"
+            (change)="updateSpacePurposes('Find a place to work')" type="checkbox" class="custom-control-input"
+            id="exp5"><label class="custom-control-label" for="exp5">Find a place to work</label>
+        </div>
+        <div class="custom-control custom-checkbox">
+          <input [checked]="isSpacePurposeAdded('Expand my network')"
+            (change)="updateSpacePurposes('Expand my network')" type="checkbox" class="custom-control-input" id="exp6">
+          <label class="custom-control-label" for="exp6">Expand my network</label>
+        </div>
+        <hr class="borderedItem" />
+        <h5 class="bold mt-0 mb-3">What type of space are you interested in?</h5>
+        <div class="workshopCateCont">
+          <div *ngFor="let Cate of spaceCates" (click)="addInSpaceInterests(Cate)"
+            [class.selected]="isInterestedInSpace(Cate)" class="WorkshopcateBtn spaceCateBtn">
+            <p class="bold m-0"><img src="/assets/imgs/spaceIcon.svg" class="mr-2">{{Cate}}
+              <i *ngIf="isInterestedInSpace(Cate)" class="fas fa-check ml-4"></i>
+            </p>
+          </div>
+        </div>
+        <hr class="borderedItem" />
+        <h5 class="bold mt-0 mb-3">Would you be interested in receiving information on Machines?</h5>
+        <div class="custom-control custom-checkbox">
+          <input [(ngModel)]="learnerProfile.interestedInMachines" type="checkbox" class="custom-control-input"
+            id="interestedInMachines">
+          <label class="custom-control-label" for="interestedInMachines">Yes, send me more information about Machines
+            when it is available</label>
+        </div>
+      </div>
+
+      <div *ngIf="mainCateActive=='expert'" class="borderdSection">
+        <h5 class="bold mt-0 mb-3">What kind of Experts are you interested in learning from?</h5>
+        <div class="workshopCateCont">
+          <div *ngFor="let Cate of expertCates" (click)="addInExpertInterests(Cate)"
+            [class.selected]="isInterestedInExpert(Cate)" class="WorkshopcateBtn expertCateBtn pr-0">
+            <div class="expertCateCont">
+              <div class="txt">
+                <img src="/assets/imgs/spaceIcon.svg" height="25px">
+                <p class="bold mb-0 mt-3">{{Cate}}</p>
+              </div>
+              <i *ngIf="isInterestedInExpert(Cate)" class="fas fa-check ml-4"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="row fixed-bottom p-3 px-4 continueBackBtns">
+  <div class="col-md-4 pointer">
+    <p class="mt-2 mb-0" *ngIf="mainCateActive==='experience'" (click)="goToSetupProfile()">
+      Skip to set up your profile</p>
+    <button *ngIf="mainCateActive==='space'" (click)="mainCateActive='experience'"
+      class="btn btnSecondary btnRounded">Back</button>
+    <button *ngIf="mainCateActive==='expert'" (click)="mainCateActive='space'"
+      class="btn btnSecondary btnRounded">Back</button>
+  </div>
+  <div class="col-md-4 pt-3 pointer text-center">
+    <p class="mb-0" *ngIf="mainCateActive==='space' || mainCateActive==='expert'" (click)="goToSetupProfile()">
+      Skip to set up your profile</p>
+  </div>
+  <div class="col-md-4 text-right">
+    <button (click)="validateFields()" class="btn btnSecondary btnRounded">Continue</button>
+  </div>
+</div>

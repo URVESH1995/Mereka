@@ -1,0 +1,138 @@
+<app-navbar></app-navbar>
+
+<div class="pagesLog">
+    <img src="/assets/imgs/M-Logo.PNG" height="25px">
+    <i class="fas fa-chevron-right lightGray px-3"></i>
+    <p class="bold my-0">Browse</p>
+    <i class="fas fa-chevron-right lightGray px-3"></i>
+    <p class="bold my-0">Job Detail</p>
+    <i class="fas fa-chevron-right lightGray px-3"></i>
+    <p class="bold my-0">{{jobOwner.fullName}}</p>
+</div>
+
+<div class="row mainCont">
+    <div class="col-sm-12 maxWidthContent">
+        <h4 class="mb-0 bold">{{myBidObject.jobDetails?.jobTitle}}</h4>
+        <div class="card jobDetailCard">
+
+            <div *ngIf="!myJob" class="d-flex mb-5">
+                <div class="userImgCont">
+                    <img [src]="jobOwner.profileUrl || '/assets/imgs/userIcon.PNG'" class="userImg">
+                    <img (click)="goToChat()" src="/assets/imgs/chatIcon.svg" class="chatIcon">
+                </div>
+                <div class="txtCont">
+                    <div class="d-flex">
+                        <h4 class="mb-0 bold mr-2">{{jobOwner.fullName}}</h4>
+                        <img src="/assets/imgs/tickIcon.svg" class="align-center" height="30px">
+                    </div>
+                    <p class="mt-1 mb-0 font-14 text1">{{dataHelper.getExpertAgency(jobOwner) || 'N/A'}}</p>
+                    <div class="d-flex mt-1">
+                        <i class="fas fa-map-marker-alt align-center"></i>
+                        <p class="mb-0 align-center font-14 ml-2">{{myBidObject.jobDetails?.preferredLocation}}</p>
+                        <p class="font-14 text1 ml-1 mb-0 align-center">
+                            {{myBidObject.jobDetails?.timestamp | date: 'mediumDate'}}
+                        </p>
+                    </div>
+                    <button (click)="navigateJobDetail()" class="btn darkBtn mt-3">Project Detail</button>
+                </div>
+            </div>
+
+            <div *ngIf="myJob" class="d-flex mb-5">
+                <div class="userImgCont">
+                    <img [src]="myBidObject.bidPerson?.profileUrl || '/assets/imgs/userIcon.PNG'" class="userImg">
+                    <img (click)="goToChat()" src="/assets/imgs/chatIcon.svg" class="chatIcon">
+                </div>
+                <div class="txtCont">
+                    <div class="d-flex">
+                        <h4 class="mb-0 bold mr-2">{{myBidObject.bidPerson?.fullName}}</h4>
+                        <img src="/assets/imgs/tickIcon.svg" class="align-center" height="30px">
+                    </div>
+                    <p *ngIf="myBidObject.bidPerson" class="mt-1 mb-0 font-14 text1">
+                        {{dataHelper.getExpertAgency(myBidObject.bidPerson) || 'N/A'}}</p>
+                    <div class="d-flex mt-1">
+                        <i class="fas fa-map-marker-alt align-center"></i>
+                        <p class="mb-0 align-center font-14 ml-2">{{myBidObject.jobDetails?.preferredLocation}}</p>
+                        <p class="font-14 text1 ml-1 mb-0 align-center">
+                            {{myBidObject.jobDetails?.timestamp | date: 'mediumDate'}}
+                        </p>
+                    </div>
+                    <button (click)="navigateMyJobDetail()" class="btn darkBtn mt-3">Project Detail</button>
+                </div>
+            </div>
+
+            <div class="d-flex w-75 justify-content-between pl-4 pt-3 mb-5">
+                <div class="txt">
+                    <p class="font-15 bold mb-1">RM {{myBidObject.totalPrice}}</p>
+                    <p class="font-14 mb-0">Budget</p>
+                </div>
+                <div class="txt">
+                    <p class="font-15 bold mb-1">RM {{paidMilestones()}}</p>
+                    <p class="font-14 mb-0">Milestones Paid</p>
+                </div>
+                <div class="txt">
+                    <p class="font-15 bold mb-1">RM {{unpaidMilestones()}}</p>
+                    <p class="font-14 mb-0">Remaining</p>
+                </div>
+                <div *ngIf="myBidObject.completionDate" class="txt">
+                    <p class="font-15 bold mb-1">{{myBidObject.completionDate | date: 'short'}}</p>
+                    <p class="font-14 mb-0 text-success">Job Completed</p>
+                </div>
+            </div>
+
+            <div *ngIf="!myJob">
+                <h5 class="mb-4 bold pt-2 mt-5">All Milestones</h5>
+                <div *ngFor="let milestone of myBidObject.milestones; index as i" class="milstone">
+                    <p class="font-13 bold mr-3">
+                        Milestone {{i+1}} of {{myBidObject.milestones.length}}:
+                        {{milestone.name}} RM {{milestone.price}}
+                    </p>
+                    <button (click)="markMilestoneAsCompleted(i)" *ngIf="milestone.status==='In Progress'"
+                        class="btn btn-sm btn-danger float-right">
+                        Report As Completed</button>
+                    <button *ngIf="milestone.status==='Completed'"
+                        class="btn btn-sm btn-dark float-right">Completed</button>
+                    <button *ngIf="milestone.status==='Paid'" class="btn btn-sm btn-success float-right">Paid</button>
+                </div>
+            </div>
+
+            <div *ngIf="myJob">
+                <h5 class="mb-4 bold pt-2 mt-5">All Milestones</h5>
+                <div *ngFor="let milestone of myBidObject.milestones; index as i" class="milstone">
+                    <p class="font-13 bold mr-3">
+                        Milestone {{i+1}} of {{myBidObject.milestones.length}}:
+                        {{milestone.name}} RM {{milestone.price}}
+                    </p>
+                    <button *ngIf="milestone.status==='In Progress'" class="btn btn-sm btn-danger float-right">
+                        In Progress</button>
+                    <button *ngIf="milestone.status==='Completed'" (click)="acceptDelivery(i)"
+                        class="btn btn-sm btn-danger float-right mr-3">Accept</button>
+                    <button (click)="updateMilestoneStatus('reject', i)" *ngIf="milestone.status==='Completed'"
+                        class="btn btn-sm btn-dark float-right">Reject</button>
+                    <button *ngIf="milestone.status==='Paid'" class="btn btn-sm btn-success float-right">Paid</button>
+                </div>
+                <span hidden id="openPaymentModal" data-toggle="modal" data-target="#addPaymentModal"></span>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<app-footer></app-footer>
+
+<div class="modal fade" id="addPaymentModal">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 60%;">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Add Payment</h4>
+                <button id="closePaymentModal" type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <app-payment-card [deductionAmount]="deductionAmount" (onValidateCard)="confirmPayment($event)">
+                </app-payment-card>
+            </div>
+        </div>
+    </div>
+</div>

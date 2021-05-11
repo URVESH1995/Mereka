@@ -1,0 +1,445 @@
+.pagesLog {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding-left: 3em;
+  border-bottom: 1px solid #d1cccc;
+}
+
+.mainCont {
+  margin: 3em 0em;
+
+  .nav.nav-tabs {
+    float: left;
+    display: block;
+    border-bottom: 0;
+    width: 100%;
+
+    .nav-link {
+      color: black;
+      border: 0px;
+      border-radius: 0px;
+      line-height: 1.2;
+      padding: 0px 10px 0px 30px;
+      margin-bottom: 25px;
+
+      &.active {
+        // font-weight: bold;
+        background-color: transparent;
+      }
+
+      &.parentTab {
+        border-left: 4px solid #d72e34;
+        padding-left: 9px;
+        margin-bottom: 30px;
+      }
+    }
+
+    .nav-item:last-child {
+      position: relative;
+
+      .proBtn {
+        height: 20px;
+        width: 30px;
+        font-size: 10px;
+        color: white;
+        background-color: #b80f0f;
+        border-color: #b80f0f;
+        border-radius: 5px;
+        padding: 0px;
+        position: absolute;
+        top: -21px;
+        left: 155px;
+      }
+    }
+  }
+
+  .profileCard {
+    border: 0px;
+    border-radius: 10px;
+    padding-bottom: 20px;
+
+    .borderItem {
+      border-bottom: 1px solid #d1cccc;
+      padding-bottom: 20px;
+    }
+
+    .borderItem:last-child {
+      border-bottom: 0px !important;
+    }
+  }
+
+  .dangerBtn {
+    height: 50px;
+    width: 220px;
+    border-radius: 5px;
+    padding: 0px;
+    font-size: 15px;
+    color: white;
+    font-weight: bold;
+    background-color: #d72e34;
+    border-color: #d72e34;
+  }
+
+  .darkBtn {
+    height: 50px;
+    font-size: 15px;
+    font-weight: bold;
+    width: 160px;
+
+    &.withdraw {
+      background-color: #7e7e7e;
+      border-color: #7e7e7e;
+    }
+  }
+
+  .billingCard {
+    border: 0px;
+    border-radius: 10px;
+
+    .header {
+      min-height: 100px;
+      align-items: center;
+      border-bottom: 1px solid #d1cccc;
+      margin-bottom: 20px;
+    }
+
+    .form-control {
+      height: 45px;
+      font-size: 14px;
+      padding: 0.5rem 20px;
+    }
+
+    .memberShips {
+      padding-bottom: 40px;
+    }
+  }
+
+  .expertDetailCont {
+    border: 0px;
+    border-radius: 10px;
+
+    #myTab2 {
+      display: flex;
+      border-bottom: 0px;
+      margin-top: 10px;
+      justify-content: space-between;
+
+      .nav-link {
+        font-weight: 500;
+        border: none;
+        padding: 15px 2px 18px 2px;
+        min-width: 60px;
+        color: #161616;
+        margin-bottom: 0px;
+        text-align: center;
+      }
+
+      .nav-link.active {
+        border: none;
+        border-bottom: 4px solid #161616;
+        font-weight: bold;
+        background-color: transparent;
+      }
+    }
+
+    .searchBar {
+      height: 45px;
+      font-size: 14px;
+      padding: 0.5rem 20px;
+      border-radius: 5px;
+      border: 1px solid #ced4da;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      color: #7f7f7f;
+
+      i {
+        font-size: 20px;
+      }
+
+      input {
+        border: 0px;
+        padding-right: 0px;
+      }
+    }
+
+    .actionBtn {
+      height: 45px;
+      border: 1px solid #ced4da;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0px 15px;
+      align-items: center;
+      border-radius: 5px;
+    }
+
+    .dropdown-menu {
+      border-radius: 10px;
+      border: 0px;
+      min-width: 14vw;
+      padding-top: 15px;
+      padding-bottom: 15px;
+
+      .dropdown-item {
+        color: #000000;
+        font-size: 15px;
+        font-weight: bold;
+        padding: 7px 20px;
+        display: flex;
+      }
+
+      .dropdown-item:hover,
+      .dropdown-item:active {
+        background-color: white;
+      }
+    }
+    .memberList {
+      border-bottom: 1px solid #ced4da;
+      padding: 18px 4.1% 18px 4.1%;
+      .custom-checkbox {
+        label {
+          padding: 0px 0px 0px 12px;
+          cursor: pointer;
+          font-size: 15px;
+        }
+        .custom-control-input:checked ~ .custom-control-label::before {
+          color: #fff;
+          border-color: #161616;
+          background-color: #161616;
+        }
+        .custom-control-label::before,
+        .custom-control-label::after {
+          width: 1.1rem;
+          height: 1.1rem;
+          top: 0.1rem;
+        }
+      }
+      select {
+        background: #ffffff url("/assets/imgs/downArrow2.svg") no-repeat right
+          21% center/10px 10px !important;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        width: 37%;
+        border: 0px;
+        font-size: 15px;
+        padding: 0px;
+        height: unset;
+      }
+    }
+    .memberList:last-child {
+      border-bottom: 0px;
+    }
+  }
+
+  .myTeamsCont {
+    border: 0px;
+    border-radius: 10px;
+    display: grid;
+    min-height: 110px;
+    align-items: center;
+  }
+}
+
+.myModal {
+  max-width: 60% !important;
+  .modal-header {
+    border-bottom-color: #d1cccc;
+    padding: 30px;
+  }
+  .darkBtn {
+    width: 160px;
+    height: 50px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .borderItem {
+    border-bottom: 1px solid #d1cccc;
+    padding: 30px 0px;
+    margin-bottom: 30px;
+    .proBtn {
+      background-color: #d72e34;
+      border-color: #d72e34;
+      border-radius: 8px;
+      padding: 0px;
+      height: 50px;
+      width: 66px;
+      color: white;
+      font-size: 15px;
+      margin-left: 15px;
+    }
+  }
+  .btn-outline-primary {
+    height: 50px;
+    font-size: 16px;
+    width: 160px;
+  }
+}
+
+/* responsiveness */
+/* tablet 991px */
+@media screen and (max-width: 991px) and (min-width: 576px) {
+  .mainCont {
+    .nav.nav-tabs {
+      .nav-link {
+        padding: 0px 10px 0px 15px;
+      }
+      .nav-item:last-child .proBtn {
+        left: 115px !important;
+      }
+    }
+    .col-sm-10 {
+      .col-sm-3.pl-0.pr-4 {
+        padding-right: 0px !important;
+      }
+    }
+    .profileCard {
+      .borderItem {
+        .btn {
+          width: 130px !important;
+        }
+      }
+    }
+    .expertDetailCont {
+      .col-sm-7 {
+        flex: 0 0 100%;
+        max-width: 100%;
+      }
+    }
+    #expertProfile {
+      .myTeamsCont {
+        .col-sm-7.text-right {
+          .btn {
+            width: 130px !important;
+            margin: 10px !important;
+          }
+        }
+      }
+    }
+    .billingCard {
+      .w-25 {
+        width: 50% !important;
+      }
+      .d-flex.justify-content-between.mt-5.mb-4.pb-2 {
+        .btn {
+          width: 150px !important;
+          margin: 10px;
+        }
+      }
+    }
+  }
+  /*modal */
+  .myModal {
+    max-width: 80% !important;
+  }
+}
+
+/*mobile 575px */
+@media only screen and (max-width: 575px) {
+  .pagesLog {
+    padding-left: 10px !important;
+  }
+  .mainCont {
+    .tab-content {
+      .profileCard {
+        .col-sm-11 {
+          padding: 0px 10px !important;
+        }
+      }
+      .billingCard {
+        .col-sm-11 {
+          padding: 0px 10px !important;
+          .text-right {
+            text-align: center !important;
+          }
+        }
+        .memberShips {
+          padding: 20px 10px !important;
+        }
+        .w-25 {
+          width: 100% !important;
+        }
+        .d-flex.justify-content-between.mt-5.mb-4.pb-2 {
+          .btn {
+            width: 150px !important;
+            margin: 10px;
+          }
+        }
+      }
+      .expertDetailCont {
+        padding: 20px 10px !important;
+        .col-sm-11 {
+          .col-sm-5 {
+            padding-right: 0px !important;
+            padding-bottom: 10px !important;
+          }
+          .col-sm-7 {
+            .nav-link {
+              font-size: 14px;
+            }
+          }
+        }
+        .memberList {
+          .col-sm-4 {
+            width: 50%;
+          }
+        }
+        .col-sm-11.text-right {
+          text-align: center !important;
+          .btn {
+            width: 130px !important;
+            margin: 10px;
+          }
+        }
+      }
+      #expertProfile {
+        .myTeamsCont {
+          padding: 20px 10px;
+          .col-sm-7.text-right {
+            text-align: center !important;
+            .btn {
+              width: 130px !important;
+              margin: 10px !important;
+            }
+          }
+        }
+      }
+    }
+  }
+  .myModal {
+    max-width: 96% !important;
+    .modal-content {
+      .modal-body {
+        padding: 20px 10px !important;
+      }
+      .col-sm-11 {
+        .text-right.mt-4 {
+          text-align: center !important;
+          .btn {
+            margin: 10px !important;
+            width: 130px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.profileImg {
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  margin: 10px 0px 10px 0px;
+  object-fit: cover;
+}
+
+.removeText:hover {
+  color: var(--danger) !important;
+}
+
+.red-alert{
+  color: red !important;
+  font-size: small !important;
+}

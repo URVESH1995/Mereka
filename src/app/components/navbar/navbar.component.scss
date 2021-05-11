@@ -1,0 +1,109 @@
+nav {
+  background: #161616;
+  flex-flow: wrap;
+
+  .blackNavbar {
+    display: inline-block;
+  }
+  .whiteNavbar {
+    display: none;
+  }
+
+  .navbar-brand,
+  .navbar-right {
+    width: 400px;
+
+    .appLogo {
+      width: 200px;
+    }
+    .getStartedBtn {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  .profileToggleBtn {
+    background: #eaeaea;
+    border-radius: 30px;
+    width: 60%;
+
+    .soloText {
+      margin-top: 5px;
+      text-align: center;
+      color: #000000;
+      width: 50%;
+      margin-bottom: 0;
+      font-size: 15px;
+    }
+
+    button {
+      width: 65%;
+      border-radius: 30px;
+    }
+  }
+
+  .bellIcon {
+    font-size: 25px;
+    margin: 12px 0 0 16px;
+    color: #ffffff;
+  }
+
+  .profileIcon {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left: 1em;
+  }
+
+  .navbarBtn {
+    background: transparent;
+    color: #ffffff;
+    border: 0;
+    border-radius: 30px;
+
+    &.activeBtn {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  .moreDropdown {
+    top: 50px;
+    left: -140px;
+    border-radius: 10px;
+
+    .dropdown-item {
+      border-radius: 30px;
+    }
+  }
+}
+
+// =========== WHEN PAGE IS SCROLLED DOWN AND NAVBAR CHANGED TO WHITE BACKGROUND =====
+
+.menuScrolled {
+  background: #ffffff !important;
+  // box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2) !important;
+
+  .whiteNavbar {
+    display: inline-block;
+  }
+  .blackNavbar {
+    display: none;
+  }
+  .navbarBtn {
+    background: transparent;
+    color: #000000;
+
+    &.activeBtn {
+      background: #e8e8e8;
+    }
+  }
+  .navbar-right {
+    .getStartedBtn {
+      border: 2px solid #e8e8e8;
+    }
+  }
+
+  .bellIcon {
+    color: #000000;
+  }
+}

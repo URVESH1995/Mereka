@@ -1,0 +1,51 @@
+<div class="borderdBlock">
+  <h5 class="bold mb-3">Email</h5>
+  <p class="font-17 text1">{{userAuth.currentUser.email}}</p>
+  <hr class="my-5" />
+  <h5 class="bold mb-3">Password
+    <span class="float-right pointer small bold">
+      <u>Edit password</u>
+    </span>
+  </h5>
+  <p class="font-17 text1">Last updated
+    <span *ngIf="userAuth.currentUser.passwordUpdatedOn">
+      {{userAuth.currentUser.passwordUpdatedOn | date:'medium'}}
+    </span>
+    <span *ngIf="!userAuth.currentUser.passwordUpdatedOn">
+      {{userAuth.currentUser.timestamp | date:'medium'}}
+    </span>
+  </p>
+  <div class="form-group">
+    <label>Old Password</label>
+    <input [(ngModel)]="oldPassword" type="password" class="form-control" placeholder="Type Password here">
+  </div>
+  <div class="form-group">
+    <label>New Password</label>
+    <input [(ngModel)]="newPassword" type="password" class="form-control" placeholder="New Password here">
+  </div>
+  <div class="form-group">
+    <label>Confirm New Password</label>
+    <input [(ngModel)]="cNewPassword" type="password" class="form-control" placeholder="Confirm Password here">
+  </div>
+  <button (click)="updatePassword()" [disabled]="!oldPassword || !newPassword || !cNewPassword"
+    class="btn btn-dark blackBgBtn">Update Password</button>
+
+  <hr style="margin: 38px 0px;" />
+  <h5 class="mb-3 bold">Device History</h5>
+  <div class="historyMainCont">
+    <div class="deviceHistCont">
+      <i class="fas fa-laptop laptopIcon"></i>
+      <div class="txt">
+        <p class="appTxt bold mb-2">Logged in on Macbook Pro</p>
+        <p class="mb-0">Kuala Lumpur on Nov 25th, 2020</p>
+      </div>
+    </div>
+    <div class="deviceHistCont">
+      <i class="fas fa-laptop laptopIcon"></i>
+      <div class="txt">
+        <p class="appTxt bold mb-2">Logged in on Macbook Pro</p>
+        <p class="mb-0">Kuala Lumpur on Nov 25th, 2020</p>
+      </div>
+    </div>
+  </div>
+</div>

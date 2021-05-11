@@ -1,0 +1,142 @@
+<ngx-loading [show]="loading"></ngx-loading>
+
+<app-navbar></app-navbar>
+
+<div class="pagesLog">
+  <img src="/assets/imgs/M-Logo.PNG" height="25px">
+  <i class="fas fa-chevron-right lightGray px-3"></i>
+  <p class="bold my-0">Browse</p>
+</div>
+
+<div class="row justify-content-center mainCont">
+  <div class="col-sm-10">
+    <div class="row">
+
+      <div class="col-sm-3 pl-0">
+        <h3 class="bold mb-5 pt-1">Filter By</h3>
+        <h6 class="bold">Categories</h6>
+        <div class="filterItemCont">
+          <p class="mb-2">Illustration</p>
+          <p class="mb-2">Photography and Video</p>
+          <p class="mb-2">Design</p>
+          <p class="mb-2">3D</p>
+          <p class="mb-2">Craft</p>
+          <p class="mb-2">Technology and VR</p>
+        </div>
+        <h6 class="bold">Type</h6>
+        <div class="filterItemCont">
+          <p class="mb-2">Expert</p>
+          <p class="mb-2">Hub</p>
+          <p class="mb-2">Expert and Hub</p>
+          <p class="mb-2">Workshops</p>
+          <p class="mb-2">Machines</p>
+        </div>
+        <h6 class="bold">Location</h6>
+        <div class="filterItemCont">
+          <p class="mb-2">India</p>
+          <p class="mb-2">Malaysia</p>
+          <p class="mb-2">US</p>
+        </div>
+        <h6 class="bold">Language</h6>
+        <div class="filterItemCont">
+          <p class="mb-2">English</p>
+          <p class="mb-2">Bahasa</p>
+          <p class="mb-2">Malaysia</p>
+        </div>
+      </div>
+
+      <div class="col-sm-9 pr-0">
+        <div class="searchBar align-center">
+          <i class="fas fa-search pointer"></i>
+          <input [(ngModel)]="searchQuery" (ngModelChange)="searchExperts()" type="text"
+            placeholder="Find Expert/Hub by Name" class="form-control">
+        </div>
+        <!-- <ul class="nav nav-tabs mt-5 pt-2" id="myTab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+              aria-selected="true">All</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+              aria-selected="false">Past Hires</a>
+          </li>
+        </ul> -->
+
+        <div class="tab-content" id="myTabContent">
+
+          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+            <p *ngIf="!displayExperts.length" class="mt-5 text-center text-secondary">No experts found!</p>
+
+            <div *ngFor="let expert of displayExperts; index as i" class="card expertCard">
+              <div class="expertDetailCont">
+                <!-- <i class="far fa-heart likeIcon"></i> -->
+                <div (click)="userDetails(expert)" class="d-flex pointer">
+                  <img [src]="expert.profileUrl || '/assets/imgs/userIcon.PNG'" class="expertImg">
+                  <div class="txt pl-3 align-center">
+                    <h5 class="mb-1">{{expert.fullName}}</h5>
+                    <p class="font-14 bold my-0">{{expert.expertProfile?.overview?.title || 'N/A'}}</p>
+                  </div>
+                </div>
+                <p class="font-13 text1 my-3">{{expert.expertProfile?.overview?.overview || 'N/A'}}</p>
+                <div class="subCategCont">
+                  <button *ngFor="let skill of getAllSkills(expert) | slice:0:3" class="btn tagBtn">{{skill}}</button>
+                  <button (click)="userDetails(expert)" *ngIf="getAllSkills(expert).length > 3"
+                    class="btn tagBtn moreBtn">+{{getAllSkills(expert).length-3}} more</button>
+                </div>
+              </div>
+              <div class="row expertContactCont">
+                <div class="col-sm-2 px-0 pointer">
+                  <p class="bold font-15 mb-0">Part of Hub</p>
+                  <p class="font-13 mb-0">{{getExpertAgency(expert) || 'N/A'}}</p>
+                </div>
+                <div class="col-sm-3 text-center align-center">
+                  <p class="bold font-15 mb-0">
+                    RM {{expert.expertProfile?.hourlyRate?.hourlyRate | number:'1.0-0' || 'N/A'}}/hr
+                  </p>
+                </div>
+                <div class="col-sm-2 px-0 text-center align-center">
+                  <p class="bold font-15 mb-0">{{expert.location?.country || 'N/A'}}</p>
+                </div>
+                <div class="col-sm-2 px-0 text-center align-center">
+                  <p class="bold font-15 mb-0 pt-2" style="line-height: 8px;">{{expert.rating || 0}}/5</p>
+                  <div class="rating">
+                    <i class="fas fa-star text-secondary" [class.text-warning]="expert.rating && expert.rating >=1"></i>
+                    <i class="fas fa-star text-secondary" [class.text-warning]="expert.rating && expert.rating >=2"></i>
+                    <i class="fas fa-star text-secondary" [class.text-warning]="expert.rating && expert.rating >=3"></i>
+                    <i class="fas fa-star text-secondary" [class.text-warning]="expert.rating && expert.rating >=4"></i>
+                    <i class="fas fa-star text-secondary"
+                      [class.text-warning]="expert.rating && expert.rating === 5"></i>
+                  </div>
+                </div>
+                <div class="col-sm-3 align-center pl-4">
+                  <button class="btn darkBtn btn-block" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">Invite to job</button>
+                  <div class="dropdown-menu dropdown-menu-right shadow" aria-labelledby="userDropdown">
+                    <a (click)="inviteExpert(expert)" class="dropdown-item pointer">
+                      <img src="/assets/imgs/addUser.svg" height="18px">
+                      <p class="my-0 font-14 pl-3">Invite To Hub</p>
+                    </a>
+                    <a (click)="inviteExpertToThisJob(expert, job)" *ngFor="let job of myPostedJobs"
+                      class="dropdown-item pointer">
+                      <img src="/assets/imgs/addUser.svg" height="18px">
+                      <p class="my-0 font-14 pl-3">{{job.jobTitle}}</p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

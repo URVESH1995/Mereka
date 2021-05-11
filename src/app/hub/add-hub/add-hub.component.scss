@@ -1,0 +1,28 @@
+.parentContent {
+  height: 125vh;
+  .logoContent {
+    border-bottom: 1px solid #dedede;
+    img {
+      width: 200px;
+    }
+  }
+  .infoContent {
+    .leftContent {
+      margin: 12em 5em 0 5em;
+      h1 {
+        font-weight: bold;
+        line-height: 1.5;
+      }
+    }
+    .featuredBlock {
+      border-radius: 10px;
+      border: 1px solid #dadada;
+      img {
+        width: 50px;
+        height: 50px;
+        object-fit: contain;
+        margin-bottom: 1em;
+      }
+    }
+  }
+}

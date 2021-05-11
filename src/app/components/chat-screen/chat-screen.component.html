@@ -1,0 +1,105 @@
+<!-- <div *ngIf="activeChat && activeChat.chatKey" class="chatsHeader justify-content-between px-4">
+  <div class="d-flex align-center">
+    <h4 class="bold mb-0">{{getRecepientName()}}</h4>
+    <img src="/assets/imgs/tickIcon.svg" class="ml-2 align-center" height="25px">
+    <i class="fas fa-map-marker-alt ml-3 align-center"></i>
+    <p class="mb-0 align-center font-14 ml-2">{{getRecepientLocation() || 'N/A'}}</p>
+  </div>
+  <button (click)="jobDetails()" class="btn darkBtn detailBtn">Project Details</button>
+</div>
+
+<div *ngIf="activeChat && activeChat.chatKey" class="chatBox" #chatMessagesContainer>
+  <div class="row justify-content-center">
+    <div class="col-sm-11 px-0">
+      <div *ngFor="let message of chatMessages" class="msgCont">
+        <div class="d-flex">
+          <img [src]="getSenderProfileUrl(message) || '/assets/imgs/userIcon.PNG'" class="userImg">
+          <div class="txt pl-3 align-center">
+            <h6 class="mb-1 bold">{{getSenderFullName(message)}}</h6>
+            <p *ngIf="message.message" class="font-13 mb-0">{{message.message}}</p>
+            <p *ngIf="message.attachedFile && message.attachedFile.url" class="font-13 mb-0 pointer">
+              <a [href]="message.attachedFile.url" target="_blank">
+                <u>{{message.attachedFile.name}} <i class="fas fa-paperclip"></i></u>
+              </a>
+            </p>
+          </div>
+        </div>
+        <p class="font-14 align-center mb-0 text1">{{message.timestamp | date: 'short'}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="activeChat && activeChat.chatKey" class="msgInputCont">
+  <div class="row justify-content-center">
+    <div class="col-sm-12">
+      <div class="row">
+        <div class="col-sm-9">
+          <div class="searchBar align-center">
+            <input (keyup.enter)="sendNewMessage()" [(ngModel)]="newMessage.message" placeholder="Type Message Here..."
+              class="form-control">
+            <div class="icons">
+              <i (click)="filePicker.click()" class="fas fa-paperclip"></i>
+              <input style="display: none;" #filePicker [multiple]="true" (change)="onChangeFile($event)" type="file"
+                accept="file_extension | .jpg, .png, .doc, .pdf, .zip, .jpeg">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <button (click)="sendNewMessage()" [disabled]="!newMessage.message"
+            class="btn darkBtn btn-block">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+<div *ngIf="activeChat && activeChat.chatKey" class="chatsHeader">
+  <h3 class="my-0 bold">{{getRecepientName()}}</h3>
+  <!-- <p class="time">12:57 PM IST</p> -->
+  <button (click)="jobDetails()" class="btn darkBtn blackBgBtn detailBtn">Project Details</button>
+</div>
+
+<div *ngIf="activeChat && activeChat.chatKey" class="chatBox" #chatMessagesContainer>
+  <div class="row justify-content-center">
+    <div class="col-sm-11 px-0">
+      <div *ngFor="let message of chatMessages" class="msgCont">
+        <div class="userInfo">
+          <img [src]="getSenderProfileUrl(message) || '/assets/imgs/GrayEllipse.png'" class="userImg">
+          <div class="txt pl-3">
+            <h6 class="Username">{{getSenderFullName(message)}}</h6>
+            <p *ngIf="message.message" class="msg">{{message.message}}</p>
+            <p *ngIf="message.attachedFile && message.attachedFile.url" class="font-13 mb-0 pointer">
+              <a [href]="message.attachedFile.url" target="_blank">
+                <u>{{message.attachedFile.name}} <i class="fas fa-paperclip"></i></u>
+              </a>
+            </p>
+          </div>
+        </div>
+        <p class="mb-0 bold">{{message.timestamp | date: 'short'}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="activeChat && activeChat.chatKey" class="msgInputCont">
+  <div class="row">
+    <div class="col-sm-9">
+      <div class="searchBar align-center">
+        <input (keyup.enter)="sendNewMessage()" [(ngModel)]="newMessage.message" placeholder="Type Message Here..."
+          class="form-control">
+        <div class="icons">
+          <i (click)="filePicker.click()" class="fas fa-paperclip"></i>
+          <input style="display: none;" #filePicker [multiple]="true" (change)="onChangeFile($event)" type="file"
+            accept="file_extension | .jpg, .png, .doc, .pdf, .zip, .jpeg">
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3 align-center">
+      <button (click)="sendNewMessage()" [disabled]="!newMessage.message"
+        class="btn darkBtn btn-block">Continue</button>
+    </div>
+  </div>
+</div>

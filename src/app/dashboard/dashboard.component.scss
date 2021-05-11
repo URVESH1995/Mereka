@@ -1,0 +1,201 @@
+.mainCont {
+  justify-content: center;
+  margin: 3em 0em;
+
+  .summaryCard {
+    min-height: 7.5vw;
+    border: 0px;
+    border-radius: 7px;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    padding: 25px;
+    display: grid;
+    align-items: center;
+  }
+
+  .chartCont {
+    border: 0px;
+    border-radius: 7px;
+    min-height: 20vw;
+    padding: 30px 0px;
+
+    .topService {
+      position: absolute;
+      top: 30px;
+      left: 28px;
+      z-index: 1;
+    }
+  }
+
+  .dealsCont {
+    border: 0px;
+    border-radius: 7px;
+    padding: 30px 0px 0px 0px;
+    color: #161616;
+    min-height: 350px;
+    margin-top: 40px;
+
+    .tableTitle {
+      padding: 0px 32px;
+
+      .searchBar {
+        height: 45px;
+        font-size: 14px;
+        padding: 0.5rem 20px;
+        border-radius: 5px;
+        border: 1px solid #ced4da;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        color: #7F7F7F;
+
+        i {
+          font-size: 18px;
+        }
+
+        input {
+          border: 0px;
+          padding-right: 0px;
+          font-size: 14px;
+        }
+      }
+    }
+
+
+    .viewtable {
+      thead {
+        th {
+          border: 0px;
+          z-index: 444;
+          background-color: #ffffff !important;
+          color: #161616;
+          font-size: 15px;
+          height: 55px;
+          vertical-align: middle;
+          border-bottom: 1px solid #dddcdc;
+        }
+
+        th:nth-child(3) {
+          min-width: 100px;
+        }
+      }
+
+      tbody {
+        tr {
+          border-bottom: 1px solid #dddcdc;
+        }
+
+        tr:hover {
+          background-color: rgba(0, 0, 0, .05);
+        }
+
+        tr:last-child {
+          border-bottom: 0px;
+        }
+
+        td {
+          vertical-align: middle !important;
+          font-size: 14px;
+          color: #474545;
+          border-top: 0px;
+        }
+
+        td:last-child {
+          img {
+            cursor: pointer;
+          }
+        }
+
+        .StatusBtn {
+          font-size: 14px;
+          padding: 0px 4px;
+          font-weight: bold;
+          color: #32C5FF;
+
+          &.progressBtn {
+            color: #F7B500;
+          }
+
+          &.pending {
+            color: #FA6400;
+          }
+        }
+      }
+
+      table th:first-child,
+      table td:first-child {
+        padding-left: 32px;
+      }
+
+      table th:last-child,
+      table td:last-child {
+        text-align: center;
+      }
+
+    }
+
+  }
+}
+
+/* responsiveness */
+/* tablet 991px */
+@media screen and (max-width: 991px) and (min-width: 576px) {
+  .mainCont{
+    .summaryCard{
+      padding: 15px !important;
+    }
+    .chartCont{
+      .col-sm-12.px-4{
+        padding-top: 40px !important;
+      }
+    }
+    .dealsCont{
+      .viewtable{
+        tbody{
+          td{
+            font-size: 13px !important;
+        }
+        }
+      }
+    }
+  }
+}
+
+/*mobile 575px */
+@media only screen and (max-width: 575px) {
+  .mainCont{
+    .col-sm-10{
+      .row{
+        .col-sm-3{
+          margin-bottom: 10px;
+        }
+      }
+      .chartCont{
+        .d-flex.mb-4{
+          padding: 0px 5px !important;
+        }
+        margin-bottom: 20px !important;
+      }
+      .col-sm-5.pl-4{
+        padding-left: 15px !important;
+      }
+      .dealsCont{
+        .col-sm-4.pl-5.pr-0{
+          padding-left: 0px !important;
+          padding-top: 10px;
+        }
+        .table{
+          td:nth-child(2){
+            min-width: 130px;
+          }
+          td:nth-child(5){
+            min-width: 130px;
+          }
+          td:nth-child(6){
+            min-width: 130px;
+          }
+        }
+      }
+    }
+  }
+}
+

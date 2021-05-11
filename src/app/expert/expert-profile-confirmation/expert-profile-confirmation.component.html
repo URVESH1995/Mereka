@@ -1,0 +1,24 @@
+<div class="row topNavbar fixed-top">
+    <div class="col-md-3 py-3">
+        <img routerLink="/home" src="/assets/imgs/grayLogo.png" class="pointer ml-4">
+    </div>
+    <div class="col-md-9 text-right">
+        <button (click)="navigatePage(btn.navigatePage)" *ngFor="let btn of tabButtons"
+            [class.activeBtn]="activeTab===btn.title" class="btn btn-inactive grayChoiceHover">{{btn.title}}</button>
+    </div>
+</div>
+
+<app-expert-profile *ngIf="allFilled()" [expertProfile]="userAuth.currentUser" [hideHeaderFooter]="true">
+</app-expert-profile>
+
+<div class="row fixed-bottom p-3 px-4 continueBackBtns">
+    <div class="col-md-4">
+        <button routerLink="/expert-portfolios" class="btn grayChoiceHover btn-light btnRounded">Back</button>
+    </div>
+    <div class="col-md-4 text-center">
+        <p (click)="saveAndExit()" class="mb-0 mt-2 pointer">Save and Exit</p>
+    </div>
+    <div class="col-md-4 text-right">
+        <button (click)="saveExpertProfile()" class="btn grayChoiceHover btnSecondary btnRounded">Confirm</button>
+    </div>
+</div>

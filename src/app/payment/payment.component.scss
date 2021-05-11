@@ -1,0 +1,100 @@
+.pagesLog {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding-left: 3em;
+  border-bottom: 1px solid #d1cccc;
+}
+
+.mainCont {
+  border: 0px;
+  border-radius: 10px;
+  min-height: 40vw;
+  margin: 3em 0em;
+  padding: 30px 0px;
+
+  .orderCont {
+    min-height: 40vw;
+    border-right: 2px solid #EAEAEA;
+
+    .orderDetail {
+      display: flex;
+      margin-top: 30px;
+
+      .orderImg {
+        height: 80px;
+        width: 80px;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  .paymentCont {
+    .form-control {
+      height: 45px;
+      font-size: 14px;
+      padding: 0.5rem 20px;
+    }
+    select {
+      background: #FFFFFF url("/assets/imgs/downArrow2.svg") no-repeat right 1.5rem center/12px 12px !important;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+    .checkuutBtn
+    {
+        background-color: #00ABEB;
+        border-color: #00ABEB;
+        color: white;
+        height: 50px;
+        border-radius: 5px;
+        padding: 0px;
+        margin: 30px 0px;
+    }
+    .cryptedBtn
+    {
+        display: flex;
+        justify-content: center;
+        color: #787878;
+        margin: 50px 0px;
+        cursor: pointer;
+    }
+  }
+}
+
+/* responsiveness */
+/* tablet 991px */
+@media screen and (max-width: 991px) and (min-width: 576px) {
+  .mainCont{
+    
+    .orderCont{
+      display: contents;
+    }
+    .paymentCont{
+      flex: 0 0 100%;
+      max-width: 100%;
+      padding-top: 50px;
+    }
+  }
+}
+
+/*mobile 575px */
+@media only screen and (max-width: 575px) {
+  .mainCont{
+    border-radius: 0px;
+    .orderCont{
+      padding-bottom: 50px;
+      .orderDetail{
+        display: block;
+        .txt{
+          padding-left: unset !important;
+        }
+      }
+    }
+  }
+}
+
+.red-alert{
+  color: red !important;
+  font-size: small !important;
+}

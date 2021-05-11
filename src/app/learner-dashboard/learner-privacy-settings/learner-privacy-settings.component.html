@@ -1,0 +1,57 @@
+<div class="borderdBlock">
+  <h4 class="bold mb-2">Your Privacy</h4>
+  <div class="toggleSwitchCont">
+    <div class="txtCont">
+      <h5 class="appTxt bold mb-2">Account Privacy</h5>
+      <p class="mb-0 text1">Allow anyone to view your profile.</p>
+    </div>
+    <div class="switchToggler">
+      <label class="switch">
+        <input (change)="updateSettings()" [(ngModel)]="mySettings.allowAnyoneToViewProfile" type="checkbox">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+  <hr class="my-5" />
+  <h4 class="bold mb-2">Cookies</h4>
+  <div class="toggleSwitchCont">
+    <div class="txtCont">
+      <h5 class="appTxt bold mb-2">Performance Cookies </h5>
+      <p class="mb-0 text1">These cookies allow to improve the performance of the platform by measuring traffic sources.
+      </p>
+    </div>
+    <div class="switchToggler">
+      <label class="switch">
+        <input (change)="updateSettings()" [(ngModel)]="mySettings.performanceCookies" type="checkbox">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+  <div class="toggleSwitchCont">
+    <div class="txtCont">
+      <h5 class="appTxt bold mb-2">Functional Cookies</h5>
+      <p class="mb-0 text1">These cookies allow the platform to personalize the content according to third-party
+        providers.</p>
+    </div>
+    <div class="switchToggler">
+      <label class="switch">
+        <input (change)="updateSettings()" [(ngModel)]="mySettings.functionalCookies" type="checkbox">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+  <hr class="my-5" />
+  <h4 class="bold mb-2">Sharing Data</h4>
+  <div class="toggleSwitchCont">
+    <div class="txtCont">
+      <h5 class="appTxt bold mb-2">Within Platform</h5>
+      <p class="mb-0 text1">Share data with the platform to build a more personalized experience. </p>
+    </div>
+    <div class="switchToggler">
+      <label class="switch">
+        <input (change)="updateSettings()" [(ngModel)]="mySettings.dataSharingWithinPlatform" type="checkbox">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+</div>

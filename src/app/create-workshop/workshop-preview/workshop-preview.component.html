@@ -1,0 +1,244 @@
+<div class="row topNavbar fixed-top">
+    <div class="col-md-3 py-3">
+        <img routerLink="/home" src="/assets/imgs/grayLogo.png" class="pointer ml-4">
+    </div>
+    <div class="col-md-9 text-right">
+        <button (click)="navigatePage(btn.navigatePage)" *ngFor="let btn of tabButtons"
+            [class.activeBtn]="activeTab===btn.title" class="btn btn-inactive grayChoiceHover">{{btn.title}}</button>
+    </div>
+</div>
+
+<div class="parentContent bg-white">
+    <div class="row justify-content-center">
+        <div class="col-md-12 maxWidthContent row">
+            <div class="col-md-12">
+                <button *ngIf="myWorkshopObj.experienceType==='online'"
+                    class="btn whiteOutlinedBtn topBtns mr-3">Online</button>
+                <button *ngIf="myWorkshopObj.experienceType==='physical'"
+                    class="btn whiteOutlinedBtn topBtns">Class</button>
+                <h2 class="bold mt-3">{{myWorkshopObj.experienceTitle}}
+                    <small routerLink="/workshop-basic-details"><i class="fas fa-pen pointer ml-2"></i></small>
+                </h2>
+                <p class="font-14">
+                    <span class="bold">hosted by: {{workshopHost.fullName}}</span>
+                    <span>
+                        <i class="fas fa-map-marker-alt pl-3 pr-1"></i>
+                        <span class="text-secondary"><u>
+                                {{myWorkshopObj.location.city}}, {{myWorkshopObj.location.country}}
+                            </u></span>
+                    </span>
+                    <span>
+                        <i class="fas fa-star pl-3"></i>
+                        <span class="text-secondary"> {{myWorkshopObj.avgRating || 'No Ratings'}}</span>
+                    </span>
+                </p>
+            </div>
+            <div class="col-md-8">
+                <div *ngIf="workshopPhotos.length" id="demo" class="carousel slide my-4" data-ride="carousel">
+                    <ul class="carousel-indicators">
+                        <li *ngFor="let img of workshopPhotos; index as i" data-target="#demo" [attr.data-slide-to]="i"
+                            [class.active]="i===0"></li>
+                    </ul>
+                    <div class="carousel-inner">
+                        <div *ngFor="let img of workshopPhotos; index as i" class="carousel-item"
+                            [class.active]="i===0"><img [src]="img">
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                    </a>
+                    <a class="carousel-control-next" href="#demo" data-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                    </a>
+                </div>
+
+                <h5 class="bold mt-5">About the Host</h5>
+                <div class="borderdSection p-4 mt-4">
+                    <div class="row">
+                        <div class="col-md-8 pl-0 borderRight">
+                            <div class="row mb-4">
+                                <div class="col-md-6 pl-0">
+                                    <div class="d-flex">
+                                        <img class="userAvatar"
+                                            [src]="workshopHost.profileUrl || '/assets/imgs/userIcon.PNG'">
+                                        <div class="pl-3">
+                                            <p class="bold mb-0">{{workshopHost.fullName}}</p>
+                                            <p class="text-secondary mb-0">
+                                                <i class="fas fa-map-marker-alt pr-1"></i>
+                                                <span class="text-secondary">{{workshopHost.location.city}},
+                                                    {{workshopHost.location.country}}</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="btn btn-dark blackBgBtn btnRounded w-100">Contact
+                                        {{workshopHost.fullName}}</button>
+                                </div>
+                            </div>
+                            <p>{{workshopHost.expertProfile?.overview?.overview}}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="bold pointer">Language</p>
+                            <p *ngFor="let lang of workshopHost.expertProfile.languages" class="mb-1">{{lang}}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h5 class="bold mt-5">About the Online Class</h5>
+                <div class="borderdSection p-4 mt-4">
+                    <div class="row">
+                        <div class="col-md-6 pl-0">
+                            <div class="d-flex mb-5">
+                                <img class="icons" src="/assets/imgs/theme.png">
+                                <div class="pl-3">
+                                    <h5><u>{{myWorkshopObj.theme}}</u></h5>
+                                    <div class="mt-3">
+                                        <span *ngFor="let tag of myWorkshopObj.tags" class="tagBtns">{{tag}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 pr-0">
+                            <div class="d-flex mb-5">
+                                <img class="icons" src="/assets/imgs/skillset.png">
+                                <div class="pl-3">
+                                    <h5><u>{{myWorkshopObj.requiredLevelOfExpertise}}</u></h5>
+                                    <div class="mt-3">
+                                        <span class="tagBtns">No prior experience required</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 pl-0">
+                            <div class="d-flex">
+                                <img class="icons" src="/assets/imgs/time.png">
+                                <div class="pl-3">
+                                    <h5 class="mt-2"><u>Duration:
+                                            <span *ngIf="myWorkshopObj.experienceDuration.hourlyDuration">
+                                                {{myWorkshopObj.experienceDuration.hourlyDuration}} h</span>
+                                            <span *ngIf="myWorkshopObj.experienceDuration.minutesDuration">
+                                                {{myWorkshopObj.experienceDuration.minutesDuration}} mins</span>
+                                        </u></h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 pr-0">
+                            <div class="d-flex">
+                                <img class="icons" src="/assets/imgs/group.png">
+                                <div class="pl-3">
+                                    <h5 class="mt-2"><u>
+                                            Open to group of {{myWorkshopObj.maximumBookableGroupByLearner}}
+                                            Learner(s)</u>
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-4" />
+
+                    <div class="d-flex">
+                        <img class="icons" src="/assets/imgs/description.png">
+                        <div class="pl-3" style="width: 85%">
+                            <p class="bold mt-2">Description of experience</p>
+                            <p>{{myWorkshopObj.experienceDescription}}</p>
+                        </div>
+                        <img routerLink="/workshop-basic-details" class="icons pointer" src="/assets/imgs/edit.png">
+                    </div>
+                </div>
+
+                <h5 class="bold mt-5">Learning Objectives</h5>
+                <div class="borderdSection p-4 mt-4">
+                    <div class="d-flex">
+                        <div class="pl-3" style="width: 90%">
+                            <p class="bold mt-2">What will you Learn</p>
+                            <p>{{myWorkshopObj.learningOutcomes}}</p>
+                        </div>
+                        <img routerLink="/workshop-basic-details" class="icons pointer" src="/assets/imgs/edit.png">
+                    </div>
+                </div>
+
+                <h5 class="bold mt-5">Instructions</h5>
+                <div class="borderdSection p-4 mt-4">
+                    <div class="d-flex">
+                        <div class="pl-3" style="width: 90%">
+                            <p class="bold mt-2">How to Prepare</p>
+                            <p>{{myWorkshopObj.instructions}}</p>
+                        </div>
+                        <img routerLink="/workshop-basic-details" class="icons pointer" src="/assets/imgs/edit.png">
+                    </div>
+                    <hr class="my-4" />
+
+                    <div class="pl-3" *ngIf="myWorkshopObj.isMaterialsProvided">
+                        <p class="bold">{{workshopHost.fullName}} will provide</p>
+                        <span *ngFor="let material of myWorkshopObj.materials" class="tagBtns">{{material}}</span>
+                    </div>
+
+                    <div class="pl-3" *ngIf="myWorkshopObj.isBringlistRequired">
+                        <p class="bold mt-4">What to bring</p>
+                        <span *ngFor="let item of myWorkshopObj.bringList" class="tagBtns">{{item}}</span>
+                    </div>
+                </div>
+
+                <h5 class="bold mt-5">Syllabus
+                    <img routerLink="/workshop-additional-info" class="syllabusEditIcon pointer"
+                        src="/assets/imgs/edit.png">
+                </h5>
+                <div class="borderdSection px-4 pb-4 scrollableDiv">
+                    <div *ngFor="let session of myWorkshopObj.sessions; index as i" class="d-flex mt-4">
+                        <p class="bold">Session {{i+1}}</p>
+                        <div class="pl-4">
+                            <p class="mb-0">{{session.topic}}</p>
+                            <p class="font-14">{{session.description}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="borderdSection p-4 mt-4">
+                    <h5 class="bold mb-4">RM
+                        <span *ngIf="myWorkshopObj.ratePerLearner">{{myWorkshopObj.ratePerLearner}}/learner </span>
+                        <span *ngIf="myWorkshopObj.ratePerMember"> {{myWorkshopObj.ratePerMember}}/member</span>
+                    </h5>
+
+                    <span class="learnerInput whiteOutlinedBtn pointer">{{myWorkshopObj.guestLearners}}</span>
+                    <span class="pl-3">Learner(s)</span>
+                    <div class="my-4">
+                        <label class="form-control">{{myWorkshopObj.experienceDuration.startDate}}</label>
+                    </div>
+
+                    <p class="mt-0">Sessions Dates</p>
+                    <div *ngIf="myWorkshopObj.sessions">
+                        <div *ngFor="let session of myWorkshopObj.sessions" class="form-group borderRadio rounded mb-2">
+                            <label>
+                                {{session.date}} <br /> {{session.startTime}} - {{session.endTime}} (MYT)
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="mt-5">
+                        <p class="bold mb-2">Total</p>
+                        <h5 *ngIf="myWorkshopObj.ratePerLearner">RM {{myWorkshopObj.ratePerLearner || 0}}/learner</h5>
+                        <h5 *ngIf="myWorkshopObj.ratePerMember">RM {{myWorkshopObj.ratePerMember || 0}}/member</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row fixed-bottom p-3 px-4 continueBackBtns">
+    <div class="col-md-4">
+        <button routerLink="/workshop-basic-details" class="btn btn-light grayChoiceHover btnRounded">Back</button>
+    </div>
+    <div class="col-md-4 text-center">
+        <p class="mb-0 mt-2">Don't worry you can also edit later once you've published!</p>
+    </div>
+    <div class="col-md-3 text-right">
+        <button (click)="saveAndNext(true)" class="btn grayChoiceHover btnSecondary btnRounded">Save Draft</button>
+    </div>
+    <div class="col-md-1 text-right">
+        <button (click)="saveAndNext()" class="btn grayChoiceHover btnSecondary btnRounded">Publish</button>
+    </div>
+</div>

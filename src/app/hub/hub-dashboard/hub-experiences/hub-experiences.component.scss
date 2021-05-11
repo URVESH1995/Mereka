@@ -1,0 +1,112 @@
+.mainHeader {
+  display: flex;
+  align-items: center;
+}
+
+.toggleBtnContainer {
+  background: #eaeaea;
+  border: 1px solid #c7c7c7;
+  border-radius: 30px;
+  margin-right: 20px;
+  width: 250px;
+
+  .soloIcon {
+    width: 50%;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+
+    i {
+      font-size: 22px;
+    }
+  }
+
+  button {
+    border-radius: 30px;
+    height: 38px;
+    width: 50%;
+    padding: 0px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    i {
+      font-size: 22px;
+    }
+  }
+}
+
+.borderdBlock {
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  background: white;
+  padding: 45px 32px;
+
+  .membersMainCont {
+    border: 1px solid #dadada;
+    border-radius: 10px;
+    margin-top: 24px;
+
+    .memberCont {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #dadada;
+      padding: 5px 30px;
+      height: 90px;
+
+      &.d-flex {
+        padding: 30px;
+        height: auto;
+      }
+
+      p {
+        margin: 0px;
+
+        &.hubName {
+          width: 30%;
+        }
+
+        &.date {
+          width: 20%;
+        }
+
+        &.plan {
+          width: 20%;
+        }
+
+        &.leave {
+          width: 14%;
+          text-align: center;
+
+          i {
+            font-size: 25px;
+            cursor: pointer;
+          }
+        }
+      }
+
+      &.headerRow {
+        background: #ececec;
+        border-radius: 10px 10px 0px 0px;
+
+        p {
+          font-weight: bold;
+        }
+      }
+    }
+    .memberCont:last-child {
+      border-bottom: 0px !important;
+    }
+  }
+}
+
+.modal {
+  .d-flex {
+    border-bottom: 1px solid #393939;
+  }
+}
