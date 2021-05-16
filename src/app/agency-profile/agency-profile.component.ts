@@ -16,13 +16,14 @@ export class AgencyProfileComponent implements OnInit {
 
   loading: boolean;
   myOwnAgency: boolean;
+  joinedAgency: boolean;
   agencyDetails: iAgency = new iAgency();
   agencyWorkshops: iExperience[] = [];
+  mainSlides: any[] = [];
   agencyExperts: iUser[] = [];
 
   currentPage: number = 1;
   selectedTag: string = 'All';
-  workshopTags: string[] = [];
 
   activeSwitch: string = 'physical';
   selectedExpertise: string = 'All';
@@ -35,7 +36,6 @@ export class AgencyProfileComponent implements OnInit {
     public userAuth: UserAuthService,
     public dataHelper: DataHelperService,
   ) {
-    this.workshopTags = this.dataHelper.workshopCategories;
   }
 
   ngOnInit(): void {
@@ -69,6 +69,11 @@ export class AgencyProfileComponent implements OnInit {
         this.getHubExperts();
       }
       this.myOwnAgency = this.agencyDetails.expertUid === this.userAuth.currentUser.uid;
+      this.joinedAgency = false;
+      if(this.agencyDetails.expertUid == this.userAuth.currentUser.agencyId && 
+        this.agencyDetails.experts.findIndex(obj=> obj.uid == this.userAuth.currentUser.uid)>=0 ) {
+        this.joinedAgency = true;
+      }
     }
   }
 
@@ -109,6 +114,18 @@ export class AgencyProfileComponent implements OnInit {
         x.theme === this.selectedTag && x.experienceType === this.activeSwitch
         && x.uid === this.agencyDetails.expertUid
       );
+    }
+    this.mainSlides = [];
+    var pArray: any = [];
+    for (var i = 0, j = this.agencyWorkshops.length; i < j; i++) {
+      pArray.push(JSON.parse(JSON.stringify(this.agencyWorkshops[i])));
+      if ((i + 1) % 3 == 0) {
+        this.mainSlides.push(JSON.parse(JSON.stringify(pArray)));
+        pArray = [];
+      }
+    }
+    if (pArray.length) {
+      this.mainSlides.push(JSON.parse(JSON.stringify(pArray)));
     }
   }
 

@@ -20,7 +20,7 @@ export class HubExperiencesComponent implements OnInit {
 
   hubWorkshops: iExperience[] = [];
   workshopType: string = 'physical';
-  workshopTypes: string[] = ['Workshop', 'Course'];
+  workshopTypes: string[] = ['Workshop', 'Course' , 'Talk', 'Program'];
   sortList: string[] = ['Recent', 'Popular', 'A - Z'];
 
   drafts: Array<iExperience> = [];

@@ -1,6 +1,6 @@
 <div class="row topNavbar fixed-top">
   <div class="col-md-3 py-3 px-0">
-    <img routerLink="/home" src="/assets/imgs/grayLogo.png" class="pointer ml-4">
+    <img routerLink="/home" src="/assets/imgs/MerekaLogo.png" class="pointer ml-4">
   </div>
   <div class="col-md-9 text-right">
     <button *ngFor="let btn of tabButtons" [class.activeBtn]="activeTab===btn.title"
@@ -63,9 +63,9 @@
           [items]="dataHelper.workshopCategories" placeholder="Theme"></ng-select> -->
 
         <div class="workshopCateCont">
-          <div *ngFor="let Cate of dataHelper.workshopCategories" (click)="addInExperienceThemes(Cate)"
-            [class.selected]="isAddedInThemes(Cate)" class="WorkshopcateBtn">
-            <p class="bold m-0">{{Cate}}</p>
+          <div [class.d-none]="!Cate.isActive" *ngFor="let Cate of dataHelper.workshopCategories" (click)="addInExperienceThemes(Cate.name)"
+            [class.selected]="isAddedInThemes(Cate.name)" class="WorkshopcateBtn">
+            <p class="bold m-0">{{Cate.name}}</p>
           </div>
         </div>
 

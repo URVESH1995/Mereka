@@ -1,6 +1,6 @@
 <div class="row topNavbar fixed-top">
   <div class="col-md-3 py-3 px-0">
-    <img routerLink="/home" src="/assets/imgs/grayLogo.png" class="pointer ml-4">
+    <img routerLink="/home" src="/assets/imgs/MerekaLogo.png" class="pointer ml-4">
   </div>
   <div class="col-md-9 text-right">
     <button *ngFor="let btn of tabButtons" [class.activeBtn]="activeTab===btn.title"
@@ -93,7 +93,7 @@
             <div class="col-md-7 pr-0">
               <div style="margin-top: 12em" class="form-group">
                 <h4 class="bold">About Me</h4>
-                <p class="font-15">What do you want people to know about you? Share your interests and hobbies!</p>
+                <p class="font-15 bold">What do you want people to know about you? Share your interests and hobbies!</p>
                 <textarea [(ngModel)]="learnerProfile.aboutMe" type="text" placeholder="Label" class="form-control"
                   rows="8"></textarea>
               </div>

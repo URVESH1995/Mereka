@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Subject } from 'rxjs';
 import { iUser, iExpertProfile, iLearnerProfile } from '../models/user';
 import { Router } from '@angular/router';
 import { iPostJob } from '../models/post-job';
+import { iChat, iMessage } from '../models/chats';
 import { iAgency } from '../models/agency';
 import { HttpClient } from "@angular/common/http";
 import { Papa } from 'ngx-papaparse';
@@ -13,6 +14,7 @@ import { iPushNotification } from '../models/push-notification';
 import { iJobBid } from '../models/job-bid';
 import { iStrings } from '../models/enums';
 import { iExperience } from '../models/experience';
+import { iCategory } from '../models/category';
 import { iBookExperience } from '../models/book-experience';
 import * as firebase from 'firebase';
 import { iTransaction } from '../models/transaction';
@@ -81,24 +83,24 @@ export class DataHelperService {
   notificationSettings = {};
   privacySettings = {};
   allTransactions: iTransaction[] = [];
+  workshopCategories: iCategory[] = [];
 
   suggestedWorkshopTags: string[] = [
     'Alpha', 'Beta', 'Facebook', 'Google', 'History', 'Class', 'Culture'
   ];
 
-  workshopCategories: string[] = [
-    'Architecture', 'Art & Culture', 'Arts & Crafts', 'Biology & Life Sciences', 'Business & Management',
-    'Creative', 'Chemistry', 'Communication', 'Cooking', 'Computer Science', 'Data Analysis & Statistics',
-    'Design', 'DIY', 'Economics & Finance', 'Education & Teacher Training', 'Electronics', 'Energy & Earth',
-    'Engineering', 'Environmental', 'Ethics', 'Food & Nutrition', 'Health & Safety', 'History', 'Humanities',
-    'Language', 'Law', 'Literature', 'Math', 'Metal Working', 'Music', 'Philanthropy', 'Philosophy & Ethics',
-    'Physics', 'Science', 'Social Sciences', 'Upcycling', 'Wood Working'
-  ];
+
+  chatWithLearners: Array<iChat> = [];
+  chatWithHubs: Array<iChat> = [];
+  chatsData: any = {};
+  selectedChatHub: string = '';
+  activeChat: iChat = new iChat();
 
   constructor(
     public papa: Papa,
     private http: HttpClient,
     public router: Router,
+    public zone: NgZone,
   ) {
     this.getYearsAndDates();
     this.fetchAllData();
@@ -106,12 +108,40 @@ export class DataHelperService {
   }
 
   fetchAllData() {
+    this.getAllCategories();
     this.getAllTransactions();
     this.getSettings();
     this.getAppData();
     this.getAllAgencies();
     this.getAllUsers();
     this.getMyJobs();
+
+    const currentUser: iUser = JSON.parse(localStorage.getItem('userData'));
+    if (currentUser && currentUser.uid) {
+      this.getChatsData();
+    }
+  }
+
+
+  getAllCategories() {
+    const self = this;
+    self.workshopCategories = [];
+    firebase.database().ref().child('categories')
+      .once('value', (snapshot) => {
+        self.workshopCategories = [];
+        const categories = snapshot.val();
+        self.zone.run(() => {
+          if (categories) {
+            for (var key in categories) {
+              self.workshopCategories.unshift(categories[key]);
+            }
+            self.workshopCategories.sort((a, b) => (b.name < a.name) ? 1 : -1);
+          }
+        })
+
+      }).catch(error => {
+        console.log(error);
+      })
   }
 
   getAllTransactions() {
@@ -244,6 +274,13 @@ export class DataHelperService {
         self.createAgencyData = self.allAgencies[uid];
         self.dataFetching.allAgenciesFetched = true;
         self.publishSomeData({ allAgenciesFetched: true });
+
+        // const currentUser: iUser = JSON.parse(localStorage.getItem('userData'));
+        // if (currentUser && currentUser.uid && self.allAgencies && self.allAgencies[currentUser.uid]) {
+        //   self.myAgency = self.allAgencies[currentUser.uid];
+        //   self.publishSomeData({ myAgencyFetched: true });
+        // }
+
       });
   }
 
@@ -270,7 +307,8 @@ export class DataHelperService {
     if (localStorage.getItem('userLoggedIn') === 'true') {
       const self = this;
       const currentUser: iUser = JSON.parse(localStorage.getItem('userData'));
-      if (currentUser.isExpert) {
+      // if (currentUser.isExpert) {
+      if (currentUser && currentUser.uid && currentUser.myAgency) {
         firebase.database().ref().child(`/agencies/${currentUser.uid}`)
           .on('value', (snapshot) => {
             self.myAgency = snapshot.val();
@@ -339,6 +377,91 @@ export class DataHelperService {
       });
   }
 
+  getChatsData() {
+    var self = this;
+    self.chatWithHubs = [];
+    self.chatWithLearners = [];
+    const currentUser: iUser = JSON.parse(localStorage.getItem('userData'));
+    var agencyId = '';
+    if (!currentUser || !currentUser.uid) {
+      return;
+    } else {
+      if (currentUser.agencyId) {
+        agencyId = currentUser.agencyId;
+      } else if (currentUser.myAgency) {
+        agencyId = currentUser.uid;
+      }
+    }
+
+    firebase.database().ref('chats/')
+      .orderByChild('uid').equalTo(currentUser.uid)
+      .once('value', (snapshot) => {
+        self.chatWithHubs = [];
+        var chatData: any = snapshot.val();
+        if (chatData) {
+          for (var key in chatData) {
+            self.chatWithHubs.unshift(JSON.parse(JSON.stringify(chatData[key])));
+          }
+        }
+        self.checkNewUserChat(currentUser.uid);
+        self.publishSomeData({ myChatFetched: true });
+      })
+
+
+    if (agencyId) {
+      firebase.database().ref('chats/')
+        .orderByChild('hubId').equalTo(agencyId)
+        .once('value', (snapshot) => {
+          self.chatWithLearners = [];
+          var chatData: any = snapshot.val();
+          if (chatData) {
+            for (var key in chatData) {
+              self.chatWithLearners.unshift(JSON.parse(JSON.stringify(chatData[key])));
+            }
+          }
+          self.checkNewHubChat(agencyId);
+          self.publishSomeData({ myChatFetched: true });
+        })
+    }
+
+  }
+
+  checkNewUserChat(uid) {
+    var self = this;
+    firebase.database().ref('chats/')
+      .orderByChild('uid').equalTo(uid)
+      .on("child_added", function (snapshot, previousChildKey) {
+        if (!self.chatWithHubs || !self.chatWithHubs.length) {
+          self.chatWithHubs = [];
+        }
+        if (self.chatWithHubs.findIndex(obj => obj.chatKey == snapshot.key) >= 0) {
+          return;
+        } else {
+          var data = snapshot.val();
+          self.chatWithHubs.unshift(JSON.parse(JSON.stringify(data)));
+          self.publishSomeData({ myChatFetched: true });
+        }
+      })
+  }
+
+  checkNewHubChat(agencyId) {
+    var self = this;
+
+    firebase.database().ref('chats/')
+      .orderByChild('hubId').equalTo(agencyId)
+      .on("child_added", function (snapshot, previousChildKey) {
+        if (!self.chatWithLearners || !self.chatWithLearners.length) {
+          self.chatWithLearners = [];
+        }
+        if (self.chatWithLearners.findIndex(obj => obj.chatKey == snapshot.key) >= 0) {
+          return;
+        } else {
+          var data = snapshot.val();
+          self.chatWithLearners.unshift(JSON.parse(JSON.stringify(data)));
+          self.publishSomeData({ myChatFetched: true });
+        }
+      })
+  }
 
   getMyJobs() {
     const self = this;

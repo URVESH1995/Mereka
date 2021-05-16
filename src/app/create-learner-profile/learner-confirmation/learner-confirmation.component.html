@@ -1,6 +1,6 @@
 <div class="row topNavbar fixed-top">
   <div class="col-md-3 py-3 px-0">
-    <img routerLink="/home" src="/assets/imgs/grayLogo.png" class="pointer ml-4">
+    <img routerLink="/home" src="/assets/imgs/MerekaLogo.png" class="pointer ml-4">
   </div>
   <div class="col-md-9 text-right">
     <button *ngFor="let btn of tabButtons" [class.activeBtn]="activeTab===btn.title"
@@ -22,7 +22,7 @@
           <img class="userAvatar" [src]="currentUser.profileUrl || '/assets/imgs/userIcon.PNG'">
           <h5 class="bold">{{currentUser.fullName}}</h5>
           <p>Learner</p>
-          <p><i class="fas fa-map-marker-alt"></i> {{currentUser.location.city}}, {{currentUser.location.country}}
+          <p><i class="fas fa-map-marker-alt"></i> {{currentUser.location?.city}}, {{currentUser.location?.country}}
           </p>
           <div class="socialLinks">
             <a *ngIf="learnerProfile.webUrl" [href]="learnerProfile.webUrl" target="_blank">

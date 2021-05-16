@@ -30,7 +30,10 @@ export class HubBasicDetailsComponent implements OnInit {
   }
 
   switchTab(tab: string) {
-    this.activeTab = tab;
+    if(this.userAuth.currentUser.myAgency) {
+      this.activeTab = tab;
+    }
+    
   }
 
 }

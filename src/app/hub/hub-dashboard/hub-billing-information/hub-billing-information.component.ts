@@ -24,7 +24,7 @@ export class HubBillingInformationComponent implements OnInit {
   myTransactions: iTransaction[] = [];
   displayTransactions: iTransaction[] = [];
   myWorkshops: iExperience[] = [];
-  transactionTypes: string[] = ['Experience', 'Job', 'Hub'];
+  transactionTypes: string[] = ['Experiences', 'Spaces'];
   agencyWithdraws: iWithdrawal[] = [];
   totalWithdraws: number;
   hubAvailabledBalance: number = 0;

@@ -3,6 +3,7 @@ import { iAgency, iAgencyLocation } from '../../models/agency';
 import { DataHelperService } from '../../services/data-helper.service';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase';
+import { UserAuthService } from 'src/app/services/user-auth.service';
 
 @Component({
   selector: 'app-hub-profile-setup',
@@ -21,7 +22,7 @@ export class HubProfileSetupComponent implements OnInit {
   myAgency: iAgency = new iAgency();
   @Output() updatedActiveTab = new EventEmitter<any>();
 
-  constructor(
+  constructor( public userAuth:UserAuthService,
     public zone: NgZone,
     public router: Router,
     public dataHelper: DataHelperService
@@ -90,23 +91,26 @@ export class HubProfileSetupComponent implements OnInit {
     this.router.navigate(['/add-hub']);
   }
 
-  nextTab() {
+  nextTab(check) {
     if (this.requiredFieldsAreFilled()) {
       if (this.newLogoFile) {
         this.dataHelper.displayLoading = true;
-        this.saveImageOnFirebase();
+        this.saveImageOnFirebase(check);
       } else if (this.newCoverFile) {
         this.dataHelper.displayLoading = true;
-        this.saveImageOnFirebase();
+        this.saveImageOnFirebase(check);
       } else {
         this.dataHelper.displayLoading = false;
-        this.saveAndNextTab();
+        this.saveAndNextTab(check);
       }
+    } else if(check) {
+      this.router.navigate(['/hub-dashboard']);
     }
+
   }
 
 
-  saveImageOnFirebase() {
+  saveImageOnFirebase(check) {
     const self = this;
     let storageRef = firebase.storage().ref();
     const filename = Math.floor(Date.now() / 1000);
@@ -122,7 +126,7 @@ export class HubProfileSetupComponent implements OnInit {
           self.newCoverFile = false;
           self.myAgency.coverImage = url;
         }
-        self.nextTab();
+        self.nextTab(check);
       })
         .catch((e) => {
           self.dataHelper.publishSomeData({ showError: e.message });
@@ -134,9 +138,24 @@ export class HubProfileSetupComponent implements OnInit {
   }
 
 
-  saveAndNextTab() {
-    this.dataHelper.createAgencyData = this.myAgency;
-    this.updatedActiveTab.emit('Your Details');
+  saveAndNextTab(check) {
+    if(!check) {
+      this.dataHelper.createAgencyData = this.myAgency;
+      this.updatedActiveTab.emit('Your Details');
+    } else {
+      const updates = {};
+      updates[`/agencies/${this.myAgency.expertUid}/agencyName`] = this.myAgency.agencyName;
+      updates[`/agencies/${this.myAgency.expertUid}/companyType`] = this.myAgency.companyType;
+      updates[`/agencies/${this.myAgency.expertUid}/location/city`] = this.myAgency.location.city;
+      updates[`/agencies/${this.myAgency.expertUid}/agencyLogo`] = this.myAgency.agencyLogo;
+      updates[`/agencies/${this.myAgency.expertUid}/coverImage`] = this.myAgency.coverImage;
+  
+      firebase.database().ref().update(updates).then(() => {
+        this.dataHelper.publishSomeData({ showSuccess: 'Hub data saved!' });
+        this.dataHelper.myAgency = this.myAgency;
+        this.router.navigate(['/hub-dashboard']);
+      });
+    }
   }
 
 

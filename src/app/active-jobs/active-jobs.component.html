@@ -11,11 +11,11 @@
           </div>
 
           <p class="mt-3 mb-1 bold font-18">{{bid.bidPerson.fullName}}</p>
-          <p class="font-13 text1">{{bid.bidPerson.expertProfile.overview.title}}</p>
+          <p class="font-13 text1">{{bid.bidPerson.expertProfile?.overview?.title}}</p>
           <div *ngIf="bid.bidPerson.location" class="icon mt-1">
             <i class="fas fa-map-marker-alt"></i>
             <p class="mb-0 font-13 pl-2 align-center">
-              {{bid.bidPerson.location.city}}, {{bid.bidPerson.location.country}}
+              {{bid.bidPerson.location?.city}}, {{bid.bidPerson.location?.country}}
             </p>
           </div>
         </div>

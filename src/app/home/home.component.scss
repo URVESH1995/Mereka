@@ -1,3 +1,7 @@
+.row{
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
 .bgCont {
   background: url("/assets/imgs/homeImg.png") center center no-repeat;
   background-size: cover;
@@ -202,12 +206,14 @@
     padding: 0 5em;
   }
   .carousel-control-prev {
-    left: -85px;
+    left: -40px;
     opacity: 1;
+    width: fit-content;
   }
   .carousel-control-next {
-    right: -85px;
+    right: -40px;
     opacity: 1;
+    width: fit-content;
   }
 }
 
@@ -542,7 +548,7 @@
 
   &.notScrolledClass {
     position: absolute;
-    top: 280px;
+    top: 216px;
     .horizontalLine {
       display: none;
     }

@@ -17,6 +17,7 @@ export class WorkshopsComponent implements OnInit {
   showLevelDropdown: boolean;
   showLanguageDropdown: boolean;
   currentPage: number = 1;
+  showNav2:boolean = true;
 
   userSettings = {
     showSearchButton: false,
@@ -24,12 +25,13 @@ export class WorkshopsComponent implements OnInit {
     inputString: ''
   };
 
+  showTopics: boolean = false;
+  showAccess: boolean = false
   hideMap: boolean;
   loading: boolean;
   workshopFilters: iExperienceFilters = new iExperienceFilters();
   allWorkshops: iExperience[] = [];
   displayWorkshops: iExperience[] = [];
-  workshopCategories: string[] = [];
   allLanguages: string[] = [];
   allTags: string[] = [];
 
@@ -37,6 +39,7 @@ export class WorkshopsComponent implements OnInit {
   selectedSortBy: string;
   allTopics: string[] = [];
   selectedTopic: string = 'All';
+  selectedTopicList: string[] = ['All'];
   sortOptions: string[] = ['Alphabetically', 'Price low to high', 'Price high to low'];
   groupOptions: string[] = ['Group - Friendly', 'For Students', 'Family - Friendly', 'For Couples', 'Kids Activities'];
 
@@ -54,8 +57,6 @@ export class WorkshopsComponent implements OnInit {
     public dataHelper: DataHelperService,
     public userAuth: UserAuthService
   ) {
-    this.workshopCategories = dataHelper.deepCloneData(dataHelper.workshopCategories);
-    // this.workshopCategories.unshift('All categories');
 
     this.dataHelper.getObservable().subscribe(data => {
       if (data.allWorkshopsFetched) {
@@ -81,6 +82,16 @@ export class WorkshopsComponent implements OnInit {
     } else {
       this.getFilteredWorkshops();
       this.getTopics();
+    }
+  }
+
+  updateFilterTopicList(topic) {
+
+    var idx = this.selectedTopicList.indexOf(topic);
+    if(idx>=0) {
+      this.selectedTopicList.splice(idx,1)
+    } else {
+      this.selectedTopicList.push(topic)
     }
   }
 
@@ -123,11 +134,11 @@ export class WorkshopsComponent implements OnInit {
 
   isAnyClassTopicMatched(workshop: iExperience): boolean {
     let topicMatched: boolean;
-    if (this.selectedTopic === 'All') {
+    if (this.selectedTopicList.includes('All') ) {
       topicMatched = true;
     } else {
       workshop.sessions.forEach(x => {
-        if (x.topic.match(this.selectedTopic)) {
+        if ( this.selectedTopicList.includes(x.topic) ) {
           topicMatched = true;
         }
       });

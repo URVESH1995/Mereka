@@ -3,8 +3,8 @@
         <div class="col-md-7 leftContent">
             <div style="width: 90%">
                 <p>Description</p>
-                <h5 class="bold">Let Learners know more about your Hub</h5>
-                <p class="text-secondary">Some short description here.</p>
+                <h5 class="bold">Describe your Hub</h5>
+                <p class="text-secondary">Please make your description concise. The optimum word count is 100-200 words.</p>
 
                 <div class="formContent">
                     <div class="form-group">
@@ -19,19 +19,26 @@
                 <img style="width: 35px;" src="/assets/imgs/light-icon.png">
                 <span class="pl-2">TIPS</span>
             </h5>
-            <p>Remember to allocate some time for introductions as well as any de-briefing or summary
-                at the end of the experience.
-            </p>
+            <p>Tell the world what your Hub offers and what makes it stand out! You may include its background story and describe its unique features.</p>
         </div>
     </div>
 </div>
 
 <div class="parentContent rounded p-4 mt-3">
     <p>Amenities</p>
-    <h5 class="bold">What amenities do you offer at your space?</h5>
-    <p class="text-secondary">Description of something here</p>
+    <h5 class="bold">What amenities do you offer at your Hub?</h5>
+    <p class="text-secondary">Indicate the comforts and conveniences which users may enjoy at your Hub.</p>
     <div class="row">
-        <div class="col-md-2 pl-0">
+
+        <div class="col-xl-2 col-md-4 col-sm-6 pl-0 pr-2" *ngFor="let amnity of allAminities; let i=index">
+            <div class="custom-control custom-checkbox mb-2">
+                <input [checked]="isAmenityAdded(amnity)" (change)="updateAmenities(amnity)"
+                    type="checkbox" class="custom-control-input" [id]="'customCheck'+i">
+                <label class="custom-control-label" [for]="'customCheck'+i">{{amnity}}</label>
+            </div>
+        </div>
+
+        <!-- <div class="col-md-2 pl-0">
             <div class="custom-control custom-checkbox mb-2">
                 <input [checked]="isAmenityAdded('Free Coffee')" (change)="updateAmenities('Free Coffee')"
                     type="checkbox" class="custom-control-input" id="customCheck1" name="example1">
@@ -51,16 +58,25 @@
                     type="checkbox" class="custom-control-input" id="customCheck3" name="example3">
                 <label class="custom-control-label" for="customCheck3">Free Snacks</label>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 
 <div class="parentContent rounded p-4 mt-3">
     <p>Facilities</p>
-    <h5 class="bold">What facilities do you offer at your space?</h5>
-    <p class="text-secondary">Description of something here</p>
+    <h5 class="bold">What facilities do you offer at your Hub?</h5>
+    <p class="text-secondary">Indicate the features and facilities present at your Hub.</p>
     <div class="row">
-        <div class="col-md-2 pl-0">
+
+        <div class="col-xl-2 col-md-4 col-sm-6 pl-0 pr-2" *ngFor="let item of allFacilities; let i=index">
+            <div class="custom-control custom-checkbox mb-2">
+                <input [checked]="isFacilityAdded(item)" (change)="updateFacilities(item)"
+                    type="checkbox" class="custom-control-input" [id]="'facilityCheck'+i">
+                <label class="custom-control-label" [for]="'facilityCheck'+i">{{item}}</label>
+            </div>
+        </div>
+
+        <!-- <div class="col-md-2 pl-0">
             <div class="custom-control custom-checkbox mb-2">
                 <input [checked]="isFacilityAdded('Lockers')" (change)="updateFacilities('Lockers')" type="checkbox"
                     class="custom-control-input" id="customCheck4" name="example4">
@@ -102,15 +118,19 @@
                     class="custom-control-input" id="customCheck9" name="example9">
                 <label class="custom-control-label" for="customCheck9">Childcare</label>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 
 <div class="row fixed-bottom p-3 px-4 continueBackBtns">
-    <div class="col-md-6">
+    <div class="col-md-4">
         <button (click)="navigateBack()" class="btn grayChoiceHover btn-light btnRounded">Back</button>
     </div>
-    <div class="col-md-6 text-right">
-        <button (click)="nextTab()" class="btn grayChoiceHover btnSecondary btnRounded">Continue</button>
+    <div class="col-md-4 text-center">
+        <button (click)="nextTab('exit')" class="btn grayChoiceHover btn-light btnRounded"
+        style="width: fit-content;" *ngIf="userAuth.currentUser.myAgency">Save & Exit</button>
+    </div>
+    <div class="col-md-4 text-right">
+        <button (click)="nextTab('')" class="btn grayChoiceHover btnSecondary btnRounded">Continue</button>
     </div>
 </div>

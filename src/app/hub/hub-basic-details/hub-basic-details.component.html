@@ -2,11 +2,11 @@
 
 <div class="row topNavbar fixed-top">
     <div class="col-md-3 py-3 px-0">
-        <img routerLink="/home" src="/assets/imgs/grayLogo.png" class="pointer ml-4">
+        <img routerLink="/home" src="/assets/imgs/MerekaLogo.png" class="pointer ml-4">
     </div>
     <div class="col-md-9 text-right">
         <button *ngFor="let btn of tabButtons" [class.activeBtn]="activeTab===btn"
-            class="btn btn-inactive grayChoiceHover">{{btn}}</button>
+            class="btn btn-inactive grayChoiceHover" (click)="switchTab(btn)">{{btn}}</button>
     </div>
 </div>
 

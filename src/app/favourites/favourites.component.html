@@ -64,7 +64,7 @@
 
                 </div>
                 <div (click)="workshopDetails(workshop)" class="py-4 px-3">
-                  <p class="font-13 text-secondary">{{workshop.location.city}}, {{workshop.location.country}}
+                  <p class="font-13 text-secondary">{{workshop.location?.city}}, {{workshop.location?.country}}
                     <span class="float-right">
                       <i class="fa fa-star"></i> {{workshop.avgRating || 'No rating'}}
                     </span>
@@ -106,8 +106,8 @@
                     </p>
                   </div>
                 </div>
-                <p class="my-3">{{expert.expertProfile.expertise.title || 'N/A'}}</p>
-                <h5 class="bold mb-0">RM {{expert.expertProfile.hourlyRate?.hourlyRate || 'N/A'}} /
+                <p class="my-3">{{expert.expertProfile?.expertise?.title || 'N/A'}}</p>
+                <h5 class="bold mb-0">RM {{expert.expertProfile?.hourlyRate?.hourlyRate || 'N/A'}} /
                   <small>Hour</small>
                 </h5>
               </div>

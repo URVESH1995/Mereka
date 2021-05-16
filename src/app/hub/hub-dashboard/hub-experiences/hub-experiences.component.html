@@ -15,7 +15,8 @@
         </div>
         <div style="width: 20%" class="mr-3">
             <ng-select [(ngModel)]="selectedTopic" (change)="getHubWorkshops()" [clearable]="false" placeholder="Topic"
-                [items]="dataHelper.workshopCategories"></ng-select>
+                [items]="dataHelper.workshopCategories"  bindLabel="name" 
+                bindValue="name" ></ng-select>
         </div>
         <div style="width: 20%">
             <ng-select [(ngModel)]="selectedSort" (change)="sortDisplayWorkshops()" [clearable]="false"
@@ -158,7 +159,7 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
-            <div class="modal-body">
+            <div class="modal-body bold">
                 Are you sure you want to remove this workshop?
             </div>
 

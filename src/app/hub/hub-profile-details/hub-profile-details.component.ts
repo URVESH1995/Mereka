@@ -2,7 +2,8 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { DataHelperService } from '../../services/data-helper.service';
 import { iAgency } from '../../models/agency';
 import { Router } from '@angular/router';
-
+import * as firebase from 'firebase';
+import { UserAuthService } from 'src/app/services/user-auth.service';
 declare var google: any;
 
 
@@ -18,7 +19,7 @@ export class HubProfileDetailsComponent implements OnInit {
   myAgency: iAgency = new iAgency();
   @Output() updatedActiveTab = new EventEmitter<any>();
 
-  constructor(
+  constructor( public userAuth:UserAuthService,
     public router: Router,
     public dataHelper: DataHelperService
   ) { }
@@ -33,11 +34,15 @@ export class HubProfileDetailsComponent implements OnInit {
   }
 
   updateUserSettings() {
-    this.userSettings = {
-      showSearchButton: false,
-      inputPlaceholderText: 'Address',
-      inputString: this.myAgency.location.location
-    };
+
+    if(this.myAgency.location && this.myAgency.location.city) {
+      this.userSettings = {
+        showSearchButton: false,
+        inputPlaceholderText: 'Address',
+        inputString: this.myAgency.location.city
+      };
+    }
+   
     this.updateMapDisplay();
   }
 
@@ -79,10 +84,30 @@ export class HubProfileDetailsComponent implements OnInit {
     }
   }
 
-  nextTab() {
+  nextTab(check) {
+
     if (this.allFieldsAreFilled()) {
-      this.dataHelper.createAgencyData = this.myAgency;
-      this.updatedActiveTab.emit('About Page');
+      if(!check) {
+        this.dataHelper.createAgencyData = this.myAgency;
+        this.updatedActiveTab.emit('About Page');
+      } else {
+        const updates = {};
+        updates[`/agencies/${this.myAgency.expertUid}/canLearnerSendJobRequests`] = this.myAgency.canLearnerSendJobRequests;
+        updates[`/agencies/${this.myAgency.expertUid}/canLearnerRequestInstantQuotes`] = this.myAgency.canLearnerRequestInstantQuotes;
+        updates[`/agencies/${this.myAgency.expertUid}/location`] = this.myAgency.location;
+        updates[`/agencies/${this.myAgency.expertUid}/agencyName`] = this.myAgency.agencyName;
+        updates[`/agencies/${this.myAgency.expertUid}/companyType`] = this.myAgency.companyType;
+        updates[`/agencies/${this.myAgency.expertUid}/agencyLogo`] = this.myAgency.agencyLogo;
+        updates[`/agencies/${this.myAgency.expertUid}/coverImage`] = this.myAgency.coverImage;
+        
+        firebase.database().ref().update(updates).then(() => {
+          this.dataHelper.publishSomeData({ showSuccess: 'Hub data saved!' });
+          this.dataHelper.myAgency = this.myAgency;
+          this.router.navigate(['/hub-dashboard']);
+        });
+      }
+    } else if(check) {
+      this.router.navigate(['/hub-dashboard']);
     }
   }
 

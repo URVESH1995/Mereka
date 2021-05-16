@@ -12,7 +12,7 @@
         <img class="userAvatar" [src]="userProfile.profileUrl || '/assets/imgs/userIcon.PNG'">
         <h5 class="bold">{{userProfile.fullName}}</h5>
         <p>Learner</p>
-        <p><i class="fas fa-map-marker-alt"></i> {{userProfile.location.city}}, {{userProfile.location.country}}
+        <p><i class="fas fa-map-marker-alt"></i> {{userProfile.location?.city}}, {{userProfile.location?.country}}
         </p>
         <div class="socialLinks">
           <a *ngIf="learnerProfile.webUrl" [href]="learnerProfile.webUrl" target="_blank">

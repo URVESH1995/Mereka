@@ -3,14 +3,16 @@
 
 <div class="row justify-content-center parentContent">
   <div class="col-md-12 maxWidthContent">
-    <h2>{{userAuth.currentUser.fullName}}'s Hub</h2>
+    <h2 class="bold">{{userAuth.currentUser.fullName}}'s Hub</h2>
     <div class="d-flex mt-3">
       <div class="leftMenu">
         <p (click)="activeMenu2='My Dashboard'; userSubMenu=false; serviceSubMenu=false"
           [class.active]="activeMenu2=='My Dashboard'" class="menu grayChoiceHover">My Dashboard
         </p>
-        <p (click)="activeMenu2='Hub Profile'; userSubMenu=false; serviceSubMenu=false"
-          [class.active]="activeMenu2=='Hub Profile'" class="menu grayChoiceHover">Hub Profile</p>
+        <!-- <p (click)="activeMenu2='Hub Profile'; userSubMenu=false; serviceSubMenu=false"
+          [class.active]="activeMenu2=='Hub Profile'" class="menu grayChoiceHover">Hub Profile</p> -->
+          <p (click)="agencyProfile()"
+          class="menu grayChoiceHover">Hub Profile</p>
         <p (click)="userSubMenu=!userSubMenu; serviceSubMenu=false" [class.active]="userSubMenu"
           class="menu grayChoiceHover mb-2">Users
         </p>
@@ -102,7 +104,16 @@
           </div>
 
           <div class="row reservationsBlock mt-5">
-            <div class="col-md-12 mb-4">
+            <div class="col-md-12 d-flex justify-content-between">
+              <p class="bold">Upcoming Reservations</p>
+
+              <p class="bold">
+                <span style="font-size: 16px" routerLink="/my-workshops" class="float-right pointer font-weight-bold bold-fontFamily">
+                  <u>View All</u></span>
+                </p>
+            </div>
+            <div class="col-md-12 py-4" 
+            style="background: #eeeeee; border-top-left-radius: 15px; border-top-right-radius: 15px; border: 1px solid #d9d9d9;">
               <!-- <p class="bold">Upcoming Reservations</p> -->
               <button (click)="selectedTab='Experiences'" [class.activeTab]="selectedTab==='Experiences'"
                 class="btn btnRounded tabButtons grayChoiceHover">Experiences</button>
@@ -111,38 +122,47 @@
               <button (click)="selectedTab='Machines'" [class.activeTab]="selectedTab==='Machines'"
                 class="btn btnRounded tabButtons grayChoiceHover">Machines</button>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-12" style=" border: 1px solid #d9d9d9; border-top: none ;">
 
-              <div *ngFor="let workshop of myWorkshops | slice:0:3" class="row roundedBlock my-3">
-                <div class="col-md-9">
-                  <div class="d-flex mb-3">
-                    <p><i class="fas fa-clock"></i> {{workshop.experienceDuration.startDate}} <br />
-                      <span class="pl-3">
-                        <span *ngIf="workshop.experienceDuration.hourlyDuration">
-                          {{workshop.experienceDuration.hourlyDuration}}h </span>
-                        <span *ngIf="workshop.experienceDuration.minutesDuration">
-                          {{workshop.experienceDuration.minutesDuration}}mins</span>
-                      </span>
-                    </p>
-                    <p>
-                      <i class="fas fa-users ml-5"></i> For {{workshop.guestLearners}} <u>Learners</u>
-                    </p>
+              <div class="w-100" *ngIf="selectedTab=='Experiences'">
+                <div *ngFor="let workshop of myWorkshops | slice:0:3" class="row roundedBlock my-3">
+                  <div class="col-md-9">
+                    <div class="d-flex mb-3">
+                      <p><i class="fas fa-clock"></i> {{workshop.experienceDuration.startDate}} <br />
+                        <span class="pl-3">
+                          <span *ngIf="workshop.experienceDuration.hourlyDuration">
+                            {{workshop.experienceDuration.hourlyDuration}}h </span>
+                          <span *ngIf="workshop.experienceDuration.minutesDuration">
+                            {{workshop.experienceDuration.minutesDuration}}mins</span>
+                        </span>
+                      </p>
+                      <p>
+                        <i class="fas fa-users ml-5"></i> For {{workshop.guestLearners}} <u>Learners</u>
+                      </p>
+                    </div>
+                    <h4>{{workshop.experienceTitle}}</h4>
+                    <span *ngFor="let tag of workshop.tags" class="badges">{{tag}}</span>
                   </div>
-                  <h4>{{workshop.experienceTitle}}</h4>
-                  <span *ngFor="let tag of workshop.tags" class="badges">{{tag}}</span>
+                  <div class="col-md-3 text-center">
+                    <button (click)="editWorkshop(workshop)" class="blackBgBtn btn btn-dark btnRounded w-75">
+                      Update</button>
+                  </div>
                 </div>
-                <div class="col-md-3 text-center">
-                  <button (click)="editWorkshop(workshop)" class="blackBgBtn btn btn-dark btnRounded w-75">Edit
-                    Experience</button>
-                </div>
+  
+                <p *ngIf="!myWorkshops.length" class="my-5 text-center text-secondary">No Experiences found!</p>
+  
+                <!-- <div *ngIf="myWorkshops.length" class="text-center py-3">
+                  <button routerLink="/my-workshops" class="blackBgBtn btn btn-dark btnRounded" style="width: 120px;">View
+                    All</button>
+                </div> -->
+              </div>
+              <div class="w-100" *ngIf="selectedTab=='Spaces'">
+                <p class="my-5 text-center text-secondary">No Spaces found!</p>
+              </div>
+              <div class="w-100" *ngIf="selectedTab=='Machines'">
+                <p class="my-5 text-center text-secondary">No Machines found!</p>
               </div>
 
-              <p *ngIf="!myWorkshops.length" class="my-5 text-center text-secondary">No workshops found!</p>
-
-              <div *ngIf="myWorkshops.length" class="text-center py-3">
-                <button routerLink="/my-workshops" class="blackBgBtn btn btn-dark btnRounded" style="width: 120px;">View
-                  All</button>
-              </div>
             </div>
           </div>
 
@@ -222,8 +242,8 @@
             <div class="col-md-8">
               <div class="profileCard p-4 rounded shadow">
                 <img class="userAvatar" [src]="myAgency.agencyLogo">
-                <img class="heartIcon" src="/assets/imgs/heart-icon.png">
-                <img class="chatIcon" src="/assets/imgs/chat-icon.png">
+                <!-- <img class="heartIcon" src="/assets/imgs/heart-icon.png">
+                <img class="chatIcon" src="/assets/imgs/chat-icon.png"> -->
                 <div class="mt-3 pl-2">
                   <div class="row">
                     <div class="col-md-7 px-0">
@@ -246,7 +266,7 @@
                   </div>
                   <p class="mb-1">Social Enterprise</p>
                   <p>
-                    <i class="fas fa-map-marker-alt"></i> {{myAgency.location.location}}
+                    <i class="fas fa-map-marker-alt"></i> {{myAgency.location?.city}} , {{myAgency.location?.country}}
                     <i class="fas fa-star ml-5"></i> {{myAgency.avgRating}} ({{myAgency.totalReviews}})
                   </p>
                   <button class="btn whiteOutlinedBtn cardBtns btnRounded">Become a Member</button>

@@ -12,10 +12,10 @@
 
 
 <section class="bgCont">
-  <div class="row" style="position: absolute; top: 190px;">
+  <div class="row" style="position: absolute; top: 124px;">
     <div class="col-md-3"></div>
     <div class="col-sm-8 pl-0">
-      <h1 style="font-size: 60px" class="font-weight-bold text-white">The Future of Innovation</h1>
+      <h1 style="font-size: 60px; " class="font-weight-bold text-white bold-fontFamily">The Future of Innovation</h1>
     </div>
   </div>
 </section>
@@ -25,7 +25,7 @@
   <div class="col-sm-12 maxWidthContent">
     <div class="row">
       <div class="col-md-12">
-        <h4 style="font-size: 34px" class="font-weight-bold">Discover More</h4>
+        <h4 style="font-size: 34px" class="font-weight-bold bold-fontFamily">Discover More</h4>
       </div>
       <div *ngFor="let item of discoverItems" class="col-sm-4 lessPadding">
         <div routerLink="/hire-expert" class="discoverMoreCard bg-white p-4">
@@ -33,7 +33,7 @@
           <hr />
           <div class="txtCont">
             <h5 style="font-size: 17px" class="bold">Hire an Expert</h5>
-            <p style="font-size: 14px" class="my-0 font-13">
+            <p style="font-size: 14px" class="my-0">
               Write a short description here Write a short description here Write a short description here
             </p>
           </div>
@@ -47,8 +47,8 @@
 <div class="row workshopSliderContainer justify-content-center py-5 bg-white">
   <div *ngIf="dataHelper.allWorkshopList" class="row col-md-12 maxWidthContent">
     <div class="col-md-12">
-      <h4 style="font-size: 34px" class="font-weight-bold">Unleash your creative potential
-        <span style="font-size: 16px" routerLink="/workshops" class="float-right pointer font-weight-bold">
+      <h4 style="font-size: 34px" class="font-weight-bold bold-fontFamily">Unleash your creative potential
+        <span style="font-size: 16px" routerLink="/workshops" class="float-right pointer font-weight-bold bold-fontFamily">
           <u>View All</u></span>
       </h4>
       <p class="font-14 text-secondary">Description of what to expect or some cool feature</p>
@@ -76,11 +76,10 @@
         </div>
       </div>
     </div>
-
+<!-- 
     <div class="col-md-4 lessPadding"
       *ngFor="let workshop of allWorkshops | paginate: { itemsPerPage: 3, currentPage: currentPage }">
       <div class="workshopCard pointer">
-        <!-- <button class="btn text-white btn-sm leftCornerBtn">BEST SELLER</button> -->
         <button (click)="favUnfavWorkshop(workshop)" class="btn text-white btn-dark btn-sm rightCornerBtn">
           <i class="fa-heart" [class.far]="!isMyFavWorkshop(workshop)" [class.fas]="isMyFavWorkshop(workshop)"></i>
         </button>
@@ -94,12 +93,46 @@
           </h5>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div *ngIf="!allWorkshops.length" class="col-md-12 text-center text-secondary my-5">No experiences found!</div>
 
-    <div *ngIf="allWorkshops.length" class="text-center w-100 mt-5">
+    <!-- <div *ngIf="allWorkshops.length" class="text-center w-100 mt-5">
       <app-custom-pagination (pageChange)="currentPage = $event"></app-custom-pagination>
+    </div> -->
+
+    <div class="col-md-12 featuredVendorsBlock maxWidthContent" *ngIf="mainSlides.length">
+      <div id="carousel-example1" class="carousel slide slider2 desktop-slider mt-4" data-ride="carousel"
+        data-interval="false">
+        <div class="carousel-inner row" role="listbox">
+          <div *ngFor="let slides of mainSlides; index as i" class="carousel-item col-sm-12 px-0" [class.active]="i===0">
+            <div class="row">
+              <div *ngFor="let workshop of slides" class="col-md-4 lessPadding pointer">
+                <div class="workshopCard pointer">
+                  <button (click)="favUnfavWorkshop(workshop)" class="btn text-white btn-dark btn-sm rightCornerBtn">
+                    <i class="fa-heart" [class.far]="!isMyFavWorkshop(workshop)" [class.fas]="isMyFavWorkshop(workshop)"></i>
+                  </button>
+                  <img (click)="workshopDetails(workshop)" [src]="workshop.coverImage">
+                  <div (click)="workshopDetails(workshop)" class="p-3">
+                    <h5 class="bold mb-1" style="font-size: 17px" >{{workshop.experienceTitle}}</h5>
+                    <p class="font-13 text-secondary">{{getWorkshopHost(workshop.uid) || 'N/A'}}</p>
+                    <h5 class="text-right mb-0" style="font-size: 15px" >
+                      <span *ngIf="workshop.ratePerLearner">MYR {{workshop.ratePerLearner}}<small>/learner </small></span>
+                      <span *ngIf="workshop.ratePerMember"> MYR {{workshop.ratePerMember}}<small>/member</small></span>
+                    </h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a class="carousel-control-prev" href="#carousel-example1" role="button" data-slide="prev">
+          <img style="transform: rotate(180deg)" src="/assets/imgs/next_Arrow.svg" height="60px">
+        </a>
+        <a class="carousel-control-next" href="#carousel-example1" role="button" data-slide="next">
+          <img src="/assets/imgs/next_Arrow.svg" height="60px">
+        </a>
+      </div>
     </div>
   </div>
 </div>
@@ -131,13 +164,18 @@
 
 
 <div class="row featuredVendorsBlock justify-content-center py-5 bg-white">
-  <div class="col-md-12 maxWidthContent">
+  <div class="col-md-12 maxWidthContent" *ngIf="!parentSlides.length">
+    <h4 style="font-size: 34px" class="font-weight-bold px-3">Featured Hubs
+    </h4>
+    <p class="font-14 text-secondary pl-3">Currently No featured hub is available</p>
+</div>
+  <div class="col-md-12 maxWidthContent" *ngIf="parentSlides.length">
     <h4 style="font-size: 34px" class="font-weight-bold px-3">Featured Hubs
       <span style="font-size: 16px" class="bold float-right pointer"><u>View All</u></span>
     </h4>
     <p class="font-14 text-secondary pl-3">Explore the best of the best in the industry!</p>
 
-    <div id="carousel-example" class="carousel slide slider2 desktop-slider mt-4" data-ride="carousel"
+    <div id="carousel-example2" class="carousel slide slider2 desktop-slider mt-4" data-ride="carousel"
       data-interval="false">
       <div class="carousel-inner row" role="listbox">
         <div *ngFor="let slides of parentSlides; index as i" class="carousel-item col-sm-12 px-0"
@@ -149,10 +187,10 @@
           </div>
         </div>
       </div>
-      <a class="carousel-control-prev" href="#carousel-example" role="button" data-slide="prev">
+      <a class="carousel-control-prev" href="#carousel-example2" role="button" data-slide="prev">
         <img style="transform: rotate(180deg)" src="/assets/imgs/next_Arrow.svg" height="60px">
       </a>
-      <a class="carousel-control-next" href="#carousel-example" role="button" data-slide="next">
+      <a class="carousel-control-next" href="#carousel-example2" role="button" data-slide="next">
         <img src="/assets/imgs/next_Arrow.svg" height="60px">
       </a>
     </div>

@@ -28,7 +28,7 @@
             <div *ngIf="bid.bidPerson.location" class="icon">
               <i class="fas fa-map-marker-alt"></i>
               <p class="mb-0 font-13 pl-2 align-center">
-                {{bid.bidPerson.location.city}}, {{bid.bidPerson.location.country}}
+                {{bid.bidPerson.location?.city}}, {{bid.bidPerson.location?.country}}
               </p>
             </div>
           </div>
@@ -108,12 +108,12 @@
             <div class="d-flex justify-content-around">
               <div class="txt">
                 <h6 class="mb-3 bold font-17">Hourly Rate</h6>
-                <p class="font-14 mb-0">RM {{bidDetails.bidPerson.expertProfile.hourlyRate.hourlyRate}}</p>
+                <p class="font-14 mb-0">RM {{bidDetails.bidPerson.expertProfile?.hourlyRate?.hourlyRate}}</p>
               </div>
               <div class="txt">
                 <h6 class="mb-3 bold font-17">Languages</h6>
-                <p *ngIf="bidDetails.bidPerson.expertProfile.languages" class="font-14 mb-0">
-                  <span *ngFor="let language of bidDetails.bidPerson.expertProfile.languages">
+                <p *ngIf="bidDetails.bidPerson.expertProfile?.languages" class="font-14 mb-0">
+                  <span *ngFor="let language of bidDetails.bidPerson.expertProfile?.languages">
                     {{language.language}},
                   </span>
                 </p>

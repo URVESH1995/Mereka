@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
 
   allWorkshops: iExperience[] = [];
   parentSlides: any[] = [];
+  mainSlides: any[] = [];
   featuredVendors: iAgency[] = [];
 
   discoverItems: any[] = [
@@ -41,7 +42,6 @@ export class HomeComponent implements OnInit {
     public dataHelper: DataHelperService,
     public userAuth: UserAuthService
   ) {
-    this.workshopTags = this.dataHelper.workshopCategories;
     this.dataHelper.workshopFilters = null;
     this.dataHelper.getObservable().subscribe(data => {
       if (data.allWorkshopsFetched) {
@@ -61,20 +61,42 @@ export class HomeComponent implements OnInit {
   getAllWorkshops() {
     this.allWorkshops = this.dataHelper.allWorkshopList || [];
     this.allWorkshops = this.allWorkshops.filter(x => x.experienceType === this.activeSwitch);
+    this.filterWorkshopSlides();
+  }
+
+  filterWorkshopSlides() {
+    var pArray = [];
+    this.mainSlides = [];
+    for (var i = 0, j = this.allWorkshops.length; i < j; i++) {
+        pArray.push(this.allWorkshops[i]);
+        if (pArray.length == 3) {
+          this.mainSlides.push(JSON.parse(JSON.stringify(pArray)));
+          pArray = [];
+        }
+    } if (pArray.length) {
+      this.mainSlides.push(JSON.parse(JSON.stringify(pArray)))
+    }
   }
 
   getAllAgencies() {
     this.parentSlides = [];
+    var pArray: any = [];
+    this.featuredVendors = [];
     const allAgencies = this.dataHelper.allAgencies;
     for (const key in allAgencies) {
-      if (allAgencies[key].isApproved) {
-        this.featuredVendors.push(allAgencies[key]);
+      var temp = allAgencies[key];
+      if (temp.isFeatured && temp.isApproved) {
+        pArray.push(temp);
+        if (pArray.length == 3) {
+          this.parentSlides.push(JSON.parse(JSON.stringify(pArray)));
+          pArray = [];
+        }
+      } else if (temp.isApproved) {
+        this.featuredVendors.push(temp);
       }
     }
-    var i, j, temp, chunk = 3;
-    for (i = 0, j = this.featuredVendors.length; i < j; i += chunk) {
-      temp = this.featuredVendors.slice(i, i + chunk);
-      this.parentSlides.push(temp);
+    if (pArray.length) {
+      this.parentSlides.push(JSON.parse(JSON.stringify(pArray)));
     }
   }
 
@@ -101,6 +123,7 @@ export class HomeComponent implements OnInit {
         x.theme === this.selectedTag && x.experienceType === this.activeSwitch
       );
     }
+    this.filterWorkshopSlides();
   }
 
   favUnfavWorkshop(workshop: iExperience) {
@@ -114,5 +137,6 @@ export class HomeComponent implements OnInit {
   agencyProfile(agency: iAgency) {
     this.router.navigate([`/agency-profile/${agency.expertUid}`]);
   }
+
 
 }

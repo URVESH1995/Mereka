@@ -26,6 +26,7 @@ export class iAgency {
     public totalReviews: number;
     public avgRating: number;
     public isApproved: boolean;
+    public isFeatured: boolean;
     public bankDetails: iAgencyBank = new iAgencyBank();
 }
 

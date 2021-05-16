@@ -7,13 +7,16 @@
 
 <div class="profileCard shadow">
   <div class="moreIcon">
-    <i (click)="favUnfavHub()" *ngIf="!myOwnAgency && !isFavHub()" class="far fa-heart mr-4"></i>
-    <i (click)="favUnfavHub()" *ngIf="!myOwnAgency && isFavHub()" class="fa fa-heart mr-4"></i>
-    <i class="far fa-comment-alt"></i>
+    <i (click)="favUnfavHub()" *ngIf=" !myOwnAgency && !isFavHub()" class="far fa-heart mr-4"></i>
+    <i (click)="favUnfavHub()" *ngIf=" !myOwnAgency && isFavHub()" class="fa fa-heart mr-4"></i>
+    <i class="far fa-comment-alt"  *ngIf=" !myOwnAgency"
+     (click)="dataHelper.selectedHubId = agencyDetails.expertUid" routerLink="/chats" ></i>
+    <button routerLink="/hub-basic-details" class="btn blackBgBtn primaryBtn p-0" 
+    style="min-width: 130px; height: 40px;"  *ngIf="myOwnAgency">Update Hub</button>
   </div>
   <img class="userAvatar" [src]="agencyDetails.agencyLogo || '/assets/imgs/userIcon.PNG'">
   <div class="nameCont">
-    <h5 class="bold">{{agencyDetails.agencyName}}</h5>
+    <h5 class="bold">{{agencyDetails.agencyName}} - {{joinedAgency }}</h5>
     <div class="socialLinks">
       <a [href]="agencyDetails.webUrl" target="_blank" *ngIf="agencyDetails.webUrl">
         <img src="/assets/imgs/gray-web-icon.png">
@@ -32,14 +35,14 @@
   <p>{{agencyDetails.companyType}}</p>
   <div class="d-flex">
     <p><i class="fas fa-map-marker-alt mr-1"></i>
-      {{agencyDetails.location.city}}, {{agencyDetails.location.country}}
+      {{agencyDetails.location?.city}}, {{agencyDetails.location?.country}}
     </p>
     <p class="pl-4"><i class="fas fa-star"></i>
       {{agencyDetails.avgRating || 0}} ({{agencyDetails.totalReviews || 0}})
     </p>
   </div>
-  <button (click)="becomeAgencyMember()" [disabled]="myOwnAgency" class="btn optBtn">Become a Member</button>
-  <button [disabled]="!myOwnAgency" class="btn optBtn">Post a Job</button>
+  <button (click)="becomeAgencyMember()" [disabled]="myOwnAgency || joinedAgency" class="btn optBtn">Become a Member</button>
+  <button [disabled]="!myOwnAgency && !joinedAgency" class="btn optBtn">Post a Job</button>
   <button class="btn optBtn">Instant Quote</button>
 </div>
 
@@ -82,12 +85,12 @@
       <div class="btnFilters">
         <button (click)="selectedTag='All'; filterWorkshops()" [class.selectedTag]="selectedTag==='All'"
           class="btn btn-outline-light text-dark">All</button>
-        <button (click)="selectedTag=tag; filterWorkshops()" [class.selectedTag]="selectedTag===tag"
-          *ngFor="let tag of workshopTags | slice:0:5" class="btn btn-outline-light text-dark ml-2">{{tag}}</button>
+        <button (click)="selectedTag=tag.name; filterWorkshops()" [class.selectedTag]="selectedTag===tag.name"
+          *ngFor="let tag of dataHelper.workshopCategories | slice:0:5" class="btn btn-outline-light text-dark ml-2">{{tag.name}}</button>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4"
+      <!-- <div class="col-md-4"
         *ngFor="let workshop of agencyWorkshops | paginate: { itemsPerPage: 3, currentPage: currentPage }">
         <div class="workshopCard pointer">
           <button (click)="favUnfavWorkshop(workshop)" class="btn text-white btn-dark btn-sm rightCornerBtn">
@@ -103,12 +106,47 @@
             </h5>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div *ngIf="!agencyWorkshops.length" class="col-md-12 text-center text-secondary my-5">No experiences found!</div>
 
-      <div *ngIf="agencyWorkshops.length" class="text-center w-100 mt-5">
+      <!-- <div *ngIf="agencyWorkshops.length" class="text-center w-100 mt-5">
         <app-custom-pagination (pageChange)="currentPage = $event"></app-custom-pagination>
+      </div> -->
+
+      <div class="col-md-12 featuredVendorsBlock maxWidthContent" *ngIf="mainSlides.length">
+        <div id="carousel-example" class="carousel slide slider2 desktop-slider mt-4" data-ride="carousel"
+          data-interval="false">
+          <div class="carousel-inner row" role="listbox">
+            <div *ngFor="let slides of mainSlides; index as i" class="carousel-item col-sm-12 px-0" [class.active]="i===0">
+              <div class="row">
+                <div *ngFor="let workshop of slides" class="col-md-4 lessPadding pointer">
+                  <!-- <img class="slideImage" [src]="workshop.coverImage || 'assets/imgs/notify-img.PNG'"> -->
+                  <div class="workshopCard pointer">
+                    <button (click)="favUnfavWorkshop(workshop)" class="btn text-white btn-dark btn-sm rightCornerBtn">
+                      <i class="fa-heart" [class.far]="!isMyFavWorkshop(workshop)" [class.fas]="isMyFavWorkshop(workshop)"></i>
+                    </button>
+                    <img (click)="workshopDetails(workshop)" [src]="workshop.coverImage">
+                    <div (click)="workshopDetails(workshop)" class="p-3">
+                      <h5 class="bold mb-1">{{workshop.experienceTitle}}</h5>
+                      <p class="font-13 text-secondary">{{getWorkshopHost(workshop.uid) || 'N/A'}}</p>
+                      <h5 class="text-right mb-0">
+                        <span *ngIf="workshop.ratePerLearner">MYR {{workshop.ratePerLearner}}<small>/learner </small></span>
+                        <span *ngIf="workshop.ratePerMember"> MYR {{workshop.ratePerMember}}<small>/member</small></span>
+                      </h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a class="carousel-control-prev" href="#carousel-example" role="button" data-slide="prev">
+            <img style="transform: rotate(180deg)" src="/assets/imgs/next_Arrow.svg" height="60px">
+          </a>
+          <a class="carousel-control-next" href="#carousel-example" role="button" data-slide="next">
+            <img src="/assets/imgs/next_Arrow.svg" height="60px">
+          </a>
+        </div>
       </div>
     </div>
 
@@ -136,8 +174,8 @@
                   </p>
                 </div>
               </div>
-              <p class="my-3">{{expert.expertProfile.expertise.title || 'N/A'}}</p>
-              <h5 class="bold mb-0">RM {{expert.expertProfile.hourlyRate?.hourlyRate || 'N/A'}} /
+              <p class="my-3">{{expert.expertProfile?.expertise?.title || 'N/A'}}</p>
+              <h5 class="bold mb-0">RM {{expert.expertProfile?.hourlyRate?.hourlyRate || 'N/A'}} /
                 <small>Hour</small>
               </h5>
             </div>

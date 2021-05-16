@@ -1,6 +1,6 @@
 <div class="row topNavbar fixed-top">
     <div class="col-md-3 py-3">
-        <img routerLink="/home" src="/assets/imgs/grayLogo.png" class="pointer ml-4">
+        <img routerLink="/home" src="/assets/imgs/MerekaLogo.png" class="pointer ml-4">
     </div>
     <div class="col-md-9 text-right">
         <button (click)="navigatePage(btn.navigatePage)" *ngFor="let btn of tabButtons"
@@ -24,7 +24,7 @@
                     <span>
                         <i class="fas fa-map-marker-alt pl-3 pr-1"></i>
                         <span class="text-secondary"><u>
-                                {{myWorkshopObj.location.city}}, {{myWorkshopObj.location.country}}
+                                {{myWorkshopObj.location?.city}}, {{myWorkshopObj.location?.country}}
                             </u></span>
                     </span>
                     <span>
@@ -65,8 +65,8 @@
                                             <p class="bold mb-0">{{workshopHost.fullName}}</p>
                                             <p class="text-secondary mb-0">
                                                 <i class="fas fa-map-marker-alt pr-1"></i>
-                                                <span class="text-secondary">{{workshopHost.location.city}},
-                                                    {{workshopHost.location.country}}</span>
+                                                <span class="text-secondary">{{workshopHost.location?.city}},
+                                                    {{workshopHost.location?.country}}</span>
                                             </p>
                                         </div>
                                     </div>
@@ -80,7 +80,7 @@
                         </div>
                         <div class="col-md-4">
                             <p class="bold pointer">Language</p>
-                            <p *ngFor="let lang of workshopHost.expertProfile.languages" class="mb-1">{{lang}}</p>
+                            <p *ngFor="let lang of workshopHost.expertProfile?.languages" class="mb-1">{{lang}}</p>
                         </div>
                     </div>
                 </div>

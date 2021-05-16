@@ -28,6 +28,7 @@ export class WorkshopDetailComponent implements OnInit {
   iHaveReviewed: boolean;
   postReviewObj: iExperienceReview = new iExperienceReview();
   parentSlides: any[] = [];
+  mainSlides: any[] = [];
   selectedSession: iExperienceSession = new iExperienceSession();
   selectedLearners: number = 1;
   totalBookingPrice: number = 0;
@@ -99,7 +100,22 @@ export class WorkshopDetailComponent implements OnInit {
   }
 
   getFeaturedWorkshops() {
+  
     this.featuredWorkshops = this.dataHelper.allWorkshopList.filter(x => x.isFeatured).splice(0, 3);
+    var pArray = [];
+    this.mainSlides = [];
+    for (var i = 0, j = this.dataHelper.allWorkshopList.length; i < j; i++) {
+      var temp = this.dataHelper.allWorkshopList[i];
+      if (temp.isFeatured) {
+        pArray.push(temp);
+        if (pArray.length == 3) {
+          this.mainSlides.push(JSON.parse(JSON.stringify(pArray)));
+          pArray = [];
+        }
+      }
+    } if (pArray.length) {
+      this.mainSlides.push(JSON.parse(JSON.stringify(pArray)))
+    }
   }
 
   updateSelectedSession(session: iExperienceSession) {
@@ -337,6 +353,13 @@ export class WorkshopDetailComponent implements OnInit {
 
   agencyProfile() {
     this.router.navigate(['/agency-profile/' + this.workshopHost.uid]);
+  }
+
+  updateWorkshopUrl(data) {
+    this.dataHelper.workshopDetail = JSON.parse(JSON.stringify(data));
+    this.router.navigate(['/workshop-details/'+ data.workshopKey ]);
+    window.scroll(0, 0);
+    this.ngOnInit();
   }
 
 }

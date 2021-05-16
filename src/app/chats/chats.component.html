@@ -1,82 +1,3 @@
-<!-- <app-header></app-header>
-
-<div class="pagesLog">
-  <img src="/assets/imgs/M-Logo.PNG" height="25px">
-  <i class="fas fa-chevron-right lightGray px-3"></i>
-  <p class="bold my-0">Chats</p>
-</div>
-
-<div class="row justify-content-center">
-  <div class="col-sm-12 maxWidthContent">
-    <div class="card mainCont">
-      <div class="row">
-        <div class="col-sm-4 px-0 chatsCont">
-          <div class="chatsHeader">
-            <div class="form-group mb-0">
-              <select class="form-control">
-                <option>All Orders</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="row my-2 justify-content-center">
-            <div class="col-sm-4 text-center" style="border-right: 1px solid #d1cccc;">
-              <p [class.danger]="activeChatsTab==='clientsTab'" (click)="toggleChatTabs('clientsTab')"
-                class="mb-0 bold pointer">Clients</p>
-            </div>
-            <div class="col-sm-4 text-center">
-              <p [class.danger]="activeChatsTab==='expertsTab'" (click)="toggleChatTabs('expertsTab')"
-                class="mb-0 bold pointer">Experts</p>
-            </div>
-          </div>
-
-          <div class="chatBody">
-
-            <p *ngIf="!chatWithClients.length && !chatWithExperts.length && dataFetched"
-              class="text-center mt-5 text-secondary">No chats found!</p>
-
-            <div *ngIf="activeChatsTab==='clientsTab'">
-              <div (click)="toggleActiveChat(chat)" [class.active]="activeChat.chatKey===chat.chatKey"
-                *ngFor="let chat of chatWithClients; index as i" class="chatInfoCont">
-                <p class="mb-0 bold font-15">{{chat.clientDetails.fullName}} -
-                  {{chat.jobDetails.status? 'Closed': 'Order In Progress'}}
-                </p>
-                <p class="linkBtn">{{chat.jobDetails.jobTitle}}</p>
-                <p class="text1 mb-0 font-15">
-                  {{chat.lastMessageTimestamp | date: 'shortTime'}} &nbsp; &nbsp;
-                  {{chat.lastMessageTimestamp | date: 'mediumDate'}}
-                </p>
-              </div>
-            </div>
-
-            <div *ngIf="activeChatsTab==='expertsTab'">
-              <div (click)="toggleActiveChat(chat)" [class.active]="activeChat.chatKey===chat.chatKey"
-                *ngFor="let chat of chatWithExperts; index as i" class="chatInfoCont">
-                <p class="mb-0 bold font-15">{{chat.expertDetails.fullName}} -
-                  {{chat.jobDetails.status? 'Closed': 'Order In Progress'}}
-                </p>
-                <p class="linkBtn">{{chat.jobDetails.jobTitle}}</p>
-                <p class="text1 mb-0 font-15">
-                  {{chat.lastMessageTimestamp | date: 'shortTime'}} &nbsp; &nbsp;
-                  {{chat.lastMessageTimestamp | date: 'mediumDate'}}
-                </p>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <div class="col-sm-8 px-0">
-          <app-chat-screen *ngIf="dataFetched" [activeChat]="activeChat"></app-chat-screen>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</div>
-
-<app-footer></app-footer> -->
-
 <ngx-loading [show]="loading"></ngx-loading>
 <app-navbar></app-navbar>
 
@@ -90,51 +11,46 @@
 
             <div class="chatsHeader">
               <div class="toggleBtnsCont">
-                <div class="toggleBtn" [class.active]="activeChatsTab==='clientsTab'"
-                  (click)="toggleChatTabs('clientsTab')">Clients</div>
-                <div class="toggleBtn" [class.active]="activeChatsTab==='expertsTab'"
-                  (click)="toggleChatTabs('expertsTab')">Experts</div>
+                <div class="toggleBtn" [class.active]="activeChatsTab==='hubsTab'"
+                  (click)="toggleChatTabs('hubsTab')" *ngIf="currentUser.myAgency || currentUser.agencyId">Hubs</div>
+                <div class="toggleBtn" [class.active]="activeChatsTab==='learnerTab'"
+                  (click)="toggleChatTabs('learnerTab')">Learner</div>
               </div>
             </div>
 
             <div class="chatBody">
-              <div *ngIf="activeChatsTab==='clientsTab'">
-                <p *ngIf="!chatWithClients.length && dataFetched" class="text-center mt-5 text-secondary">No chats
+              <div *ngIf="activeChatsTab==='hubsTab'">
+                <p *ngIf="!chatWithLearners || !chatWithLearners.length " class="text-center mt-5 text-secondary">No chats
                   found!</p>
-
-                <div (click)="toggleActiveChat(chat)" [class.active]="activeChat.chatKey===chat.chatKey"
-                  *ngFor="let chat of chatWithClients; index as i" class="chatInfoCont whiteOutlinedBtn">
+                <div (click)="toggleActiveChat(chat)" [class.active]="dataHelper.activeChat.chatKey===chat.chatKey"
+                  *ngFor="let chat of chatWithLearners; index as i" class="chatInfoCont whiteOutlinedBtn">
                   <div class="userInfoCont">
                     <div class="userInfo">
-                      <img [src]="chat.clientDetails.profileUrl || '/assets/imgs/userIcon.PNG'" class="userImg">
+                      <img [src]="getUserName(chat.uid , 'img') || '/assets/imgs/userIcon.PNG'" class="userImg">
                       <div class="nameCont">
-                        <p class="name">{{chat.clientDetails.fullName}}</p>
+                        <p class="name">{{getUserName(chat.uid , 'name')}}</p>
                       </div>
                     </div>
-                    <p class="date">{{chat.lastMessageTimestamp | date: 'short'}}</p>
+                    <p class="date">{{chat.lastEdit | date: 'short'}}</p>
                   </div>
-                  <p class="linkBtn">{{chat.jobDetails.jobTitle}}</p>
-                  <!-- <div class="lastMsgCont">{{chat.lastMessage}}</div> -->
+                  <div class="lastMsgCont">{{chat.lastMessage}}</div> 
                 </div>
               </div>
 
-              <div *ngIf="activeChatsTab==='expertsTab'">
-                <p *ngIf="!chatWithExperts.length && dataFetched" class="text-center mt-5 text-secondary">No chats
+              <div *ngIf="activeChatsTab==='learnerTab'">
+                <p *ngIf="!chatWithHubs || !chatWithHubs.length " class="text-center mt-5 text-secondary">No chats
                   found!</p>
-
-                <div (click)="toggleActiveChat(chat)" [class.active]="activeChat.chatKey===chat.chatKey"
-                  *ngFor="let chat of chatWithExperts; index as i" class="chatInfoCont whiteOutlinedBtn">
+                <div (click)="toggleActiveChat(chat)" [class.active]="dataHelper.activeChat.chatKey===chat.chatKey"
+                  *ngFor="let chat of chatWithHubs; index as i" class="chatInfoCont whiteOutlinedBtn">
                   <div class="userInfoCont">
                     <div class="userInfo">
-                      <img [src]="chat.expertDetails.profileUrl || '/assets/imgs/userIcon.PNG'" class="userImg">
+                      <img [src]="getHubName(chat.hubId , 'img') || '/assets/imgs/userIcon.PNG'" class="userImg">
                       <div class="nameCont">
-                        <p class="name">{{chat.expertDetails.fullName}}</p>
+                        <p class="name">{{getHubName(chat.hubId , 'name')}}</p>
                       </div>
                     </div>
-                    <p class="date">{{chat.lastMessageTimestamp | date: 'short'}}</p>
+                    <p class="date">{{chat.lastEdit | date: 'short'}}</p>
                   </div>
-                  <p class="linkBtn">{{chat.jobDetails.jobTitle}}</p>
-                  <!-- <div class="lastMsgCont">{{chat.lastMessage}}</div> -->
                 </div>
               </div>
 
@@ -142,7 +58,7 @@
           </div>
 
           <div class="col-sm-8 px-0">
-            <app-chat-screen *ngIf="dataFetched" [activeChat]="activeChat"></app-chat-screen>
+            <app-chat-screen *ngIf="dataHelper.activeChat.chatKey && dataFetched" ></app-chat-screen>
           </div>
 
         </div>

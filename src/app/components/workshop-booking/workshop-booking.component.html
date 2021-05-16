@@ -12,7 +12,7 @@
             </span>
             <span *ngIf="booking.workshopDetails.experienceType==='physical'">
                 <i class="fas fa-map-marker-alt"></i>
-                {{booking.workshopDetails.location.city}}, {{booking.workshopDetails.location.country}}
+                {{booking.workshopDetails.location?.city}}, {{booking.workshopDetails.location?.country}}
             </span>
             <span class="pl-3">
                 | Host: {{getHostName(booking.workshopDetails.uid) || 'N/A'}}

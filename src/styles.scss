@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "~@ng-select/ng-select/themes/default.theme.css";
-
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@900&display=swap');
 :root {
   --primaryColor: #161616;
   --secondaryColor: #41506d;
@@ -43,6 +43,10 @@
 
 .appTxt {
   font-size: 18px !important;
+}
+
+.font-10{
+  font-size: 10px !important;
 }
 
 .font-13 {
@@ -159,7 +163,11 @@
 body {
   font-family: "lato" !important;
   background: #f2f2f2;
-  zoom: 80%;
+  zoom: 100%;
+}
+
+.bold-fontFamily{
+  font-family: 'Lato', sans-serif !important;
 }
 
 .mainContent {
@@ -337,11 +345,13 @@ textarea {
 
 ng-select {
   .ng-value {
-    color: #ffffff;
+    //color: #ffffff;
     padding: 5px 10px;
     position: relative;
     padding-right: 2em;
-    background-color: #1cabe9 !important;
+    //background-color: #1cabe9 !important;
+    color: #495057;;
+    background-color: white !important;
   }
 
   .ng-value-icon {
@@ -358,6 +368,7 @@ ng-select {
     top: 12px !important;
   }
 }
+
 
 .modal-backdrop {
   width: 100% !important;
@@ -474,7 +485,7 @@ ng-select {
 }
 
 .custom-slider {
-  zoom: 125%;
+//  zoom: 125%;
   *:focus {
     outline: none !important;
   }

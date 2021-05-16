@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { DataHelperService } from '../services/data-helper.service';
 import { UserAuthService } from '../services/user-auth.service';
 import { iAgency } from '../models/agency';
-import { iUser, iExpertProfile } from '../models/user';
+import { iUser, iExpertProfile, iLearnerProfile, iUserLocation } from '../models/user';
 import { Router } from '@angular/router';
 import { iChatNode } from '../models/chat-node';
 
@@ -13,6 +13,7 @@ import { iChatNode } from '../models/chat-node';
 })
 export class ExpertProfileComponent implements OnInit {
 
+  learnerProfile: iLearnerProfile = new iLearnerProfile();
   myOwnProfile: boolean;
   @Input() hideHeaderFooter: boolean;
   @Input() expertProfile: iUser = new iUser();
@@ -27,17 +28,30 @@ export class ExpertProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.expertAgency = this.dataHelper.allAgencies[this.expertProfile.uid] || {};
+    if (this.expertProfile && this.expertProfile.myAgency) {
+      this.expertAgency = this.dataHelper.allAgencies[this.expertProfile.uid] || {};
+    } else if (this.expertProfile && this.expertProfile.agencyId) {
+      this.expertAgency = this.dataHelper.allAgencies[this.expertProfile.agencyId] || {};
+    }
 
     this.dataHelper.getObservable().subscribe(data => {
       if (data.allAgenciesFetched) {
-        this.expertAgency = this.dataHelper.allAgencies[this.expertProfile.uid] || {};
+        if (this.expertProfile && this.expertProfile.myAgency) {
+          this.expertAgency = this.dataHelper.allAgencies[this.expertProfile.uid] || {};
+        } else if (this.expertProfile && this.expertProfile.agencyId) {
+          this.expertAgency = this.dataHelper.allAgencies[this.expertProfile.agencyId] || {};
+        }
       }
     });
 
     if (this.expertProfile.uid === this.userAuth.currentUser.uid) {
       this.myOwnProfile = true
     }
+
+    if (this.dataHelper.learnerProfile) {
+      this.learnerProfile = this.dataHelper.learnerProfile;
+    }
+
   }
 
   updateProfile() {

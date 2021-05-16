@@ -7,7 +7,7 @@
 
   <ul class="navbar-nav mx-auto searchBarCont">
     <div class="roundedBar">
-      <div *ngIf="workshopFilters.type==='online'" class="toggleBtnContainer d-flex p-1">
+      <div *ngIf="workshopFilters.type==='online'" class="toggleBtnContainer d-flex p-1" style="width: 130px;">
         <div (click)="workshopFilters.type='physical'; getFilteredWorkshops()" class="soloIcon">
           <i class="fas fa-running"></i>
         </div>
@@ -15,7 +15,7 @@
           <i class="fas fa-desktop"></i>
         </button>
       </div>
-      <div *ngIf="workshopFilters.type==='physical'" class="toggleBtnContainer d-flex p-1">
+      <div *ngIf="workshopFilters.type==='physical'" class="toggleBtnContainer d-flex p-1" style="width: 130px;">
         <button class="btn btn-dark">
           <i class="fas fa-running"></i>
         </button>
@@ -23,35 +23,34 @@
           <i class="fas fa-desktop"></i>
         </div>
       </div>
-      <div class="dropdown borderedColumn categoryCont">
+      <div class="dropdown borderedColumn categoryCont" [class.w-40]="workshopFilters.type==='online'">
         <p [class.selectedCategory]="workshopFilters.category" class="pointer mb-0 text-secondary"
           data-toggle="dropdown">{{workshopFilters.category || 'Select a category'}}</p>
-        <!-- <div class="dropdown-menu categoryDropdown shadow p-3 pr-5">
-          <a (click)="workshopFilters.category=category; getFilteredWorkshops()"
-            *ngFor="let category of workshopCategories"
-            class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">{{category}}</a>
-        </div> -->
+       
         <div class="dropdown-menu categoryDropdown shadow">
           <div class="innerContent">
-            <p *ngFor="let category of workshopCategories" class="dropdown-item"
-              (click)="workshopFilters.category=category; getFilteredWorkshops()">
-              <span class="p-3">{{category}}</span>
-            </p>
+              <div class="fullItem" *ngFor="let category of  dataHelper.workshopCategories; index as i">
+                  <p  class="dropdown-item"
+                  (click)="workshopFilters.category=category.name; getFilteredWorkshops()" >
+                  <span class="py-3">{{category.name}}</span>
+              </p>
+              </div>
+              
           </div>
-        </div>
       </div>
-      <div (click)="checkNgxInput()" class="borderedColumn locationCont">
+      </div>
+      <div (click)="checkNgxInput()" class="borderedColumn locationCont" *ngIf="workshopFilters.type==='physical'">
         <ngxgeo-autocomplete id="autoCompleteOnFilters" [userSettings]="userSettings"
           (componentCallback)="autoCompleteCallback($event)">
         </ngxgeo-autocomplete>
       </div>
-      <div class="borderedColumn dateCont">
+      <div class="borderedColumn dateCont" [class.w-31]="workshopFilters.type==='online'" >
         <input [class.selectedCategory]="workshopFilters.date" (change)="getFilteredWorkshops()"
           [(ngModel)]="workshopFilters.date" type="date" placeholder="Enter date" class="form-control">
       </div>
     </div>
     <div class="filterBtnCont">
-      <button class="btn filterBtn">
+      <button class="btn filterBtn" [class.filterBtn1]="showNav2" (click)="showNav2 = !showNav2">
         <img src="/assets/imgs/filterIcon.svg" height="30px">
       </button>
     </div>
@@ -88,10 +87,10 @@
       <img class="profileIcon pointer" [src]="userAuth.currentUser.profileUrl || '/assets/imgs/userIcon.PNG'"
         data-toggle="dropdown">
       <div class="dropdown-menu moreDropdown shadow p-3 pr-5">
-        <a *ngIf="userAuth.currentUser.learnerProfile && userAuth.currentUser.learnerProfile.educationList.length"
+        <a *ngIf="userAuth.currentUser.learnerProfile && userAuth.currentUser.learnerProfile.educationList?.length"
           routerLink="/learner-dashboard" class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">My
           Dashboard</a>
-        <a *ngIf="!userAuth.currentUser.learnerProfile || (userAuth.currentUser.learnerProfile && !userAuth.currentUser.learnerProfile.educationList.length)"
+        <a *ngIf="!userAuth.currentUser.learnerProfile || (userAuth.currentUser.learnerProfile && !userAuth.currentUser.learnerProfile.educationList?.length)"
           routerLink="/create-learner-profile" class="dropdown-item btn btn-light mb-1 pointer p-2 px-3">Learner
           Profile</a>
         <a *ngIf="userAuth.currentUser.isExpert" routerLink="/profile"
@@ -119,25 +118,25 @@
 </nav>
 
 
-<div class="row filtermainCont sticky-top">
+<div class="row filtermainCont sticky-top" *ngIf="showNav2">
   <div class="col-sm-12 maxWidthContent">
     <div class="otherFiltersCont">
       <div class="leftFilters">
         <div class="dropdown">
-          <button (click)="showLevelDropdown=false; showLanguageDropdown=false;"
-            class="btn otherFilterBtn whiteOutlinedBtn" data-toggle="dropdown">Topic <i
-              class="fas fa-chevron-down"></i></button>
-          <div class="dropdown-menu shadow topicFiltersCont">
-            <div (click)="selectedTopic=topic; getFilteredWorkshops();" [class.selectedTopic]="selectedTopic===topic"
+          <button (click)="showLevelDropdown=false; showLanguageDropdown=false; showAccess=false; showTopics=!showTopics"
+            class="btn otherFilterBtn whiteOutlinedBtn" >Topic <i class="fas fa-chevron-down"></i></button>
+
+          <div class="dropdown-menu shadow topicFiltersCont" [class.show]="showTopics">
+            <div (click)="selectedTopic=topic; updateFilterTopicList(topic); getFilteredWorkshops();" [class.selectedTopic]="selectedTopicList.includes(topic)"
               *ngFor="let topic of allTopics | slice:0:50" class="filterName">{{topic}}</div>
           </div>
         </div>
 
         <div class="dropdown">
-          <button (click)="showLevelDropdown=false; showLanguageDropdown=false;"
-            class="btn otherFilterBtn whiteOutlinedBtn" data-toggle="dropdown">Access <i
+          <button (click)="showLevelDropdown=false; showLanguageDropdown=false; showAccess=!showAccess; showTopics=false"
+            class="btn otherFilterBtn whiteOutlinedBtn">Access <i
               class="fas fa-chevron-down"></i></button>
-          <div class="dropdown-menu shadow accessFiltersCont">
+          <div class="dropdown-menu shadow accessFiltersCont" [class.show]="showAccess">
             <div class="custom-control custom-switch">
               <input (change)="updateAccessibilitySwitch($event)"
                 [checked]="workshopFilters.accessibility==='everybody'" type="checkbox" class="custom-control-input"
@@ -150,7 +149,7 @@
         </div>
 
         <div class="dropdown">
-          <button (click)="showLevelDropdown=!showLevelDropdown; showLanguageDropdown=false"
+          <button (click)="showLevelDropdown=!showLevelDropdown; showLanguageDropdown=false; showTopics=false ; showAccess=false"
             class="btn otherFilterBtn whiteOutlinedBtn">Level <i class="fas fa-chevron-down"></i></button>
           <div style="top: 60px !important;" id="levelDropdownMenu" [class.show]="showLevelDropdown"
             class="dropdown-menu shadow levelsFiltersCont">
@@ -173,7 +172,7 @@
         </div>
 
         <div class="dropdown">
-          <button (click)="showLanguageDropdown=!showLanguageDropdown; showLevelDropdown=false"
+          <button (click)="showLanguageDropdown=!showLanguageDropdown; showLevelDropdown=false; showTopics=false; showAccess=false"
             class="btn otherFilterBtn whiteOutlinedBtn">Language <i class="fas fa-chevron-down"></i></button>
           <div style="top: 60px !important;" id="languageDropdownMenu" [class.show]="showLanguageDropdown"
             class="dropdown-menu shadow levelsFiltersCont languagesFilter">
@@ -229,7 +228,7 @@
         </div>
       </div>
 
-      <p *ngIf="!displayWorkshops.length" class="text-center my-5 text-secondary">No workshops found!</p>
+      <p *ngIf="!displayWorkshops.length" class="text-center my-5 text-secondary">No Experiences/Spaces/Machines found!</p>
 
       <div *ngIf="hideMap">
         <div class="row">
@@ -262,7 +261,7 @@
 
               </div>
               <div (click)="workshopDetails(workshop)" class="py-4 px-3">
-                <p class="font-13 text-secondary">{{workshop.location.city}}, {{workshop.location.country}}
+                <p class="font-13 text-secondary">{{workshop.location?.city}}, {{workshop.location?.country}}
                   <span class="float-right">
                     <i class="fa fa-star"></i> {{workshop.avgRating || 'No rating'}}
                   </span>
@@ -313,7 +312,7 @@
 
           </div>
           <div (click)="workshopDetails(workshop)" class="col-md-8 py-4">
-            <p class="font-13 text-secondary">{{workshop.location.city}}, {{workshop.location.country}}
+            <p class="font-13 text-secondary">{{workshop.location?.city}}, {{workshop.location?.country}}
               <span class="float-right">
                 <i class="fa fa-star"></i> {{workshop.avgRating || 'No rating'}}
               </span>
@@ -484,7 +483,7 @@
     <div class="row">
       <div class="col-sm-5 pb-5">
 
-        <p *ngIf="!displayWorkshops.length" class="text-center mt-5 text-secondary">No workshops found!</p>
+        <p *ngIf="!displayWorkshops.length" class="text-center mt-5 text-secondary">No Experiences/Spaces/Machines found!!</p>
 
         <div (click)="workshopDetails(workshop)" *ngFor="let workshop of displayWorkshops" class="workshopCont">
           <img [src]="workshop.coverPhotos[0].url" class="itemImg">

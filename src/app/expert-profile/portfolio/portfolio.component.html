@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <h3 class="bold mb-3">Portfolio</h3>
     </div>
-    <div *ngFor="let portfolio of expertProfile.expertProfile.portfolio" class="col-md-4 mb-4">
+    <div *ngFor="let portfolio of expertProfile.expertProfile?.portfolio" class="col-md-4 mb-4">
         <div (click)="openPortfolioDetails(portfolio)" data-toggle="modal" data-target="#portfolioDetailModal"
             class="portfolioItem shadow-sm pointer">
             <img [src]="portfolio.attachedFiles[0].url">

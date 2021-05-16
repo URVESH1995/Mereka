@@ -1,4 +1,4 @@
-<!-- <div *ngIf="activeChat && activeChat.chatKey" class="chatsHeader justify-content-between px-4">
+<!-- <div *ngIf="activeChat && dataHelper.activeChat.chatKey" class="chatsHeader justify-content-between px-4">
   <div class="d-flex align-center">
     <h4 class="bold mb-0">{{getRecepientName()}}</h4>
     <img src="/assets/imgs/tickIcon.svg" class="ml-2 align-center" height="25px">
@@ -8,7 +8,7 @@
   <button (click)="jobDetails()" class="btn darkBtn detailBtn">Project Details</button>
 </div>
 
-<div *ngIf="activeChat && activeChat.chatKey" class="chatBox" #chatMessagesContainer>
+<div *ngIf="activeChat && dataHelper.activeChat.chatKey" class="chatBox" #chatMessagesContainer>
   <div class="row justify-content-center">
     <div class="col-sm-11 px-0">
       <div *ngFor="let message of chatMessages" class="msgCont">
@@ -30,7 +30,7 @@
   </div>
 </div>
 
-<div *ngIf="activeChat && activeChat.chatKey" class="msgInputCont">
+<div *ngIf="activeChat && dataHelper.activeChat.chatKey" class="msgInputCont">
   <div class="row justify-content-center">
     <div class="col-sm-12">
       <div class="row">
@@ -55,13 +55,11 @@
 </div> -->
 
 
-<div *ngIf="activeChat && activeChat.chatKey" class="chatsHeader">
+<div *ngIf="dataHelper.activeChat && dataHelper.activeChat.chatKey" class="chatsHeader">
   <h3 class="my-0 bold">{{getRecepientName()}}</h3>
-  <!-- <p class="time">12:57 PM IST</p> -->
-  <button (click)="jobDetails()" class="btn darkBtn blackBgBtn detailBtn">Project Details</button>
 </div>
 
-<div *ngIf="activeChat && activeChat.chatKey" class="chatBox" #chatMessagesContainer>
+<div *ngIf="dataHelper.activeChat && dataHelper.activeChat.chatKey" class="chatBox" #chatMessagesContainer>
   <div class="row justify-content-center">
     <div class="col-sm-11 px-0">
       <div *ngFor="let message of chatMessages" class="msgCont">
@@ -84,7 +82,7 @@
 </div>
 
 
-<div *ngIf="activeChat && activeChat.chatKey" class="msgInputCont">
+<div *ngIf="dataHelper.activeChat && dataHelper.activeChat.chatKey" class="msgInputCont">
   <div class="row">
     <div class="col-sm-9">
       <div class="searchBar align-center">

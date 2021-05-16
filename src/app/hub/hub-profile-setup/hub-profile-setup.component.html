@@ -33,7 +33,7 @@
                             <input [(ngModel)]="myAgency.agencyName" type="text" class="form-control"
                                 placeholder="Name">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group hub1Form">
                             <label>Hub Type</label>
                             <ng-select [items]="hubTypesList" placeholder="Hub Type" [clearable]="false"
                                 [(ngModel)]="myAgency.companyType">
@@ -91,10 +91,14 @@
 </div>
 
 <div class="row fixed-bottom p-3 px-4 continueBackBtns">
-    <div class="col-md-6">
+    <div class="col-md-4">
         <button (click)="navigateBack()" class="btn grayChoiceHover btn-light btnRounded">Back</button>
     </div>
-    <div class="col-md-6 text-right">
-        <button (click)="nextTab()" class="btn grayChoiceHover btnSecondary btnRounded">Continue</button>
+    <div class="col-md-4 text-center">
+        <button (click)="nextTab('save')" class="btn grayChoiceHover btn-light btnRounded"
+        style="width: fit-content;" *ngIf="userAuth.currentUser.myAgency">Save & Exit</button>
+    </div>
+    <div class="col-md-4 text-right">
+        <button (click)="nextTab('')" class="btn grayChoiceHover btnSecondary btnRounded">Continue</button>
     </div>
 </div>

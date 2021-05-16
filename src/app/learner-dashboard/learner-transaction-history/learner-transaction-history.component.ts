@@ -18,7 +18,7 @@ export class LearnerTransactionHistoryComponent implements OnInit {
   years: number[] = [];
   myTransactions: iTransaction[] = [];
   displayTransactions: iTransaction[] = [];
-  transactionTypes: string[] = ['Experience', 'Job', 'Hub'];
+  transactionTypes: string[] = ['Experiences', 'Spaces'];
 
   constructor(
     public dataHelper: DataHelperService,

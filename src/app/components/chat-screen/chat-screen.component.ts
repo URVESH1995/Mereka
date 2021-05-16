@@ -5,6 +5,9 @@ import { UserAuthService } from '../../services/user-auth.service';
 import { Router } from '@angular/router';
 import { iChatMessage } from '../../models/chat-message';
 import * as firebase from 'firebase';
+import { iChat } from 'src/app/models/chats';
+import { iUser } from 'src/app/models/user';
+import { iAgency } from 'src/app/models/agency';
 
 
 @Component({
@@ -16,10 +19,12 @@ export class ChatScreenComponent implements OnInit {
 
   @ViewChild('chatMessagesContainer') chatMessagesContainer;
 
-  @Input() activeChat: iChatNode = new iChatNode();
   chatMessages: iChatMessage[] = [];
   newMessage: iChatMessage = new iChatMessage();
   selectedFiles: any[] = [];
+
+  userInfo: iUser = new iUser();
+  hubInfo: iAgency = new iAgency();
 
   constructor(
     public zone: NgZone,
@@ -30,35 +35,41 @@ export class ChatScreenComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getChatMessages(this.activeChat);
+    this.getChatMessages(this.dataHelper.activeChat);
 
     this.dataHelper.getObservable().subscribe(data => {
-      if (data.toggleActiveChat) {
-        this.getChatMessages(data.toggleActiveChat);
+      if (data.activeChatUpdated) {
+        this.getChatMessages(this.dataHelper.activeChat);
       }
     });
   }
 
 
-  getChatMessages(chat: iChatNode) {
+  getChatMessages(chat: iChat) {
     if (chat && chat.chatKey) {
       const self = this;
+      if (this.dataHelper.activeChat.uid === this.userAuth.currentUser.uid) {
+        if (this.dataHelper.allAgencies[this.dataHelper.activeChat.hubId]) {
+          this.hubInfo = this.dataHelper.allAgencies[this.dataHelper.activeChat.hubId];
+        } else {
+          this.hubInfo = new iAgency();
+        }
+      } else {
+        if (this.dataHelper.allUsers[this.dataHelper.activeChat.uid]) {
+          this.userInfo = this.dataHelper.allUsers[this.dataHelper.activeChat.uid];
+        } else {
+          this.userInfo = new iUser();
+        }
+      }
+      
       self.chatMessages = [];
-      self.activeChat.messages = {};
-
-      firebase.database().ref().child(`chats/${chat.chatKey}/messages`)
-        .on('child_added', (snapshot) => {
-          self.zone.run(() => {
-            self.chatMessages.push(snapshot.val());
-            self.chatMessages = self.chatMessages.filter((thing, index, self) =>
-              index === self.findIndex((t) => (
-                t.key === thing.key
-              ))
-            )
-          });
-          self.chatMessages.sort((a, b) => a.timestamp - b.timestamp);
-          self.scrollToBottom();
-        });
+    
+      for(var key in self.dataHelper.activeChat.messages) {
+        self.chatMessages.push(self.dataHelper.activeChat.messages[key]) ;
+      }
+      self.chatMessages.sort((x, y) => x.timestamp - y.timestamp );
+      self.scrollToBottom();
+     
     }
   }
 
@@ -74,20 +85,21 @@ export class ChatScreenComponent implements OnInit {
 
 
   getRecepientName() {
-    if (this.activeChat.clientId === this.userAuth.currentUser.uid) {
-      return this.activeChat.expertDetails.fullName;
+    if (this.dataHelper.activeChat.uid === this.userAuth.currentUser.uid) {
+      return this.hubInfo.agencyName;
     } else {
-      return this.activeChat.clientDetails.fullName;
+      return this.userInfo.fullName;
     }
   }
 
 
   getRecepientLocation() {
-    if (this.activeChat.clientId === this.userAuth.currentUser.uid) {
-      return this.activeChat.expertDetails.location ? this.activeChat.expertDetails.location.country : 'N/A';
-    } else {
-      return this.activeChat.clientDetails.location ? this.activeChat.clientDetails.location.country : 'N/A';
+    if (this.dataHelper.activeChat.uid === this.userAuth.currentUser.uid && this.hubInfo.location) {
+      return this.hubInfo.location.city + ' , ' + this.hubInfo.location.country;
+    } else if (this.userInfo.location) {
+      return this.userInfo.location.location;
     }
+    return '';
   }
 
 
@@ -99,18 +111,6 @@ export class ChatScreenComponent implements OnInit {
   getSenderProfileUrl(message: iChatMessage): string {
     return this.dataHelper.allUsers[message.senderId].profileUrl;
   }
-
-
-  jobDetails() {
-    if (this.activeChat.jobDetails.uid === this.userAuth.currentUser.uid) {
-      this.dataHelper.postedJobDetail = this.activeChat.jobDetails;
-      this.router.navigate(['/post-details/' + this.activeChat.jobDetails.key]);
-    } else {
-      this.dataHelper.postedJobDetail = this.activeChat.jobDetails;
-      this.router.navigate(['/job-detail/' + this.activeChat.jobDetails.key]);
-    }
-  }
-
 
   onChangeFile(event: EventTarget) {
     this.selectedFiles = [];
@@ -165,27 +165,25 @@ export class ChatScreenComponent implements OnInit {
     this.saveMessageToFirebase();
   }
 
-
   saveMessageToFirebase() {
     const self = this;
-    self.activeChat.messages = {};
+    self.dataHelper.activeChat.messages = {};
     self.newMessage.timestamp = Number(new Date());
     self.newMessage.senderId = self.userAuth.currentUser.uid;
-    self.activeChat.lastMessageTimestamp = self.newMessage.timestamp;
-    self.activeChat.lastMessage = self.newMessage.message || 'Attachment';
+    self.dataHelper.activeChat.lastEdit = self.newMessage.timestamp;
+    self.dataHelper.activeChat.lastMessage = self.newMessage.message || 'Attachment';
     self.newMessage.key = firebase.database().ref().child(`chats`).push().key;
-    self.activeChat.messages[self.newMessage.key] = self.newMessage;
+    self.dataHelper.activeChat.messages[self.newMessage.key] = self.newMessage;
 
     self.chatMessages.forEach(x => {
-      self.activeChat.messages[x.key] = x;
+      self.dataHelper.activeChat.messages[x.key] = x;
     });
 
-    firebase.database().ref().child(`chats/${self.activeChat.chatKey}`)
-      .set(self.activeChat).then(() => {
+    firebase.database().ref().child(`chats/${self.dataHelper.activeChat.chatKey}`)
+      .set(self.dataHelper.activeChat).then(() => {
         self.dataHelper.publishSomeData({ sortActiveChats: self.newMessage.timestamp });
         self.newMessage = new iChatMessage();
       });
   }
-
 
 }

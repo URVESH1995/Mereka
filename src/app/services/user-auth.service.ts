@@ -52,8 +52,33 @@ export class UserAuthService {
       this.dataHelper.publishSomeData({ showSuccess: 'User logged out!' });
       this.router.navigate(['/home']);
     });
-  }
 
+
+    var ref1: any = firebase.database().ref('chats/').orderByChild('uid').equalTo(this.currentUser.uid);
+    ref1.off('child_added');
+
+    for (var i = 0, j = this.dataHelper.chatWithHubs.length; i < j; i++) {
+      var ref: any = firebase.database().ref('chats/' + this.dataHelper.chatWithHubs[i].chatKey + "/messages");
+      ref.off('child_added');
+    }
+
+    if(this.currentUser.myAgency || this.currentUser.agencyId) {
+
+      if (this.currentUser.myAgency) {
+        var ref3: any = firebase.database().ref('chats/').orderByChild('hubId').equalTo(this.currentUser.uid);
+        ref3.off('child_added');
+      } else {
+        var ref3: any = firebase.database().ref('chats/').orderByChild('hubId').equalTo(this.currentUser.agencyId);
+        ref3.off('child_added');
+      }
+
+      for (var i = 0, j = this.dataHelper.chatWithLearners.length; i < j; i++) {
+        var ref: any = firebase.database().ref('chats/' + this.dataHelper.chatWithLearners[i].chatKey + "/messages");
+        ref.off('child_added');
+      }
+    }
+   
+  }
 
   clearServiceData() {
     this.dataHelper.myAgency = null;

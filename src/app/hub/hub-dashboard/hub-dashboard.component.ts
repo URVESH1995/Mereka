@@ -88,7 +88,9 @@ export class HubDashboardComponent implements OnInit {
 
   getMyAgencyData() {
     this.getMyWorkshops();
+
     this.myAgency = this.dataHelper.myAgency || new iAgency();
+    console.log(this.myAgency);
     this.getTotalSales();
   }
 
@@ -127,4 +129,7 @@ export class HubDashboardComponent implements OnInit {
     this.router.navigate(['/expertise-details']);
   }
 
+  agencyProfile() {
+    this.router.navigate(['/agency-profile/' + this.dataHelper.myAgency.expertUid]);
+  }
 }

@@ -3,7 +3,7 @@
 </div>
 
 <div class="row profileContent justify-content-center mb-5">
-    <div class="col-md-4">
+    <div class="col-md-5">
         <div class="profileCard p-4 rounded shadow">
             <img class="userAvatar" [src]="myAgency.agencyLogo">
             <img class="heartIcon" src="/assets/imgs/heart-icon.png">
@@ -30,7 +30,7 @@
                 </div>
                 <p class="mb-1">{{myAgency.companyType}}</p>
                 <p>
-                    <i class="fas fa-map-marker-alt"></i> {{myAgency.location.location}}
+                    <i class="fas fa-map-marker-alt"></i> {{myAgency.location?.city}}, {{myAgency.location?.country}}
                     <i class="fas fa-star ml-5"></i> {{myAgency.avgRating}} ({{myAgency.totalReviews}})
                 </p>
                 <button class="btn cardBtns whiteOutlinedBtn btnRounded">Become a Member</button>
@@ -48,23 +48,27 @@
             </div>
             <div class="col-md-4">
                 <p class="bold">Amenities</p>
-                <p class="m-0">
+                <div>
                     <span *ngFor="let amenity of myAgency.amenities" class="badges">{{amenity}}</span>
-                </p>
+                </div>
                 <p class="bold mt-4">Facilities</p>
-                <p class="m-0">
+                <div>
                     <span *ngFor="let facility of myAgency.facilities" class="badges">{{facility}}</span>
-                </p>
+                  </div>
             </div>
         </div>
     </div>
 </div>
 
 <div class="row fixed-bottom p-3 px-4 continueBackBtns">
-    <div class="col-md-6">
+    <div class="col-md-4">
         <button (click)="navigateBack()" class="btn grayChoiceHover btn-light btnRounded">Back</button>
     </div>
-    <div class="col-md-6 text-right">
+    <div class="col-md-4 text-center">
+        <button (click)="updateMyAgencyOnFirebase()" class="btn grayChoiceHover btn-light btnRounded"
+        style="width: fit-content;">Save & Exit</button>
+    </div>
+    <div class="col-md-4 text-right">
         <button (click)="updateMyAgencyOnFirebase()"
             class="btn grayChoiceHover btnSecondary btnRounded">Confirm</button>
     </div>

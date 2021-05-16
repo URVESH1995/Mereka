@@ -14,7 +14,7 @@ export class CreateLearnerProfileComponent implements OnInit {
   learnerProfile: iLearnerProfile = new iLearnerProfile();
 
   mainCateActive: string;
-  workshopCates: string[] = ["Workshop", "Talk", "Class", "Course", "Program"];
+  workshopCates: string[] = ["Workshop", "Talk", "Course", "Program"];
   spaceCates: string[] = ["Topic1", "Topic2", "Topic3", "Topic4", "Topic5", "Topic6", "Topic7", "Topic8", "Topic9", "Topic10"];
   expertCates: string[] = [
     'Web, Mobile & Software Development', 'Design & Creative', 'Sales & Marketing', 'Writing',
@@ -156,13 +156,13 @@ export class CreateLearnerProfileComponent implements OnInit {
 
   validateFields() {
     if (this.mainCateActive === 'experience') {
-      if (this.validateExperienceFields()) {
+   //   if (this.validateExperienceFields()) {
         this.mainCateActive = 'space';
-      }
+     // }
     } else if (this.mainCateActive === 'space') {
-      if (this.validateSpaceFields()) {
+     // if (this.validateSpaceFields()) {
         this.mainCateActive = 'expert';
-      }
+      //}
     } else if (this.checkIfDataFilled()) {
       this.goToSetupProfile();
     }
@@ -202,10 +202,10 @@ export class CreateLearnerProfileComponent implements OnInit {
 
   checkIfDataFilled(): boolean {
     let validData: boolean = true;
-    if (!this.learnerProfile.interestedExperts.length) {
-      this.dataHelper.publishSomeData({ showError: 'Please choose what type of experts are you interested in!' });
-      validData = false;
-    }
+    // if (!this.learnerProfile.interestedExperts.length) {
+    //   this.dataHelper.publishSomeData({ showError: 'Please choose what type of experts are you interested in!' });
+    //   validData = false;
+    // }
     return validData;
   }
 

@@ -1,6 +1,6 @@
 <div class="row topNavbar fixed-top">
   <div class="col-md-3 py-3">
-    <img routerLink="/home" src="/assets/imgs/grayLogo.png" class="pointer ml-4">
+    <img routerLink="/home" src="/assets/imgs/MerekaLogo.png" class="pointer ml-4">
   </div>
   <div class="col-md-9 text-right">
     <button (click)="navigatePage(btn.navigatePage)" *ngFor="let btn of tabButtons"
@@ -99,11 +99,11 @@
             </p>
 
             <div class="row">
-              <div *ngFor="let theme of dataHelper.workshopCategories" class="col-md-3 mb-3 pl-0">
-                <div (click)="myWorkshopObj.theme=theme" [class.selected]="myWorkshopObj.theme===theme"
+              <div [class.d-none]="!theme.isActive" *ngFor="let theme of dataHelper.workshopCategories" class="col-md-3 mb-3 pl-0">
+                <div (click)="myWorkshopObj.theme=theme.name" [class.selected]="myWorkshopObj.theme===theme.name"
                   class="innerBlock text-center p-4 pointer whiteOutlinedBtn w-100">
-                  <p class="bold m-0">{{theme | titlecase}}
-                    <i *ngIf="myWorkshopObj.theme===theme" class="fas fa-check"></i>
+                  <p class="bold m-0">{{theme.name | titlecase}}
+                    <i *ngIf="myWorkshopObj.theme===theme.name" class="fas fa-check"></i>
                   </p>
                 </div>
               </div>
@@ -137,9 +137,8 @@
         </div>
         <div *ngIf="expandLocation" class="row locationBlock">
           <div class="col-md-7 leftContent">
-            <h5 class="bold">Share us the Address of your Hub</h5>
-            <p class="text-secondary">Choose to autofill your location from your existing Hub
-              details or fill in the address manually.
+            <h5 class="bold">Share with us the Address of your Hub</h5>
+            <p class="text-secondary">Please indicate clearly where your Hub is based. This section is mandatory so that your learners can find you.
             </p>
 
             <div class="custom-control custom-radio pointer mb-2">
@@ -200,7 +199,7 @@
               <img style="width: 35px;" src="/assets/imgs/light-icon.png">
               <span class="pl-2">PIN IT</span>
             </h5>
-            <p>Is this pinned to the correct location?</p>
+            <p  class="bold">Is this pinned to the correct location?</p>
             <agm-map *ngIf="displayMap" #gm style="width: 100%; height: 530px;" [zoom]="13"
               (mapClick)="mapClicked($event)" [latitude]="myWorkshopObj.location.lat"
               [longitude]="myWorkshopObj.location.lng">

@@ -59,6 +59,9 @@ export class SetupLearnerProfileComponent implements OnInit {
   getLearnerProfile() {
     this.currentUser = this.dataHelper.deepCloneData(this.userAuth.currentUser);
     this.learnerProfile = this.currentUser.learnerProfile;
+    if(!this.learnerProfile.educationList){
+      this.learnerProfile.educationList = [];
+    } 
     this.profileImagePath = this.currentUser.profileUrl;
     this.coverImagePath = this.learnerProfile.coverImage;
     if (!this.currentUser.location) {

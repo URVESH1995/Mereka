@@ -1,6 +1,6 @@
 <div class="row">
-    <div class="row col-md-10 bg-white roundedBar p-2">
-        <div class="col-md-3 pl-0">
+    <div class="row col-md-8 bg-white roundedBar" [class.col-md-10]="workshopFilters.type==='physical'" style="height: 56px !important; padding: 6px 7px;">
+        <div class="col-md-3 pl-0" [class.col-md-4]="workshopFilters.type==='online'">
             <div *ngIf="workshopFilters.type==='online'" class="toggleBtnContainer d-flex p-1">
                 <i (click)="workshopFilters.type='physical'" class="fas fa-running pointer soloIcon"></i>
                 <button class="btn btn-dark blackBgBtn btn-sm">
@@ -14,28 +14,31 @@
                 <i (click)="workshopFilters.type='online'" class="fas fa-desktop pointer soloIcon"></i>
             </div>
         </div>
-        <div class="col-md-3 d-flex dropdown borderedColumn">
-            <!-- <i class="fas fa-shapes filterIcons"></i> -->
+        <div class="col-md-3 d-flex dropdown borderedColumn" [class.col-md-4]="workshopFilters.type==='online'">
             <img class="categoryIcon" src="/assets/imgs/category.png">
             <p [class.selectedCategory]="workshopFilters.category" class="pointer mb-0 text-secondary"
                 data-toggle="dropdown" style="white-space: nowrap; overflow: hidden;text-overflow: ellipsis;">
                 {{workshopFilters.category || 'Select a category'}}</p>
             <div class="dropdown-menu categoryDropdown shadow">
                 <div class="innerContent">
-                    <p *ngFor="let category of workshopCategories; index as i" class="dropdown-item"
-                        (click)="workshopFilters.category=category">
-                        <span class="p-3">{{category}}</span>
+                    <div class="fullItem" *ngFor="let category of  dataHelper.workshopCategories; index as i">
+                        <p  class="dropdown-item"
+                        (click)="workshopFilters.category=category.name" >
+                        <span class="py-3">{{category.name}}</span>
                     </p>
+                    </div>
+                    
                 </div>
             </div>
         </div>
-        <div class="col-md-3 d-flex borderedColumn">
+
+        <div class="col-md-3 d-flex borderedColumn" *ngIf="workshopFilters.type==='physical'">
             <i class="fas fa-map-marker-alt filterIcons"></i>
             <ngxgeo-autocomplete id="autoCompleteOnFilters" [userSettings]="userSettings"
                 (componentCallback)="autoCompleteCallback($event)">
             </ngxgeo-autocomplete>
         </div>
-        <div class="col-md-3 d-flex borderedColumn">
+        <div class="col-md-3 d-flex borderedColumn pr-0"  [class.col-md-4]="workshopFilters.type==='online'">
             <i class="fas fa-calendar-check filterIcons"></i>
             <input [class.selectedCategory]="workshopFilters.date" [(ngModel)]="workshopFilters.date" type="date"
                 placeholder="Enter date" class="form-control">

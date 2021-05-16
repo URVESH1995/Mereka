@@ -14,8 +14,8 @@
             <i class="fas fa-running"></i> Class
           </span>
           <span class="pl-3">
-            <i class="fas fa-map-marker-alt"></i> {{workshopDetails.location.city}},
-            {{workshopDetails.location.country}}
+            <i class="fas fa-map-marker-alt"></i> {{workshopDetails.location?.city}},
+            {{workshopDetails.location?.country}}
           </span>
           <span class="pl-3">
             <i class="fas fa-star"></i> {{workshopDetails.avgRating || 'No rating'}}
@@ -130,7 +130,7 @@
             </div>
             <div *ngIf="workshopHost.expertProfile?.languages" class="col-md-4">
               <p class="bold pointer">Language</p>
-              <p *ngFor="let lang of workshopHost.expertProfile.languages" class="mb-1">{{lang}}</p>
+              <p *ngFor="let lang of workshopHost.expertProfile?.languages" class="mb-1">{{lang}}</p>
             </div>
           </div>
         </div>
@@ -251,7 +251,7 @@
         <span class="reviewpills bg-white btnRounded border">Show All</span>
       </p> -->
 
-      <div id="carousel-example" class="carousel slide slider2 desktop-slider mt-4" data-ride="carousel"
+      <div id="carousel-example2" class="carousel slide slider2 desktop-slider mt-4" data-ride="carousel"
         data-interval="false">
         <div class="carousel-inner row" role="listbox">
           <div *ngFor="let slides of parentSlides; index as i" class="carousel-item col-sm-12 px-0"
@@ -274,10 +274,10 @@
             </div>
           </div>
         </div>
-        <a class="carousel-control-prev" href="#carousel-example" role="button" data-slide="prev">
+        <a class="carousel-control-prev" href="#carousel-example2" role="button" data-slide="prev">
           <img style="transform: rotate(180deg)" src="/assets/imgs/next_Arrow.svg" height="60px">
         </a>
-        <a class="carousel-control-next" href="#carousel-example" role="button" data-slide="next">
+        <a class="carousel-control-next" href="#carousel-example2" role="button" data-slide="next">
           <img src="/assets/imgs/next_Arrow.svg" height="60px">
         </a>
       </div>
@@ -303,13 +303,13 @@
 
 
 <div class="row workshopSliderContainer justify-content-center py-5">
-  <div *ngIf="featuredWorkshops.length" class="row col-md-12 maxWidthContent">
-    <div class="col-md-12">
-      <h4 class="font-weight-bold">Featured experiences</h4>
-    </div>
-    <div class="col-md-4" *ngFor="let workshop of featuredWorkshops">
+  <div class="col-md-12">
+    <h4 class="font-weight-bold">Featured experiences</h4>
+    <p  *ngIf="!mainSlides.length">No featured expeirence is available</p>
+  </div>
+ <!-- <div *ngIf="featuredWorkshops.length" class="row col-md-12 maxWidthContent">
+     <div class="col-md-4" *ngFor="let workshop of featuredWorkshops">
       <div class="workshopCard pointer">
-        <!-- <button class="btn text-white btn-sm leftCornerBtn">BEST SELLER</button> -->
         <button (click)="favUnfavWorkshop(workshop)" class="btn text-white btn-dark btn-sm rightCornerBtn">
           <i class="fa-heart" [class.far]="!isMyFavWorkshop(workshop)" [class.fas]="isMyFavWorkshop(workshop)"></i>
         </button>
@@ -323,6 +323,40 @@
           </h5>
         </div>
       </div>
+    </div> 
+  </div>  -->
+  <div class="col-md-12 featuredVendorsBlock maxWidthContent" *ngIf="mainSlides.length">
+    <div id="carousel-example" class="carousel slide slider2 desktop-slider mt-4" data-ride="carousel"
+      data-interval="false">
+      <div class="carousel-inner row" role="listbox">
+        <div *ngFor="let slides of mainSlides; index as i" class="carousel-item col-sm-12 px-0" [class.active]="i===0">
+          <div class="row">
+            <div *ngFor="let workshop of slides" class="col-md-4 lessPadding pointer">
+              <!-- <img class="slideImage" [src]="workshop.coverImage || 'assets/imgs/notify-img.PNG'"> -->
+              <div class="workshopCard pointer">
+                <button (click)="favUnfavWorkshop(workshop)" class="btn text-white btn-dark btn-sm rightCornerBtn">
+                  <i class="fa-heart" [class.far]="!isMyFavWorkshop(workshop)" [class.fas]="isMyFavWorkshop(workshop)"></i>
+                </button>
+                <img (click)="updateWorkshopUrl(workshop)" [src]="workshop.coverImage">
+                <div (click)="updateWorkshopUrl(workshop)" class="p-3">
+                  <h5 class="bold mb-1">{{workshop.experienceTitle}}</h5>
+                  <p class="font-13 text-secondary">{{getWorkshopHostFeatured(workshop.uid) || 'N/A'}}</p>
+                  <h5 class="text-right mb-0">
+                    <span *ngIf="workshop.ratePerLearner">MYR {{workshop.ratePerLearner}}<small>/learner </small></span>
+                    <span *ngIf="workshop.ratePerMember"> MYR {{workshop.ratePerMember}}<small>/member</small></span>
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#carousel-example" role="button" data-slide="prev">
+        <img style="transform: rotate(180deg)" src="/assets/imgs/next_Arrow.svg" height="60px">
+      </a>
+      <a class="carousel-control-next" href="#carousel-example" role="button" data-slide="next">
+        <img src="/assets/imgs/next_Arrow.svg" height="60px">
+      </a>
     </div>
   </div>
 </div>
@@ -336,7 +370,7 @@
     <div class="modal-content">
       <div class="modal-body p-4">
         <h5 class="bold">Leave a Review</h5>
-        <label>How would you rate the Experience?</label>
+        <label class="bold">How would you rate the Experience?</label>
         <h1>
           <i (click)="postReviewObj.rating=1" class="fas fa-star text-secondary mx-2 pointer"
             [class.text-warning]="postReviewObj.rating >=1"></i>

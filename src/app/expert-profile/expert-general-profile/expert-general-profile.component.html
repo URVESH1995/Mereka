@@ -1,18 +1,18 @@
 <h3 class="bold mb-3">What I do</h3>
 <div class="row borderedContent bg-white p-4">
     <div class="col-md-8 leftContent">
-        <h5 class="bold">{{expertProfile.expertProfile.overview.title}}</h5>
-        <p>{{expertProfile.expertProfile.overview.overview}}</p>
+        <h5 class="bold">{{expertProfile.expertProfile?.overview.title}}</h5>
+        <p>{{expertProfile.expertProfile?.overview?.overview}}</p>
     </div>
     <div class="col-md-4 pl-5">
         <h4 class="bold mb-4">My Skillset</h4>
 
-        <p *ngFor="let subCategory of expertProfile.expertProfile.expertise.skillTypes" class="mb-2">
+        <p *ngFor="let subCategory of expertProfile.expertProfile?.expertise?.skillTypes" class="mb-2">
             {{subCategory}}
         </p>
 
         <div class="mt-3">
-            <span *ngFor="let skill of expertProfile.expertProfile.expertise.skills" class="badges">
+            <span *ngFor="let skill of expertProfile.expertProfile?.expertise?.skills" class="badges">
                 {{skill}}
             </span>
         </div>

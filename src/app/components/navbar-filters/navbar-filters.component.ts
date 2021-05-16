@@ -13,10 +13,11 @@ export class NavbarFiltersComponent implements OnInit {
   userSettings = {
     showSearchButton: false,
     inputPlaceholderText: 'Location',
-    inputString: ''
+    inputString: '',
+    geoTypes: ['(cities)'],
   };
 
-  workshopCategories: string[] = [];
+
   workshopFilters: iExperienceFilters = new iExperienceFilters();
 
   constructor(
@@ -24,9 +25,7 @@ export class NavbarFiltersComponent implements OnInit {
     public dataHelper: DataHelperService
   ) { }
 
-  ngOnInit(): void {
-    this.workshopCategories = this.dataHelper.deepCloneData(this.dataHelper.workshopCategories);
-  }
+  ngOnInit() { }
 
   autoCompleteCallback(selectedData: any) {
     var Data = selectedData.data;
@@ -45,9 +44,10 @@ export class NavbarFiltersComponent implements OnInit {
   }
 
   searchWorkshops() {
+    
     if (!this.isAnyInputMissing()) {
       const el: any = document.getElementById('search_places');
-      if (!el.value) {
+      if (!el || !el.value) {
         this.workshopFilters.location = null;
         this.workshopFilters.lat = null;
         this.workshopFilters.lng = null;
@@ -58,6 +58,7 @@ export class NavbarFiltersComponent implements OnInit {
   }
 
   isAnyInputMissing(): boolean {
+   
     return (!this.workshopFilters.category && !this.workshopFilters.date
       && !this.workshopFilters.lat)
       ? true : false;

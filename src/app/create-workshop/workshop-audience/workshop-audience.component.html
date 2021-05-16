@@ -1,6 +1,6 @@
 <div class="row topNavbar fixed-top">
     <div class="col-md-3 py-3">
-        <img routerLink="/home" src="/assets/imgs/grayLogo.png" class="pointer ml-4">
+        <img routerLink="/home" src="/assets/imgs/MerekaLogo.png" class="pointer ml-4">
     </div>
     <div class="col-md-9 text-right">
         <button (click)="navigatePage(btn.navigatePage)" *ngFor="let btn of tabButtons"
@@ -240,7 +240,7 @@
 
                         <div
                             *ngIf="myWorkshopObj.requiredLevelOfExpertise==='Intermediate' || myWorkshopObj.requiredLevelOfExpertise==='Advanced'">
-                            <p class="text-secondary mt-4">What skills does your experience need to be Advanced in?</p>
+                            <p class="text-secondary mt-4 bold">What skills does your experience need to be Advanced in?</p>
                             <tag-input #input [modelAsStrings]="true" [placeholder]="'Add skill'"
                                 [secondaryPlaceholder]="'Add skill'" [(ngModel)]="myWorkshopObj.requiredskillset">
                                 <tag-input-dropdown [showDropdownIfEmpty]="true"></tag-input-dropdown>
